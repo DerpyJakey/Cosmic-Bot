@@ -67,26 +67,24 @@ public class AccountFrame extends JFrame {
 		saveBTN = new JButton();
 		closeBTN = new JButton();
 		oAuthBTN = new JButton();
-		JPanel usernamePanel = new JPanel(new BorderLayout());
-		usernamePanel.add(usernameLabel, BorderLayout.WEST);
-		usernamePanel.add(usernameInputBox, BorderLayout.CENTER);
-		JPanel passwordPanel = new JPanel(new BorderLayout());
-		passwordPanel.add(passwordLabel, BorderLayout.WEST);
-		passwordPanel.add(passwordInputBox, BorderLayout.CENTER);
-		JPanel buttonPanel = new JPanel(new BorderLayout());
-		buttonPanel.add(saveBTN, BorderLayout.WEST);
-		buttonPanel.add(closeBTN, BorderLayout.CENTER);
-		buttonPanel.add(oAuthBTN, BorderLayout.EAST);
+		JPanel accountPanel = new JPanel(new GridLayout(2, 2));
+		accountPanel.add(usernameLabel);
+		accountPanel.add(usernameInputBox);
+		accountPanel.add(passwordLabel);
+		accountPanel.add(passwordInputBox);
+		JPanel buttonPanel = new JPanel(new GridLayout(1, 3));
+		buttonPanel.add(saveBTN);
+		buttonPanel.add(closeBTN);
+		buttonPanel.add(oAuthBTN);
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.add(usernamePanel, BorderLayout.NORTH);
-		mainPanel.add(passwordPanel);
+		mainPanel.add(accountPanel);
 		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 		getContentPane().add(mainPanel);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
 		pack();
-		setSize(getWidth() + 10, getHeight() + 20);
+		setSize(getWidth(), getHeight() + 10);
 	}
   
 	void UpdateLanguage() {

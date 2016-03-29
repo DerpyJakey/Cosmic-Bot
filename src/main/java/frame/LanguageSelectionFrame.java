@@ -37,12 +37,13 @@ public class LanguageSelectionFrame extends JFrame {
 		languageBox = new JComboBox();
 		languageBox.setModel(new DefaultComboBoxModel(Language.ListLanguages()));
 		saveBTN = new JButton();
-		add(languageBox, BorderLayout.NORTH);
+		add(languageBox, BorderLayout.CENTER);
 		add(saveBTN, BorderLayout.SOUTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
 		pack();
+		setSize(getWidth() + 160, getHeight() + 20);
 	}
 
 	void UpdateLanguage() {
