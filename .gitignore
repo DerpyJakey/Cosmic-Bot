@@ -2,7 +2,10 @@
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+*.properties
+*.lock
+*.bin
+*.MF
 # Package Files #
 *.jar
 *.war

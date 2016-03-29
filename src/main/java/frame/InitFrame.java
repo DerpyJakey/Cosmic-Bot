@@ -25,6 +25,7 @@ public class InitFrame extends JFrame {
 			}
 		LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
 		}
+		DefaultConfig.CreateDefaultLanguage();
 		dispose();
 	}
 }

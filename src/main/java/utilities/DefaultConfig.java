@@ -35,6 +35,7 @@ public class DefaultConfig {
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Button_Delete", "Delete");
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Button_OAuth", "OAuth"); 
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Button_Update", "Update"); 
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Button_Send", "Send"); 
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Option_Chat", "Chat"); 
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Option_Add_New_Command", "Add new command"); 
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Option_Bot", "Bot"); 
@@ -42,6 +43,10 @@ public class DefaultConfig {
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Option_False", "False");
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Option_Viewer", "Viewer"); 
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Option_Moderator", "Moderator");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Account", "Account");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Channel", "Channel");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Language", "Language");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Menu_Settings", "Settings");
 	}
 
 	public static void CreateDefaultChannelConfig(String channel) {
