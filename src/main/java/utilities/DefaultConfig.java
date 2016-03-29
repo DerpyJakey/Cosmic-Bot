@@ -46,7 +46,11 @@ public class DefaultConfig {
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Account", "Account");
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Channel", "Channel");
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Language", "Language");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Connect", "Connect");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Disconnect", "Disconnect");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Item_Exit", "Exit");
 		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Menu_Settings", "Settings");
+		IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Menu_Client", "Client");
 	}
 
 	public static void CreateDefaultChannelConfig(String channel) {

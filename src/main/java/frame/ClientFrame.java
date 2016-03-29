@@ -2,27 +2,30 @@ package frame;
 
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 import frame.AccountFrame;
 import frame.ChannelFrame;
 import reference.Language;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import frame.LanguageSelectionFrame;
 
 public class ClientFrame extends JFrame {
-	String current_Language = Language.GetLanguage();
-	String current_Channel;
+	String current_Language = "";
+	String current_Channel = "";
 	JMenuBar menuBar;
+	JMenu clientMenu;
 	JMenu settingMenu;
 	JMenuItem accountItem;
 	JMenuItem channelItem;
 	JMenuItem languageItem;
+	JMenuItem connectItem;
+	JMenuItem disconnectItem;
+	JMenuItem exitItem;
 	JTextArea chatBox;
 	JComboBox channelSelectionBox;
 	JTextField messageInput;
 	JButton sendBTN;
 	JPanel inputPanel;
-	
+
 	public ClientFrame() {
 		CreateUI();
 		UpdateLanguage();
@@ -44,15 +47,43 @@ public class ClientFrame extends JFrame {
 				LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
 			}
 		});
+		sendBTN.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+			}
+		});
+		exitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				dispose();
+			}
+		});
+		addWindowFocusListener(new WindowAdapter() {
+			public void windowGainedFocus(WindowEvent e) {
+				if (!current_Language.equals(Language.GetLanguage())) {
+					System.out.println("UP");
+					UpdateLanguage();
+				}
+			}
+		});
 	}
 	
 	void CreateUI() {
+		setTitle(Language.GetText("Title_Client"));
 		menuBar = new JMenuBar();
 		settingMenu = new JMenu();
 		accountItem = new JMenuItem();
 		channelItem = new JMenuItem();
 		languageItem = new JMenuItem();
+		clientMenu = new JMenu();
+		connectItem = new JMenuItem();
+		disconnectItem = new JMenuItem();
+		exitItem = new JMenuItem();
+		menuBar.add(clientMenu);
 		menuBar.add(settingMenu);
+		clientMenu.add(connectItem);
+		clientMenu.add(disconnectItem);
+		clientMenu.add(exitItem);
 		settingMenu.add(accountItem);
 		settingMenu.add(channelItem);
 		settingMenu.add(languageItem);
@@ -76,11 +107,18 @@ public class ClientFrame extends JFrame {
 	}
 	
 	void UpdateLanguage() {
-		settingMenu.setText(Language.GetText("Menu_Settings"));
-		accountItem.setText(Language.GetText("Item_Account"));
-		channelItem.setText(Language.GetText("Item_Channel"));
-		languageItem.setText(Language.GetText("Item_Language"));
-		sendBTN.setText(Language.GetText("Button_Send"));
+		if (!current_Language.equals(Language.GetLanguage())) {
+			settingMenu.setText(Language.GetText("Menu_Settings"));
+			accountItem.setText(Language.GetText("Item_Account"));
+			channelItem.setText(Language.GetText("Item_Channel"));
+			clientMenu.setText(Language.GetText("Menu_Client"));
+			connectItem.setText(Language.GetText("Item_Connect"));
+			disconnectItem.setText(Language.GetText("Item_Disconnect"));
+			exitItem.setText(Language.GetText("Item_Exit"));
+			languageItem.setText(Language.GetText("Item_Language"));
+			sendBTN.setText(Language.GetText("Button_Send"));
+			current_Language = Language.GetLanguage();
+		}
 	}
 	
 	void UpdateInterface(int updateObject) {
