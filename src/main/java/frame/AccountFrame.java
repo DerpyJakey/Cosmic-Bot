@@ -61,9 +61,9 @@ public class AccountFrame extends JFrame {
   
 	void CreateUI() {
 		usernameLabel = new JLabel();
-		usernameInputBox = new JTextField(10);
+		usernameInputBox = new JTextField(20);
 		passwordLabel = new JLabel();
-		passwordInputBox = new JPasswordField(10);
+		passwordInputBox = new JPasswordField(20);
 		saveBTN = new JButton();
 		closeBTN = new JButton();
 		oAuthBTN = new JButton();
@@ -74,9 +74,9 @@ public class AccountFrame extends JFrame {
 		passwordPanel.add(passwordLabel, BorderLayout.WEST);
 		passwordPanel.add(passwordInputBox, BorderLayout.CENTER);
 		JPanel buttonPanel = new JPanel(new BorderLayout());
-		buttonPanel.add(saveBTN);
-		buttonPanel.add(closeBTN);
-		buttonPanel.add(oAuthBTN);
+		buttonPanel.add(saveBTN, BorderLayout.WEST);
+		buttonPanel.add(closeBTN, BorderLayout.CENTER);
+		buttonPanel.add(oAuthBTN, BorderLayout.EAST);
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.add(usernamePanel, BorderLayout.NORTH);
 		mainPanel.add(passwordPanel);
@@ -86,17 +86,15 @@ public class AccountFrame extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		pack();
+		setSize(getWidth() + 10, getHeight() + 20);
 	}
   
 	void UpdateLanguage() {
-		if (current_Language.equals(Language.GetLanguage())) {
-			setTitle(Language.GetText("Title_Account"));
-			usernameLabel.setText(Language.GetText("Label_Username"));
-			passwordLabel.setText(Language.GetText("Label_Password"));
-			saveBTN.setText(Language.GetText("Button_Save"));
-			closeBTN.setText(Language.GetText("Button_Close"));
-			oAuthBTN.setText(Language.GetText("Button_OAuth"));
-			current_Language = Language.GetLanguage();
-		}
+		setTitle(Language.GetText("Title_Account"));
+		usernameLabel.setText(Language.GetText("Label_Username"));
+		passwordLabel.setText(Language.GetText("Label_Password"));
+		saveBTN.setText(Language.GetText("Button_Save"));
+		closeBTN.setText(Language.GetText("Button_Close"));
+		oAuthBTN.setText(Language.GetText("Button_OAuth"));
 	}
 }

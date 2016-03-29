@@ -2,10 +2,16 @@ package frame;
 
 import java.awt.*;
 import javax.swing.*;
+import frame.AccountFrame;
+import frame.ChannelFrame;
 import reference.Language;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import frame.LanguageSelectionFrame;
 
 public class ClientFrame extends JFrame {
 	String current_Language = Language.GetLanguage();
+	String current_Channel;
 	JMenuBar menuBar;
 	JMenu settingMenu;
 	JMenuItem accountItem;
@@ -20,6 +26,24 @@ public class ClientFrame extends JFrame {
 	public ClientFrame() {
 		CreateUI();
 		UpdateLanguage();
+		accountItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				AccountFrame accountFrame = new AccountFrame();
+			}
+		});
+		channelItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				ChannelFrame channelFrame = new ChannelFrame();
+			}
+		});
+		languageItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
+			}
+		});
 	}
 	
 	void CreateUI() {
