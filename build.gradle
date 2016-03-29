@@ -1,0 +1,23 @@
+apply plugin: 'java'
+
+repositories {
+	mavenCentral()
+}
+
+jar {
+	baseName = 'Cosmic-Bot'
+	version = '0.0.1'
+	manifest {
+		attributes 'Main-Class': 'CosmicBot'
+	}
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.3'
+}
