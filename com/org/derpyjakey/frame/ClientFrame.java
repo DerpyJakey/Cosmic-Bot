@@ -6,11 +6,13 @@ import java.awt.event.*;
 import com.org.derpyjakey.frame.AccountFrame;
 import com.org.derpyjakey.frame.ChannelFrame;
 import com.org.derpyjakey.reference.Language;
+import com.org.derpyjakey.utilities.IRCHandler;
 import com.org.derpyjakey.frame.LanguageSelectionFrame;
 
 public class ClientFrame extends JFrame {
   String current_Language = "";
   String current_Channel = "";
+  boolean initialized = false;
   JMenuBar menuBar;
   JMenu clientMenu;
   JMenu settingMenu;
@@ -25,6 +27,7 @@ public class ClientFrame extends JFrame {
   JTextField messageInput;
   JButton sendBTN;
   JPanel inputPanel;
+  IRCHandler ircHandler;
 
   public ClientFrame() {
     CreateUI();
@@ -56,6 +59,25 @@ public class ClientFrame extends JFrame {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         dispose();
+      }
+    });
+    connectItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (initialized == false) {
+          //IRCHandler ircHandler = new IRCHandler();
+          //ircHandler.Connect();
+          initialized = true;
+        }
+      }
+    });
+    disconnectItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (initialized == true) {
+          //ircHandler.CloseSocket();
+          initialized = false;
+        }
       }
     });
     addWindowFocusListener(new WindowAdapter() {
@@ -108,6 +130,7 @@ public class ClientFrame extends JFrame {
   
   void UpdateLanguage() {
     if (!current_Language.equals(Language.GetLanguage())) {
+      setTitle(Language.GetText("Title_Client"));
       settingMenu.setText(Language.GetText("Menu_Settings"));
       accountItem.setText(Language.GetText("Item_Account"));
       channelItem.setText(Language.GetText("Item_Channel"));
@@ -120,8 +143,11 @@ public class ClientFrame extends JFrame {
       current_Language = Language.GetLanguage();
     }
   }
-  
+
   void UpdateInterface(int updateObject) {
-    
+    if (initialized) {
+      String[] connectedChannels = (ircHandler.GetConnectedChannels().replace("#", "").split(", "));
+      channelSelectionBox.setModel(new DefaultComboBoxModel(connectedChannels));
+    }
   }
 }

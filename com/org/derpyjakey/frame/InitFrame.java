@@ -23,7 +23,7 @@ public class InitFrame extends JFrame {
       if (!IOHandler.CheckDirectory(Directories.Files.LanguageFile)) {
         DefaultConfig.CreateDefaultLanguage();
       }
-    LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
+      LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
     }
     DefaultConfig.CreateDefaultLanguage();
     dispose();
