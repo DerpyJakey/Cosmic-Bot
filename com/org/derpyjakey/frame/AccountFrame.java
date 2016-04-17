@@ -94,5 +94,6 @@ public class AccountFrame extends JFrame {
     saveBTN.setText(Language.GetText("Button_Save"));
     closeBTN.setText(Language.GetText("Button_Close"));
     oAuthBTN.setText(Language.GetText("Button_OAuth"));
+    usernameInputBox.setText(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Username"));
   }
 }

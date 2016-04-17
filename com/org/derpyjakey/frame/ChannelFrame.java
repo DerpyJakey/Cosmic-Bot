@@ -56,7 +56,7 @@ public class ChannelFrame extends JFrame {
     @Override
       public void actionPerformed(ActionEvent actionEvent) {
         if (!channelInputBox.getText().isEmpty()) {
-          IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Channels", channelInputBox.getText());
+          IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Channel", channelInputBox.getText());
           UpdateInterface(9);
           UpdateInterface(2);
           UpdateInterface(4);
@@ -225,7 +225,7 @@ public class ChannelFrame extends JFrame {
     modeBox.setModel(new DefaultComboBoxModel(availableModes));
     enableBox.setModel(new DefaultComboBoxModel(enableOptions));
     permissionBox.setModel(new DefaultComboBoxModel(permissionOptions));
-    channelInputBox.setText(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channels"));
+    channelInputBox.setText(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channel"));
   }
 
   void InitializeInterface() {
