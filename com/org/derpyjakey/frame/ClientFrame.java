@@ -5,19 +5,15 @@ import com.org.derpyjakey.reference.Language;
 import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.IRCHandler;
 import com.org.derpyjakey.utilities.LogHandler;
-
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class ClientFrame extends JFrame {
-    String current_Language = "";
+    private String current_Language = "";
     private boolean initialized = false;
-    private JMenuBar menuBar;
     private JMenu clientMenu;
     private JMenu settingMenu;
     private JMenuItem accountItem;
@@ -28,33 +24,28 @@ public class ClientFrame extends JFrame {
     private JMenuItem exitItem;
     private JTextArea chatBox;
     private JComboBox channelSelectionBox;
-    private JTextField messageInput;
     private JButton sendBTN;
-    private JPanel inputPanel;
-    private IRCHandler ircHandler = new IRCHandler();
+    private final IRCHandler ircHandler = new IRCHandler();
 
     public ClientFrame() {
         CreateUI();
         UpdateLanguage();
-        accountItem.addActionListener(actionEvent -> {
-            AccountFrame accountFrame = new AccountFrame();
-        });
-        channelItem.addActionListener(actionEvent -> {
-            ChannelFrame channelFrame = new ChannelFrame();
-        });
-        languageItem.addActionListener(actionEvent -> {
-            LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
-        });
+        accountItem.addActionListener(actionEvent -> new AccountFrame());
+        channelItem.addActionListener(actionEvent -> new ChannelFrame());
+        languageItem.addActionListener(actionEvent -> new LanguageSelectionFrame());
         sendBTN.addActionListener(actionEvent -> {
         });
         exitItem.addActionListener(actionEvent -> dispose());
         connectItem.addActionListener(actionEvent -> {
-            if (!initialized && !IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channel").isEmpty()) {
-                LogHandler.Report(2, "Connecting");
-                ircHandler.Connect();
-                initialized = true;
-                UpdateInterface(0);
-                UpdateChat();
+            try {
+                if (!initialized && !IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channel").isEmpty()) {
+                    LogHandler.Report(2, "Connecting");
+                    ircHandler.Connect();
+                    initialized = true;
+                    UpdateInterface(0);
+                    UpdateChat();
+                }
+            } catch (NullPointerException ignored) {
             }
         });
         disconnectItem.addActionListener(actionEvent -> {
@@ -77,7 +68,7 @@ public class ClientFrame extends JFrame {
 
     private void CreateUI() {
         setTitle(Language.GetText("Title_Client"));
-        menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
         settingMenu = new JMenu();
         accountItem = new JMenuItem();
         channelItem = new JMenuItem();
@@ -103,9 +94,9 @@ public class ClientFrame extends JFrame {
         DefaultCaret caret = (DefaultCaret)chatBox.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         channelSelectionBox = new JComboBox();
-        messageInput = new JTextField();
+        JTextField messageInput = new JTextField();
         sendBTN = new JButton();
-        inputPanel = new JPanel(new BorderLayout());
+        JPanel inputPanel = new JPanel(new BorderLayout());
         inputPanel.add(channelSelectionBox, BorderLayout.WEST);
         inputPanel.add(messageInput, BorderLayout.CENTER);
         inputPanel.add(sendBTN, BorderLayout.EAST);
@@ -152,17 +143,33 @@ public class ClientFrame extends JFrame {
         new Thread(() -> {
             while (initialized) {
                 try {
-                    if (!ircHandler.ReceiveMessage().isEmpty()) {
-                        if (ircHandler.ReceiveMessage().equals("Kill Cosmic Thread")) {
-                            LogHandler.Report(2, "Stopped Thread");
-                            break;
-                        } else {
-                            chatBox.append(ircHandler.ReceiveMessage() + "\r\n");
-                        }
+                    if (CleanChat().equals("Kill Cosmic Thread")) {
+                        LogHandler.Report(2, "Killing Thread");
+                        break;
+                    } else {
+                        chatBox.append(CleanChat());
                     }
-                } catch (NullPointerException npe) {
+                } catch (NullPointerException ignored) {
                 }
             }
         }).start();
+    }
+
+    private String CleanChat() {
+        String message = ircHandler.ReceiveMessage();
+        if (message.startsWith(":tmi.twitch.tv 002")) {
+            return "Connected to Twitch.TV\n";
+        } else if (message.contains("tmi.twitch.tv 366") || message.contains("tmi.twitch.tv 353") || message.contains("tmi.twitch.tv 004") || message.contains("tmi.twitch.tv 372")) {
+            return null;
+        } else if (message.contains("JOIN #")) {
+            return null;
+        } else if (message.contains(".tmi.twitch.tv PRIVMSG #")) {
+            String chatUsername = message.substring(message.indexOf("@") + 1, message.indexOf(".tmi.twitch.tv PRIVMSG"));
+            String chatChannel = message.substring(message.indexOf("PRIVMSG #") + 9, message.indexOf(" :"));
+            String chatMessage = message.substring(message.indexOf("#" + chatChannel + " :") + 1);
+            return "(" + chatChannel + ") " + chatUsername + " : " + chatMessage + "\n";
+        } else {
+            return message + "\n";
+        }
     }
 }

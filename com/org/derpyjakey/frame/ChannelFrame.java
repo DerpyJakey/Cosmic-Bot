@@ -7,13 +7,10 @@ import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.LogHandler;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class ChannelFrame extends JFrame {
+class ChannelFrame extends JFrame {
     private String selectedChannel;
     private String selectedCommand;
-    private String[] availableChannels;
     private JLabel channelLabel;
     private JTextField channelInputBox;
     private JButton updateBTN;
@@ -43,7 +40,7 @@ public class ChannelFrame extends JFrame {
     private JPanel messagePanel;
     private JPanel directoryPanel;
 
-    public ChannelFrame() {
+    ChannelFrame() {
         try {
             UpdateInterface(9);
         } catch (NullPointerException npe) {

@@ -1,7 +1,7 @@
 package com.org.derpyjakey.reference;
 
-public class BotInfo {
-    public static final class Information {
+class BotInfo {
+    private static final class Information {
         public final static String Name = "Cosmic-Bot";
         public final static String Version = "0.01 Pre-Alpha";
         public final static String Developer = "Jacob Stevens";

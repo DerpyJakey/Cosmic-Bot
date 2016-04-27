@@ -4,17 +4,13 @@ import com.org.derpyjakey.reference.Directories;
 import com.org.derpyjakey.reference.Language;
 import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.LogHandler;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 class AccountFrame extends JFrame {
-    String currentLanguage = "";
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JTextField usernameInputBox;
