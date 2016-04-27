@@ -13,54 +13,43 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class AccountFrame extends JFrame {
+class AccountFrame extends JFrame {
     String currentLanguage = "";
-    JLabel usernameLabel;
-    JLabel passwordLabel;
-    JTextField usernameInputBox;
-    JPasswordField passwordInputBox;
-    JButton saveBTN;
-    JButton closeBTN;
-    JButton oAuthBTN;
+    private JLabel usernameLabel;
+    private JLabel passwordLabel;
+    private JTextField usernameInputBox;
+    private JPasswordField passwordInputBox;
+    private JButton saveBTN;
+    private JButton closeBTN;
+    private JButton oAuthBTN;
 
-    public AccountFrame() {
+    AccountFrame() {
         CreateUI();
         UpdateLanguage();
-        saveBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (!usernameInputBox.getText().equals(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Username"))) {
-                    IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Username", usernameInputBox.getText());
-                }
-                String passwordString = new String(passwordInputBox.getPassword());
-                if (!passwordString.equals(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Password"))) {
-                    IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Password", passwordString);
-                }
-                dispose();
+        saveBTN.addActionListener(actionEvent -> {
+            if (!usernameInputBox.getText().equals(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Username"))) {
+                IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Username", usernameInputBox.getText());
             }
-        });
-        closeBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
+            String passwordString = new String(passwordInputBox.getPassword());
+            if (!passwordString.equals(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Password"))) {
+                IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Password", passwordString);
             }
+            dispose();
         });
-        oAuthBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                Desktop desktop = Desktop.getDesktop();
-                try {
-                    desktop.browse(new URI("https://twitchapps.com/tmi/"));
-                } catch (URISyntaxException URISE){
-                    JOptionPane.showMessageDialog(null, Language.GetText("OAUTH_ERROR_MESSAGE"));
-                } catch (IOException ioe) {
-                    LogHandler.Report(4, ioe);
-                }
+        closeBTN.addActionListener(actionEvent -> dispose());
+        oAuthBTN.addActionListener(actionEvent -> {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(new URI("https://twitchapps.com/tmi/"));
+            } catch (URISyntaxException URISE){
+                JOptionPane.showMessageDialog(null, Language.GetText("OAUTH_ERROR_MESSAGE"));
+            } catch (IOException ioe) {
+                LogHandler.Report(4, ioe);
             }
         });
     }
 
-    void CreateUI() {
+    private void CreateUI() {
         usernameLabel = new JLabel();
         usernameInputBox = new JTextField(20);
         passwordLabel = new JLabel();
@@ -88,7 +77,7 @@ public class AccountFrame extends JFrame {
         setSize(getWidth() + 20, getHeight() + 10);
     }
 
-    void UpdateLanguage() {
+    private void UpdateLanguage() {
         setTitle(Language.GetText("Title_Account"));
         usernameLabel.setText(Language.GetText("Label_Username"));
         passwordLabel.setText(Language.GetText("Label_Password"));

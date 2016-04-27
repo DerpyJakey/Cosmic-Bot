@@ -3,7 +3,7 @@ package com.org.derpyjakey.utilities;
 import com.org.derpyjakey.reference.Directories;
 
 public class DefaultConfig {
-    public static void CreateDefaultConfig() {
+    static void CreateDefaultConfig() {
         IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Language", "English");
         IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Host", "irc.twitch.tv");
         IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Port", "6667");
@@ -12,7 +12,7 @@ public class DefaultConfig {
         IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Channel", "");
     }
 
-    public static void CreateDefaultLanguage() {
+    static void CreateDefaultLanguage() {
         IOHandler.SetConfig(Directories.Files.LanguageFile, "Available Languages", "English");
         IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Title_Client", "Cosmic-Bot");
         IOHandler.SetConfig(Directories.Files.LanguageFile, "English_Title_Account", "Account");

@@ -1,7 +1,8 @@
 package com.org.derpyjakey.utilities;
 
 public class LogHandler {
-    static boolean debug = true;
+    private static boolean debug = true;
+    
     public static void Report(int level, Object report) {
         switch (level) {
             case 1:
@@ -22,21 +23,21 @@ public class LogHandler {
         }
     }
 
-    static void InfoReport(Object infoMessage) {
+    private static void InfoReport(Object infoMessage) {
         System.out.println("--INFO--\n" + infoMessage.toString());
     }
 
-    static void DebugReport(Object debugMessage) {
+    private static void DebugReport(Object debugMessage) {
         if (debug) {
             System.out.println("--DEBUG--\n" + debugMessage.toString());
         }
     }
 
-    static void WarningReport(Object warningMessage) {
+    private static void WarningReport(Object warningMessage) {
         System.out.println("--WARNING--\n" + warningMessage.toString());
     }
 
-    static void ErrorReport(Object errorMessage) {
+    private static void ErrorReport(Object errorMessage) {
         System.out.println("--ERROR--\n" + errorMessage.toString());
     }
 

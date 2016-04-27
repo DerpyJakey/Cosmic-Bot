@@ -2,15 +2,14 @@ package com.org.derpyjakey.utilities;
 
 
 import com.org.derpyjakey.reference.Directories;
-
 import java.io.*;
 import java.net.Socket;
 
 public class IRCHandler {
-    Socket twitchSocket = null;
-    BufferedWriter twitchWriter = null;
-    BufferedReader twitchReader = null;
-    String connectedChannels = null;
+    private Socket twitchSocket = null;
+    private BufferedWriter twitchWriter = null;
+    private BufferedReader twitchReader = null;
+    private String connectedChannels = null;
 
     public void Connect() {
         ConnectToServer(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Host"), Integer.parseInt(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Port")));
@@ -18,7 +17,7 @@ public class IRCHandler {
         ConnectToChannel(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channel"));
     }
 
-    void ConnectToServer(String host, int port) {
+    private void ConnectToServer(String host, int port) {
         try {
             twitchSocket = new Socket(host, port);
             twitchWriter = new BufferedWriter(new OutputStreamWriter(twitchSocket.getOutputStream()));
@@ -32,12 +31,12 @@ public class IRCHandler {
         }
     }
 
-    void LoginToServer(String username, String password) {
+    private void LoginToServer(String username, String password) {
         SendRawMessage("PASS " + password);
         SendRawMessage("NICK " + username);
     }
 
-    void ConnectToChannel(String channels) {
+    private void ConnectToChannel(String channels) {
         String[] channelList = channels.toLowerCase().split(", ");
         for (String channel:channelList) {
             if (channel.startsWith("#")) {
@@ -71,7 +70,7 @@ public class IRCHandler {
         }
     }
 
-    void SendRawMessage(String rawMessage) {
+    private void SendRawMessage(String rawMessage) {
         LogHandler.Report(2, "MESSAGE: " + rawMessage);
         try {
             twitchWriter.write(rawMessage + "\r\n");
@@ -103,7 +102,11 @@ public class IRCHandler {
         if (!twitchSocket.isClosed()) {
             String message;
             try {
-                message = twitchReader.readLine();
+                if (!twitchReader.readLine().isEmpty()) {
+                    message = twitchReader.readLine();
+                } else {
+                    message = null;
+                }
             } catch (IOException ioe) {
                 message = null;
             }

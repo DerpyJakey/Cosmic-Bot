@@ -7,6 +7,7 @@ import com.org.derpyjakey.utilities.IRCHandler;
 import com.org.derpyjakey.utilities.LogHandler;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,76 +16,53 @@ import java.awt.event.WindowEvent;
 
 public class ClientFrame extends JFrame {
     String current_Language = "";
-    boolean initialized = false;
-    JMenuBar menuBar;
-    JMenu clientMenu;
-    JMenu settingMenu;
-    JMenuItem accountItem;
-    JMenuItem channelItem;
-    JMenuItem languageItem;
-    JMenuItem connectItem;
-    JMenuItem disconnectItem;
-    JMenuItem exitItem;
-    JTextArea chatBox;
-    JComboBox channelSelectionBox;
-    JTextField messageInput;
-    JButton sendBTN;
-    JPanel inputPanel;
-    IRCHandler ircHandler = new IRCHandler();
+    private boolean initialized = false;
+    private JMenuBar menuBar;
+    private JMenu clientMenu;
+    private JMenu settingMenu;
+    private JMenuItem accountItem;
+    private JMenuItem channelItem;
+    private JMenuItem languageItem;
+    private JMenuItem connectItem;
+    private JMenuItem disconnectItem;
+    private JMenuItem exitItem;
+    private JTextArea chatBox;
+    private JComboBox channelSelectionBox;
+    private JTextField messageInput;
+    private JButton sendBTN;
+    private JPanel inputPanel;
+    private IRCHandler ircHandler = new IRCHandler();
 
     public ClientFrame() {
         CreateUI();
         UpdateLanguage();
-        accountItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                AccountFrame accountFrame = new AccountFrame();
+        accountItem.addActionListener(actionEvent -> {
+            AccountFrame accountFrame = new AccountFrame();
+        });
+        channelItem.addActionListener(actionEvent -> {
+            ChannelFrame channelFrame = new ChannelFrame();
+        });
+        languageItem.addActionListener(actionEvent -> {
+            LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
+        });
+        sendBTN.addActionListener(actionEvent -> {
+        });
+        exitItem.addActionListener(actionEvent -> dispose());
+        connectItem.addActionListener(actionEvent -> {
+            if (!initialized && !IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channel").isEmpty()) {
+                LogHandler.Report(2, "Connecting");
+                ircHandler.Connect();
+                initialized = true;
+                UpdateInterface(0);
+                UpdateChat();
             }
         });
-        channelItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                ChannelFrame channelFrame = new ChannelFrame();
-            }
-        });
-        languageItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                LanguageSelectionFrame languageSelectionFrame = new LanguageSelectionFrame();
-            }
-        });
-        sendBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-            }
-        });
-        exitItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
-            }
-        });
-        connectItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (initialized == false && !IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channel").isEmpty()) {
-                    LogHandler.Report(2, "Connecting");
-                    ircHandler.Connect();
-                    initialized = true;
-                    UpdateInterface(0);
-                    UpdateChat();
-                }
-            }
-        });
-        disconnectItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (initialized == true) {
-                    LogHandler.Report(2, "Disconnecting");
-                    ircHandler.Disconnect();
-                    UpdateInterface(1);
-                    initialized = false;
-                }
+        disconnectItem.addActionListener(actionEvent -> {
+            if (initialized) {
+                LogHandler.Report(2, "Disconnecting");
+                ircHandler.Disconnect();
+                UpdateInterface(1);
+                initialized = false;
             }
         });
         addWindowFocusListener(new WindowAdapter() {
@@ -97,7 +75,7 @@ public class ClientFrame extends JFrame {
         });
     }
 
-    void CreateUI() {
+    private void CreateUI() {
         setTitle(Language.GetText("Title_Client"));
         menuBar = new JMenuBar();
         settingMenu = new JMenu();
@@ -119,10 +97,11 @@ public class ClientFrame extends JFrame {
         chatBox = new JTextArea();
         chatBox.setEditable(false);
         chatBox.setLineWrap(true);
-        chatBox.setAutoscrolls(true);
+        chatBox.setWrapStyleWord(true);
         JScrollPane chatScrollPane = new JScrollPane(chatBox);
-        chatScrollPane.setAutoscrolls(true);
         chatScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        DefaultCaret caret = (DefaultCaret)chatBox.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         channelSelectionBox = new JComboBox();
         messageInput = new JTextField();
         sendBTN = new JButton();
@@ -140,7 +119,7 @@ public class ClientFrame extends JFrame {
         setVisible(true);
     }
 
-    void UpdateLanguage() {
+    private void UpdateLanguage() {
         if (!current_Language.equals(Language.GetLanguage())) {
             setTitle(Language.GetText("Title_Client"));
             settingMenu.setText(Language.GetText("Menu_Settings"));
@@ -156,7 +135,7 @@ public class ClientFrame extends JFrame {
         }
     }
 
-    void UpdateInterface(int updateObject) {
+    private void UpdateInterface(int updateObject) {
         if (updateObject == 0) {
             try {
                 String[] channelSelections = (ircHandler.GetConnectedChannels().replace("#", "").split(", "));
@@ -169,11 +148,10 @@ public class ClientFrame extends JFrame {
         }
     }
 
-    void UpdateChat() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (initialized) {
+    private void UpdateChat() {
+        new Thread(() -> {
+            while (initialized) {
+                try {
                     if (!ircHandler.ReceiveMessage().isEmpty()) {
                         if (ircHandler.ReceiveMessage().equals("Kill Cosmic Thread")) {
                             LogHandler.Report(2, "Stopped Thread");
@@ -182,6 +160,7 @@ public class ClientFrame extends JFrame {
                             chatBox.append(ircHandler.ReceiveMessage() + "\r\n");
                         }
                     }
+                } catch (NullPointerException npe) {
                 }
             }
         }).start();

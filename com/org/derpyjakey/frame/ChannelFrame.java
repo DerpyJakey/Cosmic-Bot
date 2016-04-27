@@ -11,37 +11,38 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ChannelFrame extends JFrame {
-    String selectedChannel;
-    String selectedCommand;
-    String[] availableChannels;
-    JLabel channelLabel;
-    JTextField channelInputBox;
-    JButton updateBTN;
-    JLabel channelSelectionLabel;
-    JComboBox channelSelectionBox;
-    JLabel modeLabel;
-    JComboBox modeBox;
-    JLabel enableLabel;
-    JComboBox enableBox;
-    JLabel permissionLabel;
-    JComboBox permissionBox;
-    JLabel availableCommandsLabel;
-    JComboBox availableCommandsBox;
-    JLabel commandLabel;
-    JTextField commandInput;
-    JLabel messageLabel;
-    JTextField messageInput;
-    JLabel fileDirectoryLabel;
-    JTextField fileDirectoryInput;
-    JButton saveBTN;
-    JButton deleteBTN;
-    JButton closeBTN;
-    JPanel modePanel;
-    JPanel availableCommandsPanel;
-    JPanel comboPanel;
-    JPanel commandPanel;
-    JPanel messagePanel;
-    JPanel directoryPanel;
+    private String selectedChannel;
+    private String selectedCommand;
+    private String[] availableChannels;
+    private JLabel channelLabel;
+    private JTextField channelInputBox;
+    private JButton updateBTN;
+    private JLabel channelSelectionLabel;
+    private JComboBox channelSelectionBox;
+    private JLabel modeLabel;
+    private JComboBox modeBox;
+    private JLabel enableLabel;
+    private JComboBox enableBox;
+    private JLabel permissionLabel;
+    private JComboBox permissionBox;
+    private JLabel availableCommandsLabel;
+    private JComboBox availableCommandsBox;
+    private JLabel commandLabel;
+    private JTextField commandInput;
+    private JLabel messageLabel;
+    private JTextField messageInput;
+    private JLabel fileDirectoryLabel;
+    private JTextField fileDirectoryInput;
+    private JButton saveBTN;
+    private JButton deleteBTN;
+    private JButton closeBTN;
+    private JPanel modePanel;
+    private JPanel availableCommandsPanel;
+    private JPanel comboPanel;
+    private JPanel commandPanel;
+    private JPanel messagePanel;
+    private JPanel directoryPanel;
+
     public ChannelFrame() {
         try {
             UpdateInterface(9);
@@ -52,84 +53,59 @@ public class ChannelFrame extends JFrame {
         UpdateLanguage();
         InitializeInterface();
         UpdateInterface(1);
-        updateBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (!channelInputBox.getText().isEmpty()) {
-                    IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Channel", channelInputBox.getText());
-                    UpdateInterface(9);
-                    UpdateInterface(2);
-                    UpdateInterface(4);
-                    UpdateInterface(1);
-                }
-            }
-        });
-        channelSelectionBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (!channelSelectionBox.getSelectedItem().toString().isEmpty()) {
-                    UpdateInterface(9);
-                    UpdateInterface(3);
-                }
-            }
-        });
-        modeBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                IOHandler.SetConfig(Directories.Files.ChannelFile.replace("%CHANNEL%", selectedChannel), "Mode", modeBox.getSelectedItem().toString());
-                if (modeBox.getSelectedItem().toString().equals(Language.GetText("Option_Bot"))) {
-                    UpdateInterface(2);
-                    UpdateInterface(5);
-                    UpdateInterface(4);
-                    if (modeBox.getSelectedItem().toString().equals(Language.GetText("Option_Add_New_Command"))) {
-                        UpdateInterface(6);
-                    } else {
-                        UpdateInterface(7);
-                    }
-                } else {
-                    UpdateInterface(8);
-                }
-            }
-        });
-        availableCommandsBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+        updateBTN.addActionListener(actionEvent -> {
+            if (!channelInputBox.getText().isEmpty()) {
+                IOHandler.SetConfig(Directories.Files.ConfigurationFile, "Channel", channelInputBox.getText());
+                UpdateInterface(9);
+                UpdateInterface(2);
                 UpdateInterface(4);
-                if (availableCommandsBox.getSelectedItem().toString().equals(Language.GetText("Option_Add_New_Command"))) {
+                UpdateInterface(1);
+            }
+        });
+        channelSelectionBox.addActionListener(actionEvent -> {
+            if (!channelSelectionBox.getSelectedItem().toString().isEmpty()) {
+                UpdateInterface(9);
+                UpdateInterface(3);
+            }
+        });
+        modeBox.addActionListener(actionEvent -> {
+            IOHandler.SetConfig(Directories.Files.ChannelFile.replace("%CHANNEL%", selectedChannel), "Mode", modeBox.getSelectedItem().toString());
+            if (modeBox.getSelectedItem().toString().equals(Language.GetText("Option_Bot"))) {
+                UpdateInterface(2);
+                UpdateInterface(5);
+                UpdateInterface(4);
+                if (modeBox.getSelectedItem().toString().equals(Language.GetText("Option_Add_New_Command"))) {
                     UpdateInterface(6);
                 } else {
                     UpdateInterface(7);
                 }
+            } else {
+                UpdateInterface(8);
             }
         });
-        saveBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (availableCommandsBox.getSelectedItem().toString().equals(Language.GetText("Option_Add_New_Command"))) {
-                    if (!commandInput.getText().isEmpty()) {
-                        AddCommand();
-                    }
-                } else {
-                    SaveCommand();
+        availableCommandsBox.addActionListener(actionEvent -> {
+            UpdateInterface(4);
+            if (availableCommandsBox.getSelectedItem().toString().equals(Language.GetText("Option_Add_New_Command"))) {
+                UpdateInterface(6);
+            } else {
+                UpdateInterface(7);
+            }
+        });
+        saveBTN.addActionListener(actionEvent -> {
+            if (availableCommandsBox.getSelectedItem().toString().equals(Language.GetText("Option_Add_New_Command"))) {
+                if (!commandInput.getText().isEmpty()) {
+                    AddCommand();
                 }
+            } else {
+                SaveCommand();
             }
         });
-        deleteBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                DeleteCommand();
-            }
-        });
-        closeBTN.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
-            }
-        });
+        deleteBTN.addActionListener(actionEvent -> DeleteCommand());
+        closeBTN.addActionListener(actionEvent -> dispose());
         setVisible(true);
     }
 
-    void CreateUI() {
+    private void CreateUI() {
         channelLabel = new JLabel();
         channelInputBox = new JTextField(10);
         updateBTN = new JButton();
@@ -204,7 +180,7 @@ public class ChannelFrame extends JFrame {
         pack();
     }
 
-    void UpdateLanguage() {
+    private void UpdateLanguage() {
         setTitle(Language.GetText("Title_Channel"));
         channelLabel.setText(Language.GetText("Label_Channel"));
         updateBTN.setText(Language.GetText("Button_Update"));
@@ -228,7 +204,7 @@ public class ChannelFrame extends JFrame {
         channelInputBox.setText(IOHandler.GetValue(Directories.Files.ConfigurationFile, "Channel"));
     }
 
-    void InitializeInterface() {
+    private void InitializeInterface() {
         modePanel.setVisible(false);
         availableCommandsPanel.setVisible(false);
         comboPanel.setVisible(false);
@@ -239,7 +215,7 @@ public class ChannelFrame extends JFrame {
         deleteBTN.setVisible(false);
     }
 
-    void UpdateInterface(int updateObject) {
+    private void UpdateInterface(int updateObject) {
         if (updateObject == 1) {
             channelSelectionBox.setModel(new DefaultComboBoxModel(channelInputBox.getText().replace("#", "").split(", ")));
         } else if (updateObject == 2) {
@@ -308,7 +284,7 @@ public class ChannelFrame extends JFrame {
         pack();
     }
 
-    void AddCommand() {
+    private void AddCommand() {
         IOHandler.SetConfig(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), commandInput.getText() + ".Enable", enableBox.getSelectedItem().toString());
         IOHandler.SetConfig(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), commandInput.getText() + ".Permission", permissionBox.getSelectedItem().toString());
         IOHandler.SetConfig(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), commandInput.getText() + ".Message", messageInput.getText());
@@ -319,7 +295,7 @@ public class ChannelFrame extends JFrame {
         availableCommandsBox.setSelectedItem(commandInput.getText());
     }
 
-    void SaveCommand() {
+    private void SaveCommand() {
         IOHandler.SetConfig(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), availableCommandsBox.getSelectedItem().toString() + ".Enable", enableBox.getSelectedItem().toString());
         IOHandler.SetConfig(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), availableCommandsBox.getSelectedItem().toString() + ".Permission", permissionBox.getSelectedItem().toString());
         IOHandler.SetConfig(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), availableCommandsBox.getSelectedItem().toString() + ".Message", messageInput.getText());
@@ -330,7 +306,7 @@ public class ChannelFrame extends JFrame {
         availableCommandsBox.setSelectedItem(commandInput.getText());
     }
 
-    void DeleteCommand() {
+    private void DeleteCommand() {
         IOHandler.DeleteKey(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), availableCommandsBox.getSelectedItem().toString() + ".Enable");
         IOHandler.DeleteKey(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), availableCommandsBox.getSelectedItem().toString() + ".Permission");
         IOHandler.DeleteKey(Directories.Files.CommandFile.replace("%CHANNEL%", selectedChannel), availableCommandsBox.getSelectedItem().toString() + ".Message");

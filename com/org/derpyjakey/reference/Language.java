@@ -12,7 +12,7 @@ public class Language {
     }
 
     public static String[] ListLanguages() {
-        if (IOHandler.GetValue(Directories.Files.LanguageFile, "Available Languages").equals(null)) {
+        if (IOHandler.GetValue(Directories.Files.LanguageFile, "Available Languages").isEmpty()) {
             return null;
         } else {
             return IOHandler.GetValue(Directories.Files.LanguageFile, "Available Languages").split(", ");

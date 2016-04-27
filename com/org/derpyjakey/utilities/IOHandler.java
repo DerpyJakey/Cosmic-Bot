@@ -155,7 +155,7 @@ public class IOHandler {
 
     public static String[] ListCommands(String directory) {
         FileInputStream fileInput = null;
-        List<String> stringList = new ArrayList<String>();
+        List<String> stringList = new ArrayList<>();
         int i = 0;
         try {
             fileInput = new FileInputStream(directory);
@@ -169,8 +169,7 @@ public class IOHandler {
                 }
             }
             stringList.add(i++, Language.GetText("Option_Add_New_Command"));
-            String[] output = stringList.toArray(new String[stringList.size()]);
-            return output;
+            return stringList.toArray(new String[stringList.size()]);
         } catch (IOException ioe) {
             LogHandler.Report(2, "Could not list commands\n" + ioe);
         } finally {
