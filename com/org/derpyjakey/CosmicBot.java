@@ -1,11 +1,28 @@
 package com.org.derpyjakey;
 
 import com.org.derpyjakey.frame.ClientFrame;
-import com.org.derpyjakey.utilities.Initializer;
+import com.org.derpyjakey.utilities.IOHandler;
+import com.org.derpyjakey.reference.Directories;
+import com.org.derpyjakey.utilities.DefaultConfig;
 
-class CosmicBot {
-    public static void main(String[] args) {
-        new Initializer();
-        new ClientFrame();
-    }
+public class CosmicBot {
+	public static void main(String[] args) {
+		if (!IOHandler.CheckDirectory(Directories.Folders.RootFolder)) {
+			IOHandler.CreateDirectory(Directories.Folders.RootFolder);
+		}
+		if (!IOHandler.CheckDirectory(Directories.Folders.ConfigurationFolder)) {
+			IOHandler.CreateDirectory(Directories.Folders.ConfigurationFolder);
+		}
+		if (!IOHandler.CheckDirectory(Directories.Files.ConfigurationFile) ||
+		IOHandler.CheckDirectory(Directories.Files.LanguageFile)) {
+			if (!IOHandler.CheckDirectory(Directories.Files.ConfigurationFile)) {
+				DefaultConfig.CreateDefaultConfig();
+			}
+			if (!IOHandler.CheckDirectory(Directories.Files.LanguageFile)) {
+				DefaultConfig.CreateDefaultLanguage();
+			}
+			new LanguageFrame();
+		}
+		new ClientFrame();
+	}
 }
