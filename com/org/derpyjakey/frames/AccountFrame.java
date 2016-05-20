@@ -1,5 +1,10 @@
 package com.org.derpyjakey.frames;
 
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.LogHandler;
 import com.org.derpyjakey.references.Directories;
@@ -71,9 +76,9 @@ public class AccountFrame {
 			account_Frame.setTitle(Language.getText("Title.Account"));
 			account_Username_Label.setText(Language.getText("Label.Username"));
 			account_Password_Label.setText(Language.getText("Label.Password"));
-			account_Save_Button.setText("Button.Save"));
-			account_Close_Button.setText("Button.Close"));
-			account_OAuth_Button.setText("Button.OAuth"));
+			account_Save_Button.setText(Language.getText("Button.Save"));
+			account_Close_Button.setText(Language.getText("Button.Close"));
+			account_OAuth_Button.setText(Language.getText("Button.OAuth"));
 			current_Language = Language.getLanguage();
 		}
 	}

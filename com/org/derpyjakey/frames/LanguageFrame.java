@@ -47,7 +47,7 @@ public class LanguageFrame {
 		if (!current_Language.equals(Language.getLanguage())) {
 			language_Frame.setTitle(Language.getText("Title.Language"));
 			language_Label.setText(Language.getText("Label.Language"));
-			language_Save_Button.setText("Button.Save"));
+			language_Save_Button.setText(Language.getText("Button.Save"));
 			current_Language = Language.getLanguage();
 		}
 	}
@@ -56,7 +56,7 @@ public class LanguageFrame {
 		if (!current_Language.equals(Language.getLanguage())) {
 			language_Frame.setTitle(Language.getText(language, "Title.Language.Selection"));
 			language_Label.setText(Language.getText(language, "Label.Language"));
-			language_Save_Button.setText(language, "Button.Save"));
+			language_Save_Button.setText(Language.getText(language, "Button.Save"));
 			current_Language = Language.getLanguage();
 		}
 	}

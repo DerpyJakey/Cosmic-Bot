@@ -1,5 +1,9 @@
 package com.org.derpyjakey.frames;
 
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.references.Language;
 import com.org.derpyjakey.utilities.LogHandler;
@@ -44,26 +48,26 @@ public class ChannelFrame {
 	void initialize() {
 		current_Language = "";
 		channel_Frame = new JFrame();
-		JLabel channel_Label = new JLabel;
-		JTextField channel_Input_Box = new JTextField;
-		JButton channel_Update_Button = new JButton;
-		JLabel channel_Selection_Label = new JLabel;
-		JComboBox channel_Selection_Box = new JComboBox;
-		JLabel channel_Mode_Label = new JLabel;
-		JComboBox channel_Mode_Combo_Box = new JComboBox;
-		JLabel channel_Permission_Label = new JLabel;
-		JComboBox channel_Permission_Combo_Box = new JComboBox;
-		JLabel channel_Available_Commands_Label = new JLabel;
-		JComboBox channel_Available_Commands_Combo_Box = new JComboBox;
-		JLabel channel_Command_Label = new JLabel;
-		JTextField channel_Command_Input = new JTextField;
-		JLabel channel_Message_Label = new JLabel;
-		JTextField channel_Message_Input = new JTextField;
-		JLabel channel_File_Directory_Label = new JLabel;
-		JTextField channel_File_Directory_Input = new JTextField;
-		JButton channel_Save_Button = new JButton;
-		JButton channel_Delete_Button = new JButton;
-		JButton channel_Close_Button = new JButton;
+		JLabel channel_Label = new JLabel();
+		JTextField channel_Input_Box = new JTextField();
+		JButton channel_Update_Button = new JButton();
+		JLabel channel_Selection_Label = new JLabel();
+		JComboBox channel_Selection_Box = new JComboBox();
+		JLabel channel_Mode_Label = new JLabel();
+		JComboBox channel_Mode_Combo_Box = new JComboBox();
+		JLabel channel_Permission_Label = new JLabel();
+		JComboBox channel_Permission_Combo_Box = new JComboBox();
+		JLabel channel_Available_Commands_Label = new JLabel();
+		JComboBox channel_Available_Commands_Combo_Box = new JComboBox();
+		JLabel channel_Command_Label = new JLabel();
+		JTextField channel_Command_Input = new JTextField();
+		JLabel channel_Message_Label = new JLabel();
+		JTextField channel_Message_Input = new JTextField();
+		JLabel channel_File_Directory_Label = new JLabel();
+		JTextField channel_File_Directory_Input = new JTextField();
+		JButton channel_Save_Button = new JButton();
+		JButton channel_Delete_Button = new JButton();
+		JButton channel_Close_Button = new JButton();
 	}
 	
 	void updateLanguage() {
@@ -92,10 +96,10 @@ public class ChannelFrame {
 		JPanel channel_Channel_Selection_Panel = new JPanel(new BorderLayout());
 		channel_Channel_Selection_Panel.add(channel_Selection_Label, BorderLayout.WEST);
 		channel_Channel_Selection_Panel.add(channel_Selection_Box, BorderLayout.EAST);
-		JPanel channel_Mode_Panel = new JPanel;
+		JPanel channel_Mode_Panel = new JPanel();
 		channel_Mode_Panel.add(channel_Mode_Label, BorderLayout.WEST);
 		channel_Mode_Panel.add(channel_Mode_Combo_Box, BorderLayout.CENTER);
-		JPanel channel_Available_Commands_Panel(new BorderLayout());
+		JPanel channel_Available_Commands_Panel = new JPanel(new BorderLayout());
 		channel_Available_Commands_Panel.add(channel_Available_Commands_Label, BorderLayout.WEST);
 		channel_Available_Commands_Panel.add(channel_Available_Commands_Combo_Box, BorderLayout.CENTER);
 		JPanel channel_Combo_Panel = new JPanel(new GridLayout(1, 4));
