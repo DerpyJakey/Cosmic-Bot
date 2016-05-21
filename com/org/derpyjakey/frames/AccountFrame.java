@@ -29,11 +29,11 @@ public class AccountFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				if (!account_Username_Input_Box.getText().equals(IOHandler.getValue(Directories.Files.ConfigurationFile, "Username"))) {
-					IOHandler.setConfig(Directories.Files.ConfigurationFile, "Username", account_Username_Input_Box.getText());
+					IOHandler.setValue(Directories.Files.ConfigurationFile, "Username", account_Username_Input_Box.getText());
 				}
 				String account_tmp_Password = new String(account_Password_Input_Box.getPassword());
 				if (!account_tmp_Password.equals(IOHandler.getValue(Directories.Files.ConfigurationFile, "Password"))) {
-					IOHandler.setConfig(Directories.Files.ConfigurationFile, "Password", account_tmp_Password);
+					IOHandler.setValue(Directories.Files.ConfigurationFile, "Password", account_tmp_Password);
 				}
 				dispose();
 			}

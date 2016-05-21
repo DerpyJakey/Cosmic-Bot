@@ -4,7 +4,7 @@ import com.org.derpyjakey.utilities.IOHandler;
 
 public class Language {
 	public static void setLanguage(String language) {
-		IOhandler.setConfig(Directories.Files.ConfigurationFile, "Language", language);
+		IOhandler.setValue(Directories.Files.ConfigurationFile, "Language", language);
 	}
 	
 	public static String getLanguage() {
