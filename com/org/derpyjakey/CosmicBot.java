@@ -1,8 +1,8 @@
 package com.org.derpyjakey;
 
-import com.org.derpyjakey.frame.ClientFrame;
+import com.org.derpyjakey.frames.ClientFrame;
 import com.org.derpyjakey.utilities.IOHandler;
-import com.org.derpyjakey.reference.Directories;
+import com.org.derpyjakey.references.Directories;
 import com.org.derpyjakey.utilities.DefaultConfig;
 
 public class CosmicBot {
