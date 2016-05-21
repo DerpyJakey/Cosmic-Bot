@@ -1,5 +1,15 @@
 package com.org.derpyjakey.utilities;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Enumeration;
+import com.org.derpyjakey.references.Language;
+
 public class IOHandler {
 	
 	public static String getRoot() {
@@ -114,5 +124,58 @@ public class IOHandler {
 				}
 			}
 		}
+	}
+	
+	public static boolean containsKey(String directory, String key) {
+		FileInputStream fileInput = null;
+		try {
+			fileInput = new FileInputStream(directory);
+			Properties properties = new Properties();
+			properties.load(fileInput);
+			return properties.containsKey(key);
+		} catch (IOException ioe) {
+			LogHandler.report(2, "Could not read file\n" + directory + "\n" + ioe);
+			return false;
+		} finally {
+			if (fileInput != null) {
+				try {
+					fileInput.close();
+				} catch (IOException ioe) {
+					LogHandler.report(2, "Could not close FileInputStream\n" + ioe);
+				}
+			}
+		}
+	}
+	
+	public static String[] listCommands(String directory) {
+		FileInputStream fileInput = null;
+		List<String> stringList = new ArrayList<String>();
+		int i = 0;
+		try {
+			fileInput = new FileInputStream(directory);
+			Properties properties = new Properties();
+			properties.load(fileInput);
+			Enumeration enuKeys = properties.keys();
+			while (enuKeys.hasMoreElements()) {
+				String key = (String) enuKeys.nextElements();
+				if (keys.contains(".Enable")) {
+					stringList.add(i++, key.replace(".Enable", ""));
+				}
+			}
+			stringList.add(i++, Language.getText("Options.Add.New.Command"));
+			String[] output = stringList.toArray(new String[stringList.size()]);
+			return output;
+		} catch (IOException ioe) {
+			LogHandler.report(2, "Could not list commands\n" + ioe);
+		} finally {
+			if (fileInput != null) {
+				try {
+					fileInput.close();
+				} catch (IOException ioe) {
+					LogHandler.report(2, "Could not close FileInputStream\n" + ioe);
+				}
+			}
+		}
+		return null;
 	}
 }
