@@ -57,7 +57,7 @@ public class LanguageFrame {
 			language_Frame.setTitle(Language.getText(language, "Title.Language.Selection"));
 			language_Label.setText(Language.getText(language, "Label.Language"));
 			language_Save_Button.setText(Language.getText(language, "Button.Save"));
-			current_Language = Language.getLanguage();
+			current_Language = language;
 		}
 	}
 	

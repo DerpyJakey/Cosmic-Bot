@@ -85,6 +85,7 @@ public class ChannelFrame {
 			channel_Save_Button.setText(Language.getText("Button.Save"));
 			channel_Delete_Button.setText(Language.getText("Button.Delete"));
 			channel_Close_Button.setText(Language.getText("Button.Close"));
+			current_Language = Language.getLanguage();
 		}
 	}
 	
