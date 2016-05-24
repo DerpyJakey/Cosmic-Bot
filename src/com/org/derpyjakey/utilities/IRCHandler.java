@@ -1,9 +1,12 @@
 package com.org.derpyjakey.utilities;
 
-import java.io.*;
-import java.net.Socket;
-import com.org.derpyjakey.utilities.LogHandler;
 import com.org.derpyjakey.references.Directories;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
 
 public class IRCHandler {
 	Socket cosmic_Socket;

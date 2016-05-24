@@ -1,7 +1,5 @@
 package com.org.derpyjakey.utilities;
 
-import com.org.derpyjakey.utilities.Language;
-import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.references.Directories;
 
 public class Language {
@@ -14,7 +12,7 @@ public class Language {
 	}
 	
 	public static String[] listLanguages() {
-		if (IOHandler.getValue(Directories.Files.LanguageFile, "Available Languages").equals(null)) {
+		if (IOHandler.getValue(Directories.Files.LanguageFile, "Available Languages").isEmpty()) {
 			return null;
 		} else {
 			return IOHandler.getValue(Directories.Files.LanguageFile, "Available Languages").split(", ");
@@ -37,4 +35,22 @@ public class Language {
 			return null;
 		}
 	}
+        
+        public static String convertTextToEnglish(String text) {
+                if (IOHandler.containsKey(Directories.Files.LanguageFile, getLanguage() + "." + text)) {
+                        return getText("English", text);
+                } else {
+                        LogHandler.report(2, "Missing " + '"' + text + '"' + " for " + '"' + getLanguage() + "'");
+                        return null;
+                }
+        }
+        
+        public static String convertTextFromEnglish(String language, String text) {
+                if (IOHandler.containsKey(Directories.Files.LanguageFile, language + "." + text)) {
+                    return getText(language, text);
+                } else {
+                    LogHandler.report(2, "Missing " + '"' + text + '"' + " for " + '"' + language + '"');
+                    return null;
+                }
+        }
 }

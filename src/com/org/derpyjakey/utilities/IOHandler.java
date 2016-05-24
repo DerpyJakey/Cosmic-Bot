@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Enumeration;
-import com.org.derpyjakey.utilities.Language;
 
 public class IOHandler {	
 	public static String getRoot() {

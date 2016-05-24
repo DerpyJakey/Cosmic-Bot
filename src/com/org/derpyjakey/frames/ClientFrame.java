@@ -1,11 +1,18 @@
 package com.org.derpyjakey.frames;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.IRCHandler;
+import com.org.derpyjakey.utilities.Language;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class ClientFrame {
 	String current_Language;
@@ -35,9 +42,25 @@ public class ClientFrame {
 		updateLanguage();
 		addComponents();
 		setFrameProperties();
+		client_About_Item.addActionListener((ActionEvent actionEvent) -> {
+                    //NOTE TO SELF
+                    //ADD ABOUT FRAME
+                });
+		client_Exit_Item.addActionListener((ActionEvent actionEvent) -> {
+                    client_Frame.dispose();
+                });
+		client_Account_Item.addActionListener((ActionEvent actionEvent) -> {
+                    AccountFrame accountFrame = new AccountFrame();
+                });
+		client_Channel_Item.addActionListener((ActionEvent actionEvent) -> {
+                    ChannelFrame channelFrame = new ChannelFrame();
+                });
+		client_Language_Item.addActionListener((ActionEvent actionEvent) -> {
+                    LanguageFrame languageFrame = new LanguageFrame();
+                });
 	}
 	
-	void initialize() {
+	private void initialize() {
 		current_Language = "";
 		client_Frame = new JFrame();
 		client_Panel = new JPanel(new BorderLayout());
@@ -60,7 +83,7 @@ public class ClientFrame {
 		chat_Thread_Init = false;
 	}
 	
-	void updateLanguage() {
+	private void updateLanguage() {
 		if (!current_Language.equals(Language.getLanguage())) {
 			client_Frame.setTitle(Language.getText("Frame.Client"));
 			client_Menu.setText(Language.getText("Menu.Client"));
@@ -77,7 +100,7 @@ public class ClientFrame {
 		}
 	}
 	
-	void addComponents() {
+	private void addComponents() {
 		client_Menu_Bar.add(client_Menu);
 		client_Menu_Bar.add(client_Server_Menu);
 		client_Menu_Bar.add(client_Settings_Menu);
@@ -96,26 +119,25 @@ public class ClientFrame {
 		client_Frame.setJMenuBar(client_Menu_Bar);
 	}
 	
-	void setFrameProperties() {
+	private void setFrameProperties() {
 		client_Frame.setSize(500, 500);
 		client_Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		client_Frame.setVisible(true);
 	}
 	
 	void updateChat() {
-		Thread chat_Thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (status_Connected) {
-					if (ircHandler.recieveMessage().equals("Disconnect Cosmic-Bot")) {
-						status_Connected = false;
-						break;
-					} else {
-						client_Chat_Text_Area.append(ircHandler.recieveMessage());
-					}
-				}
-			}
-		});
+		Thread chat_Thread = new Thread(() -> {
+                    while (status_Connected) {
+                        if (!ircHandler.recieveMessage().equals("Disconnect Cosmic-Bot")) {
+                            if (!ircHandler.recieveMessage().isEmpty()) {
+                                client_Chat_Text_Area.append(ircHandler.recieveMessage());
+                            }
+                        } else {
+                            status_Connected = false;
+                            break;
+                        }
+                    }
+                });
 		if (status_Connected && !chat_Thread_Init) {
 			chat_Thread.start();
 			chat_Thread_Init = true;

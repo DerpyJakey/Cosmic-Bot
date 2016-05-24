@@ -17,6 +17,7 @@ public class DefaultConfig {
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Client", "Cosmic-Bot");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Account", "Account");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Language", "Language");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Channel", "Channel");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Client", "Client");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Server", "Server");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Settings", "Settings");
@@ -27,13 +28,29 @@ public class DefaultConfig {
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Account", "Account");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Channel", "Channel");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Language", "Language");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Channel.Selection", "Channel Selection");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Channels", "Channels");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Language", "Language");
-		IOHandler.setValue(Directories.Files.LanguageFile, "English.Labal.Username", "Username");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Username", "Username");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Password", "Password");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Mode", "Mode");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Permission", "Permission");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Available.Commands", "Available Commands");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Command", "Command");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Message", "Message");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.File.Directory", "File Directory");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Update", "Update");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Send", "Send");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Save", "Save");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Close", "Close");
 		IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.OAuth", "OAuth");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Delete", "Delete");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.True", "True");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.False", "False");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Chat", "Chat");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Bot", "Bot");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Moderator", "Moderator");
+		IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Everyone", "Everyone");
 		IOHandler.setValue(Directories.Files.LanguageFile, "Available Languages", "English");
 	}
 	

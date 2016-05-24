@@ -14,16 +14,19 @@ public class CosmicBot {
 		if (!IOHandler.checkDirectory(Directories.Folders.ConfigurationFolder)) {
 			IOHandler.createDirectory(Directories.Folders.ConfigurationFolder);
 		}
+                if (!IOHandler.checkDirectory(Directories.Folders.ChannelRootFolder)) {
+                        IOHandler.createDirectory(Directories.Folders.ChannelRootFolder);
+                }
 		if (!IOHandler.checkDirectory(Directories.Files.ConfigurationFile) ||
-		IOHandler.checkDirectory(Directories.Files.LanguageFile)) {
+		!IOHandler.checkDirectory(Directories.Files.LanguageFile)) {
 			if (!IOHandler.checkDirectory(Directories.Files.ConfigurationFile)) {
 				DefaultConfig.createDefaultConfig();
 			}
 			if (!IOHandler.checkDirectory(Directories.Files.LanguageFile)) {
 				DefaultConfig.createDefaultLanguage();
 			}
-			new LanguageFrame();
+                LanguageFrame languageFrame = new LanguageFrame();
 		}
-		new ClientFrame();
+        ClientFrame clientFrame = new ClientFrame();
 	}
 }

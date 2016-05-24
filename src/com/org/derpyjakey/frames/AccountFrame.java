@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.net.URISyntaxException;
-import java.awt.event.ActionListener;
 import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.LogHandler;
@@ -28,41 +27,32 @@ public class AccountFrame {
 		updateLanguage();
 		addComponents();
 		setFrameProperties();
-		account_Save_Button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				if (!account_Username_Input_Box.getText().equals(IOHandler.getValue(Directories.Files.ConfigurationFile, "Username"))) {
-					IOHandler.setValue(Directories.Files.ConfigurationFile, "Username", account_Username_Input_Box.getText());
-				}
-				String account_tmp_Password = new String(account_Password_Input_Box.getPassword());
-				if (!account_tmp_Password.equals(IOHandler.getValue(Directories.Files.ConfigurationFile, "Password"))) {
-					IOHandler.setValue(Directories.Files.ConfigurationFile, "Password", account_tmp_Password);
-				}
-				account_Frame.dispose();
-			}
-		});
-		account_Close_Button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				account_Frame.dispose();
-			}
-		});
-		account_OAuth_Button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				Desktop desktop = Desktop.getDesktop();
-				try {
-					desktop.browse(new URI("https://twitchapps.com/tmi/"));
-				} catch (URISyntaxException URISE) {
-					JOptionPane.showMessageDialog(null, Language.getText("Error.OAUTH"));
-				} catch (IOException IOE) {
-					LogHandler.report(4, IOE);
-				}
-			}
-		});
+		account_Save_Button.addActionListener((ActionEvent actionEvent) -> {
+                    if (!account_Username_Input_Box.getText().equals(IOHandler.getValue(Directories.Files.ConfigurationFile, "Username"))) {
+                        IOHandler.setValue(Directories.Files.ConfigurationFile, "Username", account_Username_Input_Box.getText());
+                    }
+                    String account_tmp_Password = new String(account_Password_Input_Box.getPassword());
+                    if (!account_tmp_Password.equals(IOHandler.getValue(Directories.Files.ConfigurationFile, "Password"))) {
+                        IOHandler.setValue(Directories.Files.ConfigurationFile, "Password", account_tmp_Password);
+                    }
+                    account_Frame.dispose();
+                });
+		account_Close_Button.addActionListener((ActionEvent actionEvent) -> {
+                    account_Frame.dispose();
+                });
+		account_OAuth_Button.addActionListener((ActionEvent actionEvent) -> {
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.browse(new URI("https://twitchapps.com/tmi/"));
+                    } catch (URISyntaxException URISE) {
+                        JOptionPane.showMessageDialog(null, Language.getText("Error.OAUTH"));
+                    } catch (IOException IOE) {
+                        LogHandler.report(4, IOE);
+                    }
+                });
 	}
 	
-	void initialize() {
+	private void initialize() {
 		current_Language = "";
 		account_Frame = new JFrame();
 		account_Username_Label = new JLabel();
@@ -74,7 +64,7 @@ public class AccountFrame {
 		account_OAuth_Button = new JButton();
 	}
 	
-	void updateLanguage() {
+	private void updateLanguage() {
 		if (!current_Language.equals(Language.getLanguage())) {
 			account_Frame.setTitle(Language.getText("Frame.Account"));
 			account_Username_Label.setText(Language.getText("Label.Username"));
@@ -86,7 +76,7 @@ public class AccountFrame {
 		}
 	}
 	
-	void addComponents() {
+	private void addComponents() {
 		JPanel account_Input_Panel = new JPanel(new GridLayout(2, 2));
 		account_Input_Panel.add(account_Username_Label);
 		account_Input_Panel.add(account_Username_Input_Box);
@@ -102,7 +92,7 @@ public class AccountFrame {
 		account_Frame.getContentPane().add(account_Frame_Panel);
 	}
 	
-	void setFrameProperties() {
+	private void setFrameProperties() {
 		account_Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		account_Frame.setResizable(false);
 		account_Frame.pack();
