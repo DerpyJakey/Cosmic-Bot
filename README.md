@@ -1,4 +1,4 @@
 # Cosmic-Bot
-Twitch bot written in Java
+Twitch bot written in Java!
 
-Current Status: Unusable
+Current Status: Almost Functional!

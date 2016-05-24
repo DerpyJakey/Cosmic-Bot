@@ -1,25 +1,26 @@
 package com.org.derpyjakey;
 
 import com.org.derpyjakey.frames.ClientFrame;
+import com.org.derpyjakey.frames.LanguageFrame;
 import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.references.Directories;
 import com.org.derpyjakey.utilities.DefaultConfig;
 
 public class CosmicBot {
 	public static void main(String[] args) {
-		if (!IOHandler.CheckDirectory(Directories.Folders.RootFolder)) {
-			IOHandler.CreateDirectory(Directories.Folders.RootFolder);
+		if (!IOHandler.checkDirectory(Directories.Folders.RootFolder)) {
+			IOHandler.createDirectory(Directories.Folders.RootFolder);
 		}
-		if (!IOHandler.CheckDirectory(Directories.Folders.ConfigurationFolder)) {
-			IOHandler.CreateDirectory(Directories.Folders.ConfigurationFolder);
+		if (!IOHandler.checkDirectory(Directories.Folders.ConfigurationFolder)) {
+			IOHandler.createDirectory(Directories.Folders.ConfigurationFolder);
 		}
-		if (!IOHandler.CheckDirectory(Directories.Files.ConfigurationFile) ||
-		IOHandler.CheckDirectory(Directories.Files.LanguageFile)) {
-			if (!IOHandler.CheckDirectory(Directories.Files.ConfigurationFile)) {
-				DefaultConfig.CreateDefaultConfig();
+		if (!IOHandler.checkDirectory(Directories.Files.ConfigurationFile) ||
+		IOHandler.checkDirectory(Directories.Files.LanguageFile)) {
+			if (!IOHandler.checkDirectory(Directories.Files.ConfigurationFile)) {
+				DefaultConfig.createDefaultConfig();
 			}
-			if (!IOHandler.CheckDirectory(Directories.Files.LanguageFile)) {
-				DefaultConfig.CreateDefaultLanguage();
+			if (!IOHandler.checkDirectory(Directories.Files.LanguageFile)) {
+				DefaultConfig.createDefaultLanguage();
 			}
 			new LanguageFrame();
 		}

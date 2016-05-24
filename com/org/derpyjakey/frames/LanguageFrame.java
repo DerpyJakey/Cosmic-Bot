@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.org.derpyjakey.references.Language;
+import com.org.derpyjakey.utilities.Language;
 
 public class LanguageFrame {
 	String current_Language;
@@ -13,7 +13,7 @@ public class LanguageFrame {
 	JComboBox language_ComboBox;
 	JButton language_Save_Button;
 	
-	LanguageFrame() {
+	public LanguageFrame() {
 		initialize();
 		updateLanguage();
 		addComponents();
@@ -29,7 +29,7 @@ public class LanguageFrame {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				Language.setLanguage(language_ComboBox.getSelectedItem().toString());
-				dispose();
+				language_Frame.dispose();
 			}
 		});
 	}
@@ -39,13 +39,13 @@ public class LanguageFrame {
 		language_Frame = new JFrame();
 		language_Label = new JLabel();
 		language_ComboBox = new JComboBox();
-		language_ComboBox.setModel(new DefaultComboBoxModel(Language.ListLanguages()));
+		language_ComboBox.setModel(new DefaultComboBoxModel(Language.listLanguages()));
 		language_Save_Button = new JButton();
 	}
 	
 	void updateLanguage() {
 		if (!current_Language.equals(Language.getLanguage())) {
-			language_Frame.setTitle(Language.getText("Title.Language"));
+			language_Frame.setTitle(Language.getText("Frame.Language"));
 			language_Label.setText(Language.getText("Label.Language"));
 			language_Save_Button.setText(Language.getText("Button.Save"));
 			current_Language = Language.getLanguage();
@@ -54,7 +54,7 @@ public class LanguageFrame {
 	
 	void updateLanguage(String language) {
 		if (!current_Language.equals(Language.getLanguage())) {
-			language_Frame.setTitle(Language.getText(language, "Title.Language.Selection"));
+			language_Frame.setTitle(Language.getText(language, "Frame.Language"));
 			language_Label.setText(Language.getText(language, "Label.Language"));
 			language_Save_Button.setText(Language.getText(language, "Button.Save"));
 			current_Language = language;
@@ -62,8 +62,8 @@ public class LanguageFrame {
 	}
 	
 	void addComponents() {
-		add(language_ComboBox, BorderLayout.CENTER);
-		add(language_Save_Button, BorderLayout.SOUTH);
+		language_Frame.add(language_ComboBox, BorderLayout.CENTER);
+		language_Frame.add(language_Save_Button, BorderLayout.SOUTH);
 	}
 	
 	void setFrameProperties() {
@@ -71,5 +71,6 @@ public class LanguageFrame {
 		language_Frame.setResizable(false);
 		language_Frame.pack();
 		language_Frame.setSize(language_Frame.getWidth() + 165, language_Frame.getHeight() + 25);
+		language_Frame.setVisible(true);
 	}
 }

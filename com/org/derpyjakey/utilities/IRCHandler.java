@@ -2,7 +2,7 @@ package com.org.derpyjakey.utilities;
 
 import java.io.*;
 import java.net.Socket;
-import com.org.derpyjakey.utilties.LogHandler;
+import com.org.derpyjakey.utilities.LogHandler;
 import com.org.derpyjakey.references.Directories;
 
 public class IRCHandler {
@@ -25,7 +25,7 @@ public class IRCHandler {
 		} catch (IOException ioe) {
 			try {
 				Thread.sleep(5000);
-			} catch (InterruptedException ioe) {
+			} catch (InterruptedException ie) {
 				Thread.currentThread().interrupt();
 			}
 		}
@@ -36,7 +36,7 @@ public class IRCHandler {
 		sendRawMessage("NICK " + username);
 	}
 	
-	void connectToChannel(string channels) {
+	void connectToChannel(String channels) {
 		String[] channelList = channels.toLowerCase().split(", ");
 		for (String channel:channelList) {
 			if (channel.startsWith("#")) {
@@ -84,7 +84,7 @@ public class IRCHandler {
 		}
 	}
 	
-	public string recieveMessage() {
+	public String recieveMessage() {
 		try {
 			return cosmic_Reader.readLine();
 		} catch (IOException ioe) {
@@ -97,7 +97,7 @@ public class IRCHandler {
 		try {
 			cosmic_Socket.close();
 		} catch (IOException ioe) {
-			LogHandler.Report(4, ioe);
+			LogHandler.report(4, ioe);
 		}
 	}
 }

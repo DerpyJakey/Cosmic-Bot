@@ -33,11 +33,11 @@ public class LogHandler {
 	}
 	
 	static void warningReport(Object message) {
-		System.out.println(message.toString);
+		System.out.println(message.toString());
 	}
 	
 	static void errorReport(Object message) {
-		System.out.println(message.toString);
+		System.out.println(message.toString());
 	}
 	
 	static void fatalReport(Object message) {

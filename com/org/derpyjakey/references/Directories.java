@@ -4,7 +4,7 @@ import com.org.derpyjakey.utilities.IOHandler;
 
 public class Directories {
 	public static final class Folders {
-		public final static String RootFolder = IOHandler.getRootDirectory();
+		public final static String RootFolder = IOHandler.getRoot();
 		public final static String ConfigurationFolder = RootFolder + "/Config";
 		public final static String ChannelRootFolder = RootFolder + "/Channels";
 		public final static String ChannelFolder = ChannelRootFolder + "/%CHANNEL%";

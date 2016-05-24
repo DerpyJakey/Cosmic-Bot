@@ -1,8 +1,11 @@
 package com.org.derpyjakey.frames;
 
 import java.awt.*;
+import java.net.URI;
 import javax.swing.*;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.net.URISyntaxException;
 import java.awt.event.ActionListener;
 import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.IOHandler;
@@ -35,13 +38,13 @@ public class AccountFrame {
 				if (!account_tmp_Password.equals(IOHandler.getValue(Directories.Files.ConfigurationFile, "Password"))) {
 					IOHandler.setValue(Directories.Files.ConfigurationFile, "Password", account_tmp_Password);
 				}
-				dispose();
+				account_Frame.dispose();
 			}
 		});
 		account_Close_Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				dispose();
+				account_Frame.dispose();
 			}
 		});
 		account_OAuth_Button.addActionListener(new ActionListener() {
@@ -53,7 +56,7 @@ public class AccountFrame {
 				} catch (URISyntaxException URISE) {
 					JOptionPane.showMessageDialog(null, Language.getText("Error.OAUTH"));
 				} catch (IOException IOE) {
-					LogHandler.Report(4, IOE);
+					LogHandler.report(4, IOE);
 				}
 			}
 		});
@@ -73,7 +76,7 @@ public class AccountFrame {
 	
 	void updateLanguage() {
 		if (!current_Language.equals(Language.getLanguage())) {
-			account_Frame.setTitle(Language.getText("Title.Account"));
+			account_Frame.setTitle(Language.getText("Frame.Account"));
 			account_Username_Label.setText(Language.getText("Label.Username"));
 			account_Password_Label.setText(Language.getText("Label.Password"));
 			account_Save_Button.setText(Language.getText("Button.Save"));
@@ -104,5 +107,6 @@ public class AccountFrame {
 		account_Frame.setResizable(false);
 		account_Frame.pack();
 		account_Frame.setSize(account_Frame.getWidth(), account_Frame.getHeight() + 10);
+		account_Frame.setVisible(true);
 	}
 }

@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Enumeration;
-import com.org.derpyjakey.references.Language;
+import com.org.derpyjakey.utilities.Language;
 
-public class IOHandler {
-	
+public class IOHandler {	
 	public static String getRoot() {
 		String osID  = System.getProperty(("os.name").toLowerCase());
 		if (osID.contains("nux")) {
@@ -47,7 +46,7 @@ public class IOHandler {
 				properties.load(fileInput);
 				fileInput.close();
 			} catch (IOException ioe) {
-					LogHandler.report(2, "Could not read file.\n" + ioe);
+				LogHandler.report(2, "Could not read file.\n" + ioe);
 			}
 		}
 		try {
@@ -70,6 +69,7 @@ public class IOHandler {
 					fileOutput.close();
 				} catch (IOException ioe) {
 					LogHandler.report(2, "Could not close FileOutputStream\n" + ioe);
+				}
 			}
 		}
 	}
@@ -157,8 +157,8 @@ public class IOHandler {
 			properties.load(fileInput);
 			Enumeration enuKeys = properties.keys();
 			while (enuKeys.hasMoreElements()) {
-				String key = (String) enuKeys.nextElements();
-				if (keys.contains(".Enable")) {
+				String key = (String) enuKeys.nextElement();
+				if (key.contains(".Enable")) {
 					stringList.add(i++, key.replace(".Enable", ""));
 				}
 			}

@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import com.org.derpyjakey.utilities.IOHandler;
-import com.org.derpyjakey.references.Language;
+import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.LogHandler;
 import com.org.derpyjakey.references.Directories;
 import com.org.derpyjakey.utilities.DefaultConfig;
@@ -17,22 +17,20 @@ public class ChannelFrame {
 	JLabel channel_Enable_Label;
 	JLabel channel_Permission_Label;
 	JLabel channel_File_Directory_Label;
+	JLabel channel_Selection_Label;
+	JLabel channel_Mode_Label;
+	JLabel channel_Available_Commands_Label;
+	JLabel channel_Command_Label;
 	JLabel channel_Message_Label;
 	JTextField channel_Input_Box;
 	JTextField channel_Command_Input;
 	JTextField channel_Message_Input;
 	JTextField channel_File_Directory_Input;
-	JLabel channel_Selection_Label;
-	JLabel channel_Mode_Label;
-	JLabel channel_Permission_Label;
-	JLabel channel_Available_Commands_Label;
-	JLabel channel_Command_Label;
 	JComboBox channel_Selection_Box;
 	JComboBox channel_Mode_Combo_Box;
 	JComboBox channel_Permission_Combo_Box;
 	JComboBox channel_Enable_Box;
 	JComboBox channel_Available_Commands_Combo_Box;
-	JComboBox channel_Permission_Combo_Box;
 	JButton channel_Update_Button;
 	JButton channel_Save_Button;
 	JButton channel_Delete_Button;
@@ -48,31 +46,31 @@ public class ChannelFrame {
 	void initialize() {
 		current_Language = "";
 		channel_Frame = new JFrame();
-		JLabel channel_Label = new JLabel();
-		JTextField channel_Input_Box = new JTextField();
-		JButton channel_Update_Button = new JButton();
-		JLabel channel_Selection_Label = new JLabel();
-		JComboBox channel_Selection_Box = new JComboBox();
-		JLabel channel_Mode_Label = new JLabel();
-		JComboBox channel_Mode_Combo_Box = new JComboBox();
-		JLabel channel_Permission_Label = new JLabel();
-		JComboBox channel_Permission_Combo_Box = new JComboBox();
-		JLabel channel_Available_Commands_Label = new JLabel();
-		JComboBox channel_Available_Commands_Combo_Box = new JComboBox();
-		JLabel channel_Command_Label = new JLabel();
-		JTextField channel_Command_Input = new JTextField();
-		JLabel channel_Message_Label = new JLabel();
-		JTextField channel_Message_Input = new JTextField();
-		JLabel channel_File_Directory_Label = new JLabel();
-		JTextField channel_File_Directory_Input = new JTextField();
-		JButton channel_Save_Button = new JButton();
-		JButton channel_Delete_Button = new JButton();
-		JButton channel_Close_Button = new JButton();
+		channel_Label = new JLabel();
+		channel_Input_Box = new JTextField();
+		channel_Update_Button = new JButton();
+		channel_Selection_Label = new JLabel();
+		channel_Selection_Box = new JComboBox();
+		channel_Mode_Label = new JLabel();
+		channel_Mode_Combo_Box = new JComboBox();
+		channel_Permission_Label = new JLabel();
+		channel_Permission_Combo_Box = new JComboBox();
+		channel_Available_Commands_Label = new JLabel();
+		channel_Available_Commands_Combo_Box = new JComboBox();
+		channel_Command_Label = new JLabel();
+		channel_Command_Input = new JTextField();
+		channel_Message_Label = new JLabel();
+		channel_Message_Input = new JTextField();
+		channel_File_Directory_Label = new JLabel();
+		channel_File_Directory_Input = new JTextField();
+		channel_Save_Button = new JButton();
+		channel_Delete_Button = new JButton();
+		channel_Close_Button = new JButton();
 	}
 	
 	void updateLanguage() {
 		if (!current_Language.equals(Language.getLanguage())) {
-			channel_Frame.setTitle(Language.getText("Title.Channel"));
+			channel_Frame.setTitle(Language.getText("Frame.Channel"));
 			channel_Label.setText(Language.getText("Label.Channels"));
 			channel_Update_Button.setText(Language.getText("Button.Update"));
 			channel_Selection_Label.setText(Language.getText("Label.Channel_Selection"));
@@ -143,5 +141,6 @@ public class ChannelFrame {
 	void setFrameProperties() {
 		channel_Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		channel_Frame.pack();
+		channel_Frame.setVisible(true);
 	}
 }

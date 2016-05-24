@@ -1,10 +1,12 @@
 package com.org.derpyjakey.utilities;
 
+import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.IOHandler;
+import com.org.derpyjakey.references.Directories;
 
 public class Language {
 	public static void setLanguage(String language) {
-		IOhandler.setValue(Directories.Files.ConfigurationFile, "Language", language);
+		IOHandler.setValue(Directories.Files.ConfigurationFile, "Language", language);
 	}
 	
 	public static String getLanguage() {
@@ -31,6 +33,7 @@ public class Language {
 		if (IOHandler.containsKey(Directories.Files.LanguageFile, getLanguage() + "." + text)) {
 			return (IOHandler.getValue(Directories.Files.LanguageFile, getLanguage() + "." + text));
 		} else {
+			LogHandler.report(2, "Requesting Missing Text: " + text);
 			return null;
 		}
 	}
