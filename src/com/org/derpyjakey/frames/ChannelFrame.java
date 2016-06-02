@@ -175,7 +175,7 @@ public class ChannelFrame {
         current_Language = "";
         channel_Frame = new JFrame();
         channel_Label = new JLabel();
-        channel_Input_Box = new JTextField();
+        channel_Input_Box = new JTextField(20);
         channel_Update_Button = new JButton();
         channel_Selection_Label = new JLabel();
         channel_Selection_Box = new JComboBox();

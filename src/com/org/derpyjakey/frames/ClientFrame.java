@@ -2,6 +2,7 @@ package com.org.derpyjakey.frames;
 
 import com.org.derpyjakey.utilities.IRCHandler;
 import com.org.derpyjakey.utilities.Language;
+import com.org.derpyjakey.utilities.LogHandler;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -47,6 +48,7 @@ public class ClientFrame {
             //ADD ABOUT FRAME
         });
         client_Exit_Item.addActionListener((ActionEvent actionEvent) -> {
+            status_Connected = false;
             client_Frame.dispose();
         });
         client_Account_Item.addActionListener((ActionEvent actionEvent) -> {
@@ -57,6 +59,19 @@ public class ClientFrame {
         });
         client_Language_Item.addActionListener((ActionEvent actionEvent) -> {
             LanguageFrame languageFrame = new LanguageFrame();
+        });
+        client_Connect_Item.addActionListener((ActionEvent actionEvent) -> {
+            if (client_Connect_Item.getText().equals(Language.convertTextFromEnglish("MenuItem.Connect"))) {
+                client_Connect_Item.setText(Language.getText("MenuItem.Disconnect"));
+                status_Connected = true;
+                ircHandler.connect();
+                updateChat();
+            } else {
+                client_Connect_Item.setText(Language.getText("MenuItem.Connect"));
+                status_Connected = false;
+                updateChat();
+                ircHandler.disconnect();
+            }
         });
     }
 
@@ -120,21 +135,24 @@ public class ClientFrame {
     }
 
     private void setFrameProperties() {
+        client_Chat_Text_Area.setEditable(false);
+        client_Chat_Text_Area.setAutoscrolls(true);
+        client_Chat_Text_Area.setWrapStyleWord(true);
+        client_Chat_Text_Area.setLineWrap(true);
         client_Frame.setSize(500, 500);
-        client_Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        client_Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         client_Frame.setVisible(true);
     }
 
     void updateChat() {
         Thread chat_Thread = new Thread(() -> {
-            while (status_Connected) {
-                if (!ircHandler.recieveMessage().equals("Disconnect Cosmic-Bot")) {
-                    if (!ircHandler.recieveMessage().isEmpty()) {
-                        client_Chat_Text_Area.append(ircHandler.recieveMessage());
-                    }
-                } else {
+            while (status_Connected) { 
+                String client_Message = ircHandler.recieveMessage();
+                if (client_Message.equals("Disconnecting Cosmic-Bot")) {
                     status_Connected = false;
                     break;
+                } else {
+                    client_Chat_Text_Area.append(client_Message + "\n");
                 }
             }
         });

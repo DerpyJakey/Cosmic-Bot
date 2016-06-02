@@ -17,7 +17,7 @@ public class IRCHandler {
     public void connect() {
         connectToServer(IOHandler.getValue(Directories.Files.ConfigurationFile, "Host"), Integer.parseInt(IOHandler.getValue(Directories.Files.ConfigurationFile, "Port")));
         loginToServer(IOHandler.getValue(Directories.Files.ConfigurationFile, "Username"), IOHandler.getValue(Directories.Files.ConfigurationFile, "Password"));
-        connectToChannel(IOHandler.getValue(Directories.Files.ConfigurationFile, "Channel"));
+        connectToChannel(IOHandler.getValue(Directories.Files.ConfigurationFile, "Channels"));
     }
 
     void connectToServer(String host, int port) {
