@@ -34,6 +34,7 @@ public class DefaultConfig {
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Username", "Username");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Password", "Password");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Mode", "Mode");
+        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Enable", "Enable");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Permission", "Permission");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Available.Commands", "Available Commands");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Command", "Command");
@@ -51,6 +52,7 @@ public class DefaultConfig {
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Bot", "Bot");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Moderator", "Moderator");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Everyone", "Everyone");
+        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Add.New.Command", "Add New Command");
         IOHandler.setValue(Directories.Files.LanguageFile, "Available Languages", "English");
     }
 

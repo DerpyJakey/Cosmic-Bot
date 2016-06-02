@@ -11,8 +11,8 @@ import java.util.Enumeration;
 
 public class IOHandler {	
     public static String getRoot() {
-        String osID  = System.getProperty(("os.name").toLowerCase());
-        if (osID.contains("nux")) {
+        String osID = System.getProperty(("os.name")).toLowerCase();
+        if (osID.contains("lin")) {
             return System.getProperty("user.home") + "/.Cosmic-Bot";
         } else if (osID.contains("win")) {
             return System.getenv("AppData") + "/Cosmic-Bot";
@@ -161,7 +161,6 @@ public class IOHandler {
                     stringList.add(i++, key.replace(".Enable", ""));
                 }
             }
-            stringList.add(i++, Language.getText("Options.Add.New.Command"));
             String[] output = stringList.toArray(new String[stringList.size()]);
             return output;
         } catch (IOException ioe) {

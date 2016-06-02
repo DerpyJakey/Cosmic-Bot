@@ -44,7 +44,16 @@ public class Language {
             return null;
         }
     }
-
+    
+    public static String convertTextFromEnglish(String text) {
+        if (IOHandler.containsKey(Directories.Files.LanguageFile, Language.getLanguage() + "." + text)) {
+            return getText(Language.getLanguage(), text);
+        } else {
+            LogHandler.report(2, "Missing " + '"' + text + '"' + " for " + '"' + Language.getLanguage() + '"');
+            return null;
+        }
+    }
+    
     public static String convertTextFromEnglish(String language, String text) {
         if (IOHandler.containsKey(Directories.Files.LanguageFile, language + "." + text)) {
             return getText(language, text);
