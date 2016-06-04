@@ -89,7 +89,7 @@ public class IRCHandler {
 
     public String recieveMessage() {
         try {
-            return cosmic_Reader.readLine();
+            return cosmic_Reader.readLine().replace("\n", "").replace("\r", "");
         } catch (IOException ioe) {
             return null;
         }

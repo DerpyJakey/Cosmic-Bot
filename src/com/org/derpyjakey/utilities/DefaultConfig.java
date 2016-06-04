@@ -18,6 +18,7 @@ public class DefaultConfig {
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Account", "Account");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Language", "Language");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Channel", "Channel");
+        IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.About", "About Cosmic-Bot");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Client", "Client");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Server", "Server");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Settings", "Settings");
@@ -40,6 +41,9 @@ public class DefaultConfig {
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Command", "Command");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Message", "Message");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.File.Directory", "File Directory");
+        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Developer", "Developer");
+        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Github", "Github");
+        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Twitch", "Twitch");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Update", "Update");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Send", "Send");
         IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Save", "Save");
