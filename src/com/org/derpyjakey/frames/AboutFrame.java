@@ -2,10 +2,17 @@ package com.org.derpyjakey.frames;
 
 import com.org.derpyjakey.references.BotInfo;
 import com.org.derpyjakey.utilities.Language;
+import com.org.derpyjakey.utilities.LogHandler;
 import java.awt.BorderLayout;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 public class AboutFrame {
     String current_Language = "";
@@ -19,6 +26,26 @@ public class AboutFrame {
         updateLanguage();
         addComponents();
         setFrameProperties();
+        about_Github_Label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI(BotInfo.Information.GithubLink));
+                } catch (URISyntaxException | IOException ex) {
+                    LogHandler.report(2, ex);
+                }
+            }
+        });
+        about_Twitch_Label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI(BotInfo.Information.TwitchLink));
+                } catch (URISyntaxException | IOException ex) {
+                    LogHandler.report(2, ex);
+                }
+            }
+        });
     }
     
     private void initialize() {
@@ -42,12 +69,14 @@ public class AboutFrame {
         about_Frame.add(about_Developer_Label, BorderLayout.NORTH);
         about_Frame.add(about_Github_Label, BorderLayout.CENTER);
         about_Frame.add(about_Twitch_Label, BorderLayout.SOUTH);
-        about_Developer_Label.setHorizontalAlignment(JLabel.CENTER);
-        about_Github_Label.setHorizontalAlignment(JLabel.CENTER);
-        about_Twitch_Label.setHorizontalAlignment(JLabel.CENTER);
     }
     
     private void setFrameProperties() {
+        about_Developer_Label.setHorizontalAlignment(JLabel.CENTER);
+        about_Github_Label.setHorizontalAlignment(JLabel.CENTER);
+        about_Twitch_Label.setHorizontalAlignment(JLabel.CENTER);
+        about_Github_Label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        about_Twitch_Label.setCursor(new Cursor(Cursor.HAND_CURSOR));
         about_Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         about_Frame.setResizable(false);
         about_Frame.pack();

@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class IRCHandler {
+    boolean connected_Twitch;
     Socket cosmic_Socket;
     BufferedWriter cosmic_Writer;
     BufferedReader cosmic_Reader;
@@ -18,6 +19,7 @@ public class IRCHandler {
         connectToServer(IOHandler.getValue(Directories.Files.ConfigurationFile, "Host"), Integer.parseInt(IOHandler.getValue(Directories.Files.ConfigurationFile, "Port")));
         loginToServer(IOHandler.getValue(Directories.Files.ConfigurationFile, "Username"), IOHandler.getValue(Directories.Files.ConfigurationFile, "Password"));
         connectToChannel(IOHandler.getValue(Directories.Files.ConfigurationFile, "Channels"));
+        connected_Twitch = true;
     }
 
     void connectToServer(String host, int port) {
@@ -99,6 +101,9 @@ public class IRCHandler {
         connected_Channels = null;
         try {
             cosmic_Socket.close();
+            cosmic_Writer.close();
+            cosmic_Reader.close();
+            connected_Twitch = false;
         } catch (IOException ioe) {
             LogHandler.report(4, ioe);
         }

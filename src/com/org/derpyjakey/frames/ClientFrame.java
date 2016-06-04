@@ -5,7 +5,6 @@ import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.LogHandler;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -69,11 +68,11 @@ public class ClientFrame {
                 client_Connect_Item.setText(Language.getText("MenuItem.Disconnect"));
                 status_Connected = true;
                 ircHandler.connect();
-                updateChat();
+                if (!chat_Thread_Init) {
+                    updateChat();
+                }
             } else {
                 client_Connect_Item.setText(Language.getText("MenuItem.Connect"));
-                status_Connected = false;
-                updateChat();
                 ircHandler.disconnect();
             }
         });
@@ -156,22 +155,23 @@ public class ClientFrame {
             OUTER: 
             while (status_Connected) {
                 client_Message = ircHandler.recieveMessage();
-                switch (client_Message) {
-                    case "Disconnecting Cosmic-Bot":
-                        status_Connected = false;
-                        break OUTER;
-                    default:
-                        LogHandler.report(2, client_Message);
-                        if (client_Message.startsWith(":tmi.twitch.tv")) {
-                            if (client_Message.contains("001")) {
-                                updateChat("Joined Twitch.TV");
-                            } else if (client_Message.equals("PING :tmi.twitch.tv")) {
-                                ircHandler.sendRawMessage("PONG :tmi.twitch.tv");
-                            }
+                try {
+                    LogHandler.report(2, client_Message);
+                    if (client_Message.startsWith(":tmi.twitch.tv")) {
+                        if (client_Message.contains("001")) {
+                            updateChat("Joined Twitch.TV");
+                        } else if (client_Message.equals("PING :tmi.twitch.tv")) {
+                            ircHandler.sendRawMessage("PONG :tmi.twitch.tv");
+                        }
+                    } else {
+                        if (client_Message.contains(".tmi.twitch.tv JOIN #")) {
+                            updateChat("Joined #" + client_Message.substring(client_Message.lastIndexOf("#") + 1));
+                        } else if (client_Message.contains(".tmi.twitch.tv 353") || client_Message.contains(".tmi.twitch.tv 366")) {
                         } else {
                             updateChat(client_Message);
                         }
-                        break;
+                    }
+                } catch (NullPointerException ignore) {
                 }
             }
         });
