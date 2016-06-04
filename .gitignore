@@ -2,4 +2,8 @@
 # Package Files #
 *.xml
 *.iml
-*.geany
+*.directory
+*.mf
+*.properties
+/build/*
+/test/*
