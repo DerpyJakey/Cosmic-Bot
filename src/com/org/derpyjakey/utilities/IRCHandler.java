@@ -88,6 +88,10 @@ public class IRCHandler {
             return connected_Channels;
         }
     }
+    
+    public int getConnectedChannelAmount() {
+        return getConnectedChannels().split(", ").length;
+    }
 
     public String recieveMessage() {
         try {

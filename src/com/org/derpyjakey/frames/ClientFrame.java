@@ -4,6 +4,7 @@ import com.org.derpyjakey.utilities.IRCHandler;
 import com.org.derpyjakey.utilities.Language;
 import com.org.derpyjakey.utilities.LogHandler;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,9 +14,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 public class ClientFrame {
     String client_Message;
@@ -36,10 +40,11 @@ public class ClientFrame {
     JMenuItem client_Channel_Item;
     JMenuItem client_Language_Item;
     JComboBox client_Channel_Selection_Box;
-    JTextArea client_Chat_Text_Area;
+    JTextPane client_Chat_Text;
     JTextField client_Input_Text_Field;
     JButton client_Send_Button;
     JScrollPane client_Chat_Scroll;
+    StyledDocument client_Document;
     IRCHandler ircHandler = new IRCHandler();
 
     public ClientFrame() {
@@ -71,8 +76,12 @@ public class ClientFrame {
                 if (!chat_Thread_Init) {
                     updateChat();
                 }
+                for (String channel : ircHandler.getConnectedChannels().replace("#", "").split(", ")) {
+                    client_Channel_Selection_Box.addItem(channel);
+                }
             } else {
                 client_Connect_Item.setText(Language.getText("MenuItem.Connect"));
+                updateChat("Disconnecting");
                 ircHandler.disconnect();
             }
         });
@@ -94,10 +103,11 @@ public class ClientFrame {
         client_Channel_Item = new JMenuItem();
         client_Language_Item = new JMenuItem();
         client_Channel_Selection_Box = new JComboBox();
-        client_Chat_Text_Area = new JTextArea();
+        client_Chat_Text = new JTextPane();
         client_Input_Text_Field = new JTextField();
         client_Send_Button = new JButton();
         client_Chat_Scroll = new JScrollPane();
+        client_Document = client_Chat_Text.getStyledDocument();
         status_Connected = false;
         chat_Thread_Init = false;
     }
@@ -132,7 +142,7 @@ public class ClientFrame {
         client_Input_Panel.add(client_Channel_Selection_Box, BorderLayout.WEST);
         client_Input_Panel.add(client_Input_Text_Field, BorderLayout.CENTER);
         client_Input_Panel.add(client_Send_Button, BorderLayout.EAST);
-        client_Chat_Scroll.setViewportView(client_Chat_Text_Area);
+        client_Chat_Scroll.setViewportView(client_Chat_Text);
         client_Panel.add(client_Chat_Scroll, BorderLayout.CENTER);
         client_Panel.add(client_Input_Panel, BorderLayout.SOUTH);
         client_Frame.getContentPane().add(client_Panel);
@@ -140,9 +150,7 @@ public class ClientFrame {
     }
 
     private void setFrameProperties() {
-        client_Chat_Text_Area.setEditable(false);
-        client_Chat_Text_Area.setWrapStyleWord(true);
-        client_Chat_Text_Area.setLineWrap(true);
+        client_Chat_Text.setEditable(false);
         client_Chat_Scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         client_Chat_Scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         client_Frame.setSize(500, 500);
@@ -168,10 +176,21 @@ public class ClientFrame {
                             updateChat("Joined #" + client_Message.substring(client_Message.lastIndexOf("#") + 1));
                         } else if (client_Message.contains(".tmi.twitch.tv 353") || client_Message.contains(".tmi.twitch.tv 366")) {
                         } else {
-                            updateChat(client_Message);
+                            String username_One = client_Message.substring(client_Message.indexOf(":") + 1, client_Message.indexOf("!"));
+                            String username_Two = client_Message.substring(client_Message.indexOf("!") + 1, client_Message.indexOf("@"));
+                            String username_Three = client_Message.substring(client_Message.indexOf("@") + 1, client_Message.indexOf(".tmi.twitch.tv"));
+                            String chat_Split_Channel = client_Message.substring(client_Message.indexOf("PRIVMSG #") + 9, client_Message.indexOf(" :"));
+                            String chat_Split_Message = client_Message.substring(client_Message.indexOf("PRIVMSG #" + chat_Split_Channel + " :") + ("PRIVMSG #" + chat_Split_Channel + " :").length());
+                            if (username_One.equals(username_Two) && username_One.equals(username_Three)) {
+                                if (ircHandler.getConnectedChannelAmount() > 1) {
+                                    updateChat("#" + chat_Split_Channel, username_One, chat_Split_Message);
+                                } else {
+                                    updateChat(username_One, chat_Split_Message);
+                                }
+                            }
                         }
                     }
-                } catch (NullPointerException ignore) {
+                } catch (NullPointerException ignored) {
                 }
             }
         });
@@ -180,10 +199,38 @@ public class ClientFrame {
             chat_Thread_Init = true;
         }
     }
-    
-    private void updateChat(String chat_Message) {
+ 
+        private void updateChat(String message) {
         try {
-            client_Chat_Text_Area.getDocument().insertString(0, chat_Message + "\n", null);
+            Style client_Chat_Style = client_Chat_Text.addStyle("Style", null);
+            StyleConstants.setForeground(client_Chat_Style, Color.BLACK);
+            client_Document.insertString(client_Document.getStartPosition().getOffset(), message + "\n", client_Chat_Style);
+        } catch (BadLocationException ble) {
+            LogHandler.report(3, ble);
+        }
+    }
+
+    private void updateChat(String chat_Username, String chat_Message) {
+        try {
+            Style client_Chat_Style = client_Chat_Text.addStyle("Style", null);
+            StyleConstants.setForeground(client_Chat_Style, Color.BLACK);
+            client_Document.insertString(client_Document.getStartPosition().getOffset(), ": " + chat_Message + "\n", client_Chat_Style);
+            StyleConstants.setForeground(client_Chat_Style, Color.RED);
+            client_Document.insertString(client_Document.getStartPosition().getOffset(), chat_Username, client_Chat_Style);
+        } catch (BadLocationException ble) {
+            LogHandler.report(3, ble);
+        }
+    }
+
+    private void updateChat(String chat_Channel, String chat_Username, String chat_Message) {
+        try {
+            Style client_Chat_Style = client_Chat_Text.addStyle("Style", null);
+            StyleConstants.setForeground(client_Chat_Style, Color.BLACK);
+            client_Document.insertString(client_Document.getStartPosition().getOffset(), ": " + chat_Message + "\n", client_Chat_Style);
+            StyleConstants.setForeground(client_Chat_Style, Color.RED);
+            client_Document.insertString(client_Document.getStartPosition().getOffset(), chat_Username, client_Chat_Style);
+            StyleConstants.setForeground(client_Chat_Style, Color.GRAY);
+            client_Document.insertString(client_Document.getStartPosition().getOffset(), chat_Channel + " ", client_Chat_Style);
         } catch (BadLocationException ble) {
             LogHandler.report(3, ble);
         }
