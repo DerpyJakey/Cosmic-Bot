@@ -85,6 +85,16 @@ public class ClientFrame {
                 ircHandler.disconnect();
             }
         });
+        client_Input_Text_Field.addActionListener((ActionEvent actionEvent) -> {
+            ircHandler.sendMessage("#" + client_Channel_Selection_Box.getSelectedItem().toString(), client_Input_Text_Field.getText());
+            updateChat(client_Input_Text_Field.getText(), Color.GREEN);
+            client_Input_Text_Field.setText("");
+        });
+        client_Send_Button.addActionListener((ActionEvent actionEvent) -> {
+            ircHandler.sendMessage("#" + client_Channel_Selection_Box.getSelectedItem().toString(), client_Input_Text_Field.getText());
+            updateChat(client_Input_Text_Field.getText(), Color.GREEN);
+            client_Input_Text_Field.setText("");
+        });
     }
 
     private void initialize() {
@@ -164,7 +174,6 @@ public class ClientFrame {
             while (status_Connected) {
                 client_Message = ircHandler.recieveMessage();
                 try {
-                    LogHandler.report(2, client_Message);
                     if (client_Message.startsWith(":tmi.twitch.tv")) {
                         if (client_Message.contains("001")) {
                             updateChat("Joined Twitch.TV");
@@ -176,17 +185,20 @@ public class ClientFrame {
                             updateChat("Joined #" + client_Message.substring(client_Message.lastIndexOf("#") + 1));
                         } else if (client_Message.contains(".tmi.twitch.tv 353") || client_Message.contains(".tmi.twitch.tv 366")) {
                         } else {
-                            String username_One = client_Message.substring(client_Message.indexOf(":") + 1, client_Message.indexOf("!"));
-                            String username_Two = client_Message.substring(client_Message.indexOf("!") + 1, client_Message.indexOf("@"));
-                            String username_Three = client_Message.substring(client_Message.indexOf("@") + 1, client_Message.indexOf(".tmi.twitch.tv"));
-                            String chat_Split_Channel = client_Message.substring(client_Message.indexOf("PRIVMSG #") + 9, client_Message.indexOf(" :"));
-                            String chat_Split_Message = client_Message.substring(client_Message.indexOf("PRIVMSG #" + chat_Split_Channel + " :") + ("PRIVMSG #" + chat_Split_Channel + " :").length());
-                            if (username_One.equals(username_Two) && username_One.equals(username_Three)) {
-                                if (ircHandler.getConnectedChannelAmount() > 1) {
-                                    updateChat("#" + chat_Split_Channel, username_One, chat_Split_Message);
-                                } else {
+                            try {
+                                String username_One = client_Message.substring(client_Message.indexOf(":") + 1, client_Message.indexOf("!"));
+                                String username_Two = client_Message.substring(client_Message.indexOf("!") + 1, client_Message.indexOf("@"));
+                                String username_Three = client_Message.substring(client_Message.indexOf("@") + 1, client_Message.indexOf(".tmi.twitch.tv"));
+                                String chat_Split_Channel = client_Message.substring(client_Message.indexOf("PRIVMSG #") + 9, client_Message.indexOf(" :"));
+                                String chat_Split_Message = client_Message.substring(client_Message.indexOf("PRIVMSG #" + chat_Split_Channel + " :") + ("PRIVMSG #" + chat_Split_Channel + " :").length());
+                                if (username_One.equals(username_Two) && username_One.equals(username_Three)) {
+                                    if (ircHandler.getConnectedChannelAmount() > 1) {
+                                        updateChat("#" + chat_Split_Channel, username_One, chat_Split_Message);
+                                    } else {
                                     updateChat(username_One, chat_Split_Message);
+                                    }
                                 }
+                            } catch (StringIndexOutOfBoundsException ignored) {
                             }
                         }
                     }
@@ -200,10 +212,20 @@ public class ClientFrame {
         }
     }
  
-        private void updateChat(String message) {
+    private void updateChat(String message) {
         try {
             Style client_Chat_Style = client_Chat_Text.addStyle("Style", null);
             StyleConstants.setForeground(client_Chat_Style, Color.BLACK);
+            client_Document.insertString(client_Document.getStartPosition().getOffset(), message + "\n", client_Chat_Style);
+        } catch (BadLocationException ble) {
+            LogHandler.report(3, ble);
+        }
+    }
+    
+    private void updateChat(String message, Color message_Color) {
+        try {
+            Style client_Chat_Style = client_Chat_Text.addStyle("Style", null);
+            StyleConstants.setForeground(client_Chat_Style, message_Color);
             client_Document.insertString(client_Document.getStartPosition().getOffset(), message + "\n", client_Chat_Style);
         } catch (BadLocationException ble) {
             LogHandler.report(3, ble);

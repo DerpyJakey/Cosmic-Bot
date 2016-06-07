@@ -93,6 +93,10 @@ public class AccountFrame {
     }
 
     private void setFrameProperties() {
+        if (IOHandler.containsKey(Directories.Files.ConfigurationFile, "Username") && IOHandler.containsKey(Directories.Files.ConfigurationFile, "Password")) {
+            account_Username_Input_Box.setText(IOHandler.getValue(Directories.Files.ConfigurationFile, "Username"));
+            account_Password_Input_Box.setText(IOHandler.getValue(Directories.Files.ConfigurationFile, "Username"));
+        }
         account_Frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	account_Frame.setResizable(false);
         account_Frame.pack();

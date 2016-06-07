@@ -63,7 +63,6 @@ public class IRCHandler {
     }
 
     void disconnectFromChannel(String channels) {
-        
     }
 
     public void sendRawMessage(String message) {
