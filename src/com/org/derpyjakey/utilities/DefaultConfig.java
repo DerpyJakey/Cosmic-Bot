@@ -63,6 +63,22 @@ public class DefaultConfig {
     public static void createDefaultChannelConfig(String channel) {
         IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Mode", "Chat");
         IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Command Key", "!");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Forbidden Word Protection", "False");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Forbidden Words", "");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Caps Limit Protection", "False");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Caps Limit", "0");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Letter Limit Protection", "False");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Letter Limit", "0");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Word Limit Protection", "False");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Word Limit", "0");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Spam Protection", "False");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Spam Amount (Message within time limit)", "0");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Spam Timer (Seconds)", "0");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "1 Warning", "30s");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "2 Warning", "1m");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "3 Warning", "5m");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "4 Warning", "10m");
+        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "5 Warning", "ban");
     }
 
     public static void createDefaultCommandConfig(String channel) {
