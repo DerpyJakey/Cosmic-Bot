@@ -4,87 +4,46 @@ import com.org.derpyjakey.references.Directories;
 
 public class DefaultConfig {
     public static void createDefaultConfig() {
-        IOHandler.setValue(Directories.Files.ConfigurationFile, "Language", "English");
-        IOHandler.setValue(Directories.Files.ConfigurationFile, "Host", "irc.twitch.tv");
-        IOHandler.setValue(Directories.Files.ConfigurationFile, "Port", "6667");
-        IOHandler.setValue(Directories.Files.ConfigurationFile, "Username", "");
-        IOHandler.setValue(Directories.Files.ConfigurationFile, "Password", "");
-        IOHandler.setValue(Directories.Files.ConfigurationFile, "Channel", "");
+        IOHandler.createDirectory(Directories.Folders.configurationFolder);
+        String[] keys = {"Language", "Host", "Port", "Username", "Password", "Channel"};
+        String[] values = {"English", "irc.twitch.tv", "6667", "", "", ""};
+        IOHandler.setValue(Directories.Files.configurationFile, keys, values);
     }
 
     public static void createDefaultLanguage() {
-        IOHandler.setValue(Directories.Files.LanguageFile, "Available Languages", "English");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Client", "Cosmic-Bot");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Account", "Account");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Language", "Language");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.Channel", "Channel");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Frame.About", "About Cosmic-Bot");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Client", "Client");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Server", "Server");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Menu.Settings", "Settings");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Connect", "Connect");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Disconnect", "Disconnect");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.About", "About");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Exit", "Exit");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Account", "Account");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Channel", "Channel");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.MenuItem.Language", "Language");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Channel.Selection", "Channel Selection");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Channels", "Channels");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Language", "Language");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Username", "Username");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Password", "Password");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Mode", "Mode");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Enable", "Enable");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Permission", "Permission");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Available.Commands", "Available Commands");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Command", "Command");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Message", "Message");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.File.Directory", "File Directory");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Developer", "Developer");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Github", "Github");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Label.Twitch", "Twitch");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Update", "Update");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Send", "Send");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Save", "Save");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Close", "Close");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.OAuth", "OAuth");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Button.Delete", "Delete");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.True", "True");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.False", "False");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Chat", "Chat");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Bot", "Bot");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Moderator", "Moderator");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Everyone", "Everyone");
-        IOHandler.setValue(Directories.Files.LanguageFile, "English.Option.Add.New.Command", "Add New Command");
-        IOHandler.setValue(Directories.Files.LanguageFile, "Available Languages", "English");
+        IOHandler.createDirectory(Directories.Folders.configurationFolder);
+        IOHandler.setValue(Directories.Files.languageFile, "Available Languages", "English");
+        String[] englishFrames = {"English.Frame.Client", "English.Frame.Account", "English.Frame.Language", "English.Frame.Channel", "English.Frame.About"};
+        String[] englishFramesText = {"Cosmic-Bot", "Account", "Language", "Channel", "About Cosmic-Bot"};
+        IOHandler.setValue(Directories.Files.languageFile, englishFrames, englishFramesText);
+        String[] englishMenus = {"English.Menu.Client", "English.Menu.Server", "English.Menu.Settings"};
+        String[] englishMenusText = {"Client", "Server", "Settings"};
+        IOHandler.setValue(Directories.Files.languageFile, englishMenus, englishMenusText);
+        String[] englishMenuItems = {"English.MenuItem.Connect", "English.MenuItem.Disconnect", "English.MenuItem.About", "English.MenuItem.Exit", "English.MenuItem.Account", "English.MenuItem.Channel", "English.MenuItem.Language"};
+        String[] englishMenuItemsText = {"Connect", "Disconnect", "About", "Exit", "Account", "Channel", "Language"};
+        IOHandler.setValue(Directories.Files.languageFile, englishMenuItems, englishMenuItemsText);
+        String[] englishLabels = {"English.Label.ChannelSelection", "English.Label.Channel", "English.Label.Language", "English.Label.Username", "English.Label.Password", "English.Label.Mode", "English.Label.Enable", "English.Label.Permission", "English.Label.AvailableCommands", "English.Label.Command", "English.Label.Message", "English.Label.FileDirectory", "English.Label.Developer", "English.Label.Github", "English.Label.Twitch"};
+        String[] englishLabelsText = {"Channel Selection", "Channels", "Language", "Username", "Password", "Mode", "Enable", "Permission", "Available Commands", "Command", "Message", "File Directory", "Developer", "Github", "Twitch"};
+        IOHandler.setValue(Directories.Files.languageFile, englishLabels, englishLabelsText);
+        String[] englishButtons = {"English.Button.Update", "English.Button.Send", "English.Button.Save", "English.Button.Close", "English.Button.OAuth", "English.Button.Delete"};
+        String[] englishButtonsText = {"Update", "Send", "Save", "Close", "OAuth", "Delete"};
+        IOHandler.setValue(Directories.Files.languageFile, englishButtons, englishButtonsText);
+        String[] englishOptions = {"English.Option.True", "English.Option.False", "English.Option.Chat", "English.Option.Bot", "English.Option.Moderator", "English.Option.Everyone", "English.Option.AddNewCommand"};
+        String[] englishOptionsText = {"True", "False", "Chat", "Bot", "Moderator", "Everyone", "Add New Command"};
+        IOHandler.setValue(Directories.Files.languageFile, englishOptions, englishOptionsText);
     }
 
     public static void createDefaultChannelConfig(String channel) {
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Mode", "Chat");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Command Key", "!");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Forbidden Word Protection", "False");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Forbidden Words", "");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Caps Limit Protection", "False");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Caps Limit", "0");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Letter Limit Protection", "False");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Letter Limit", "0");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Word Limit Protection", "False");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Word Limit", "0");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Enable Spam Protection", "False");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Spam Amount (Message within time limit)", "0");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "Spam Timer (Seconds)", "0");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "1 Warning", "30s");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "2 Warning", "1m");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "3 Warning", "5m");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "4 Warning", "10m");
-        IOHandler.setValue(Directories.Files.ChannelFile.replace("%CHANNEL%", channel), "5 Warning", "ban");
+        IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channel));
+        String[] keys = {"Mode", "Command Key", "Enable Blacklist Words", "Blacklisted Words", "Enable Caps Limit", "Caps Limit", "Enable Text Limit", "Text Limit", "Enable Word Limit", "Word Limit", "Enable Spam Protection", "Spam Amount", "Spam Timer", "1 Warning", "2 Warning", "3 Warning", "4 Warning", "5 Warning"};
+        String[] values = {"Chat", "!", "False", "", "False", "", "False", "", "False", "", "False", "", "", "30s", "1m", "5m", "10m", "ban"};
+        IOHandler.setValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), keys, values);
     }
 
-    public static void createDefaultCommandConfig(String channel) {
-        IOHandler.setValue(Directories.Files.CommandFile.replace("%CHANNEL%", channel), "Test.Enable", "False");
-        IOHandler.setValue(Directories.Files.CommandFile.replace("%CHANNEL%", channel), "Test.Message", "Test Message. To get content of a text file, use %FileDirectory%");
-        IOHandler.setValue(Directories.Files.CommandFile.replace("%CHANNEL%", channel), "Test.FileDirectory", "C:/Test.txt");
-        IOHandler.setValue(Directories.Files.CommandFile.replace("%CHANNEL%", channel), "Test.Permission", "Moderator");
+    public static void createDefaultChannelCommandConfig(String channel) {
+        IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channel));
+        String[] keys = {"Test.Enable", "Test.Message", "Test.FileDirectory", "Test.Permission"};
+        String[] values = {"False", "Test Message. To get content of a text file. Use %FileDirectory%", "C:/Test.txt", "Moderator"};
+        IOHandler.setValue(Directories.Files.commandFile.replace("%CHANNEL%", channel), keys, values);
     }
 }

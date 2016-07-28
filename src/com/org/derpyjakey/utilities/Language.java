@@ -4,61 +4,49 @@ import com.org.derpyjakey.references.Directories;
 
 public class Language {
     public static void setLanguage(String language) {
-        IOHandler.setValue(Directories.Files.ConfigurationFile, "Language", language);
+        IOHandler.setValue(Directories.Files.configurationFile, "Language", language);
     }
 
     public static String getLanguage() {
-        return IOHandler.getValue(Directories.Files.ConfigurationFile, "Language");
+        return IOHandler.getValue(Directories.Files.configurationFile, "Language");
     }
 
     public static String[] listLanguages() {
-        if (IOHandler.getValue(Directories.Files.LanguageFile, "Available Languages").isEmpty()) {
-            return null;
+        return IOHandler.getValue(Directories.Files.languageFile, "Available Languages").split(", ");
+    }
+
+    public static String getText(String text) {
+        if (IOHandler.checkKey(Directories.Files.languageFile, getLanguage() + "." + text)) {
+            return IOHandler.getValue(Directories.Files.languageFile, getLanguage() + "." + text);
         } else {
-            return IOHandler.getValue(Directories.Files.LanguageFile, "Available Languages").split(", ");
+            LogHandler.errorReport("Missing " + '"' + text + '"' + " for " + getLanguage());
+            return null;
         }
     }
 
     public static String getText(String language, String text) {
-        if (IOHandler.containsKey(Directories.Files.LanguageFile, language + "." + text)) {
-            return (IOHandler.getValue(Directories.Files.LanguageFile, language + "." + text));
+        if (IOHandler.checkKey(Directories.Files.languageFile, language + "." + text)) {
+            return IOHandler.getValue(Directories.Files.languageFile, language + "." + text);
         } else {
-            return getText(text);
-        }
-    }
-
-    public static String getText(String text) {
-        if (IOHandler.containsKey(Directories.Files.LanguageFile, getLanguage() + "." + text)) {
-            return (IOHandler.getValue(Directories.Files.LanguageFile, getLanguage() + "." + text));
-        } else {
-            LogHandler.report(2, "Requesting Missing Text: " + text);
+            LogHandler.errorReport("Missing " + '"' + text + '"' + " for " + language);
             return null;
         }
     }
 
-    public static String convertTextToEnglish(String text) {
-        if (IOHandler.containsKey(Directories.Files.LanguageFile, getLanguage() + "." + text)) {
-            return getText("English", text);
-        } else {
-            LogHandler.report(2, "Missing " + '"' + text + '"' + " for " + '"' + getLanguage() + "'");
-            return null;
-        }
-    }
-    
     public static String convertTextFromEnglish(String text) {
-        if (IOHandler.containsKey(Directories.Files.LanguageFile, Language.getLanguage() + "." + text)) {
-            return getText(Language.getLanguage(), text);
+        if (IOHandler.checkKey(Directories.Files.languageFile, getLanguage() + "." + text)) {
+            return getText(getLanguage(), text);
         } else {
-            LogHandler.report(2, "Missing " + '"' + text + '"' + " for " + '"' + Language.getLanguage() + '"');
+            LogHandler.errorReport("Missing " + '"' + text + '"' + " for " + getLanguage());
             return null;
         }
     }
-    
+
     public static String convertTextFromEnglish(String language, String text) {
-        if (IOHandler.containsKey(Directories.Files.LanguageFile, language + "." + text)) {
-            return getText(language, text);
+        if (IOHandler.checkKey(Directories.Files.languageFile, language + "." + text)) {
+            return getText(getLanguage(), text);
         } else {
-            LogHandler.report(2, "Missing " + '"' + text + '"' + " for " + '"' + language + '"');
+            LogHandler.errorReport("Missing " + '"' + text + '"' + " for " + language);
             return null;
         }
     }

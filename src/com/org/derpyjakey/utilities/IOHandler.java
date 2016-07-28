@@ -1,179 +1,157 @@
 package com.org.derpyjakey.utilities;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Properties;
+import java.io.*;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Properties;
+import java.util.Vector;
 
-public class IOHandler {	
+public class IOHandler {
     public static String getRoot() {
-        String osID = System.getProperty(("os.name")).toLowerCase();
-        if (osID.contains("lin")) {
-            return System.getProperty("user.home") + "/.Cosmic-Bot";
-        } else if (osID.contains("win")) {
+        String osID = System.getProperty("os.name").toLowerCase();
+        if(osID.contains("lin")) {
+            return System.getProperty("user.home") + "/.config/Cosmic-Bot";
+        } else if(osID.contains("win")) {
             return System.getenv("AppData") + "/Cosmic-Bot";
-        } else if (osID.contains("mac")) {
+        } else if(osID.contains("mac")) {
             return System.getProperty("user.dir") + "/Library/Application Support/Cosmic-Bot";
         } else {
-            LogHandler.report(1, "This OS has not been added into script. Please provide OS ID when reporting to the developer\n");
-            LogHandler.report(1, "OS ID = " + osID);
+            LogHandler.warningReport("This OS has not been added into the application. Please provide OS ID when reporting this error to the developer\nOS ID: " + osID);
             return System.getProperty("user.dir") + "/Cosmic-Bot";
         }
     }
 
     public static boolean checkDirectory(String directory) {
-        File fileDirectory = new File(directory);
-        return fileDirectory.exists();
+        File file = new File(directory);
+        return file.exists();
     }
 
     public static void createDirectory(String directory) {
-        File fileDirectory = new File(directory);
-        fileDirectory.mkdir();
+        File file = new File(directory);
+        file.mkdirs();
+    }
+
+    public static boolean checkKey(String directory, String key) {
+        PropertySorter propertySorter = new PropertySorter();
+        try {
+            propertySorter.load(new FileReader(directory));
+            return propertySorter.containsKey(key);
+        } catch (FileNotFoundException eof) {
+            return false;
+        } catch (IOException ioe) {
+            return false;
+        }
     }
 
     public static void setValue(String directory, String key, String value) {
-        FileInputStream fileInput = null;
-        FileOutputStream fileOutput = null;
-        Properties properties = new Properties();
-        if (checkDirectory(directory)) {
-            try {
-                fileInput = new FileInputStream(directory);
-                properties.load(fileInput);
-                fileInput.close();
-            } catch (IOException ioe) {
-                LogHandler.report(2, "Could not read file.\n" + ioe);
-            }
-        }
+        PropertySorter propertySorter = new PropertySorter();
         try {
-            fileOutput = new FileOutputStream(directory);
-            properties.setProperty(key, value);
-            properties.store(fileOutput, null);
-            fileOutput.close();
+            if(checkDirectory(directory)) {
+                propertySorter.load(new FileReader(directory));
+            }
+            FileOutputStream fileOutputStream = new FileOutputStream(directory);
+            propertySorter.setProperty(key, value);
+            propertySorter.store(fileOutputStream, null);
+            fileOutputStream.close();
         } catch (IOException ioe) {
-            LogHandler.report(2, "Could not write to file.\n" + ioe);
-            } finally {
-                if (fileInput != null) {
-                    try {
-                        fileInput.close();
-                    } catch (IOException ioe) {
-                        LogHandler.report(2, "Could not close FileInputStream\n" + ioe);
-                    }
-                }
-                if (fileOutput != null) {
-                    try {
-                        fileOutput.close();
-                    } catch (IOException ioe) {
-                        LogHandler.report(2, "Could not close FileOutputStream\n" + ioe);
-                    }
-                }
+            LogHandler.errorReport("Could not write to file.\n" + ioe);
         }
     }
 
-    public static void deleteKey(String directory, String key) {
-        FileInputStream fileInput = null;
-        FileOutputStream fileOutput = null;
-        Properties properties = new Properties();
-        if (checkDirectory(directory)) {
-            try {
-                fileInput = new FileInputStream(directory);
-                properties.load(fileInput);
-                fileInput.close();
-            } catch (IOException ioe) {
-                LogHandler.report(2, "Could not read file\n" + ioe);
-            }
-        }
+    public static void setValue(String directory, String[] keys, String[] values) {
+        PropertySorter propertySorter = new PropertySorter();
         try {
-            fileOutput = new FileOutputStream(directory);
-            properties.remove(key);
-            properties.store(fileOutput, null);
-            fileOutput.close();
-        } catch (IOException ioe) {
-            LogHandler.report(2, "Could not write to file\n" + ioe);
-        } finally {
-            if (fileInput != null) {
-                try {
-                    fileInput.close();
-                } catch (IOException ioe) {
-                    LogHandler.report(2, "Could not close FileOutputStream\n" + ioe);
-                }
+            if(checkDirectory(directory)) {
+                propertySorter.load(new FileReader(directory));
             }
+            FileOutputStream fileOutputStream = new FileOutputStream(directory);
+            for(int i = 0; i <= keys.length - 1 && i <= values.length - 1; i++) {
+                propertySorter.setProperty(keys[i], values[i]);
+            }
+            propertySorter.store(fileOutputStream, null);
+            fileOutputStream.close();
+        } catch (IOException ioe) {
+            LogHandler.errorReport("Could not write to file.\n" + ioe);
         }
     }
 
     public static String getValue(String directory, String key) {
-        FileInputStream fileInput = null;
         try {
-            fileInput = new FileInputStream(directory);
-            Properties properties = new Properties();
-            properties.load(fileInput);
-            return properties.getProperty(key);
-        } catch (IOException ioe) {
-            LogHandler.report(2, "Could not read file\n" + directory + "\n" + ioe);
+            PropertySorter propertySorter = new PropertySorter();
+            propertySorter.load(new FileReader(directory));
+            if (propertySorter.containsKey(key)) {
+                return propertySorter.getProperty(key);
+            } else {
+                return null;
+            }
+        } catch (FileNotFoundException e) {
             return null;
-        } finally {
-            if (fileInput != null) {
-                try {
-                    fileInput.close();
-                } catch (IOException ioe) {
-                    LogHandler.report(2, "Could not close FileInputStream\n" + ioe);
-                }
-            }
+        } catch (IOException ioe) {
+            return null;
         }
     }
 
-    public static boolean containsKey(String directory, String key) {
-        FileInputStream fileInput = null;
+    public static String[] getValue(String directory, String[] keys) {
         try {
-            fileInput = new FileInputStream(directory);
-            Properties properties = new Properties();
-            properties.load(fileInput);
-            return properties.containsKey(key);
-        } catch (IOException ioe) {
-            LogHandler.report(2, "Could not read file\n" + directory + "\n" + ioe);
-            return false;
-        } finally {
-            if (fileInput != null) {
-                try {
-                    fileInput.close();
-                } catch (IOException ioe) {
-                    LogHandler.report(2, "Could not close FileInputStream\n" + ioe);
+            PropertySorter propertySorter = new PropertySorter();
+            String[] values = new String[keys.length];
+            propertySorter.load(new FileReader(directory));
+            for(int i = 0; i <= keys.length - 1; i++) {
+                if (propertySorter.containsKey(keys[i])) {
+                    values[i] = propertySorter.getProperty(keys[i]);
+                } else {
+                    values[i] = null;
                 }
             }
+            return values;
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException ioe) {
+            return null;
         }
     }
 
-    public static String[] listCommands(String directory) {
-        FileInputStream fileInput = null;
-        List<String> stringList = new ArrayList<>();
-        int i = 0;
+    public static void deleteValue(String directory, String key) {
+        PropertySorter propertySorter = new PropertySorter();
         try {
-            fileInput = new FileInputStream(directory);
-            Properties properties = new Properties();
-            properties.load(fileInput);
-            Enumeration enuKeys = properties.keys();
-            while (enuKeys.hasMoreElements()) {
-                String key = (String) enuKeys.nextElement();
-                if (key.contains(".Enable")) {
-                    stringList.add(i++, key.replace(".Enable", ""));
-                }
+            if(checkDirectory(directory)) {
+                propertySorter.load(new FileReader(directory));
             }
-            String[] output = stringList.toArray(new String[stringList.size()]);
-            return output;
+            FileOutputStream fileOutputStream = new FileOutputStream(directory);
+            propertySorter.remove(key);
+            propertySorter.store(fileOutputStream, null);
+            fileOutputStream.close();
         } catch (IOException ioe) {
-        LogHandler.report(2, "Could not list commands\n" + ioe);
-        } finally {
-            if (fileInput != null) {
-                try {
-                    fileInput.close();
-                } catch (IOException ioe) {
-                    LogHandler.report(2, "Could not close FileInputStream\n" + ioe);
-                }
-            }
+            LogHandler.errorReport("Could not write to file.\n" + ioe);
         }
-        return null;
+    }
+
+    public static void deleteValue(String directory, String[] keys) {
+        PropertySorter propertySorter = new PropertySorter();
+        try {
+            if(checkDirectory(directory)) {
+                propertySorter.load(new FileReader(directory));
+            }
+            FileOutputStream fileOutputStream = new FileOutputStream(directory);
+            for (int i = 0; i <= keys.length - 1; i++) {
+                propertySorter.remove(keys[i]);
+            }
+            propertySorter.store(fileOutputStream, null);
+            fileOutputStream.close();
+        } catch (IOException ioe) {
+            LogHandler.errorReport("Could not write to file.\n" + ioe);
+        }
+    }
+}
+
+class PropertySorter extends Properties {
+    public Enumeration keys() {
+        Enumeration enumeration = super.keys();
+        Vector<String> keyList = new Vector<String>();
+        while(enumeration.hasMoreElements()) {
+            keyList.add((String)enumeration.nextElement());
+        }
+        Collections.sort(keyList);
+        return keyList.elements();
     }
 }

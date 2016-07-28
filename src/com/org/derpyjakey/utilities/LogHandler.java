@@ -1,46 +1,27 @@
 package com.org.derpyjakey.utilities;
 
+import com.org.derpyjakey.references.Directories;
+
 public class LogHandler {
-    static boolean debug = true;
-    public static void report(int level, Object report) {
-        switch(level) {
-            case 1:
-                infoReport(report);
-                break;
-            case 2:
-                debugReport(report);
-                break;
-            case 3:
-                warningReport(report);
-                break;
-            case 4:
-                errorReport(report);
-                break;
-            case 5:
-                fatalReport(report);
-                break;
+    public static void infoReport(String message) {
+        System.out.println("INFO: " + message);
+    }
+
+    public static void debugReport(String message) {
+        if (IOHandler.getValue(Directories.Files.configurationFile, "Debug Mode").equals("True")) {
+            System.out.println("DEBUG: " + message);
         }
     }
 
-    static void infoReport(Object message) {
-        System.out.println(message.toString());
+    public static void warningReport(String message) {
+        System.out.println("WARNING: " + message);
     }
 
-    static void debugReport(Object message) {
-        if (debug) {
-            System.out.println(message.toString());
-        }
+    public static void errorReport(String message) {
+        System.out.println("ERROR: " + message);
     }
 
-    static void warningReport(Object message) {
-        System.out.println(message.toString());
-    }
-
-    static void errorReport(Object message) {
-        System.out.println(message.toString());
-    }
-
-    static void fatalReport(Object message) {
-        System.out.println(message.toString());
+    public static void fatalErrorReport(String message) {
+        System.out.println("FATAL ERROR: " + message);
     }
 }
