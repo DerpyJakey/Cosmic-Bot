@@ -7,11 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class About {
-    private String active_Language = "";
+    private String activeLanguage;
     private JFrame frame = new JFrame();
-    private JLabel developer_Label = new JLabel();
-    private JLabel github_Label = new JLabel();
-    private JLabel twitch_Label = new JLabel();
+    private JLabel developerLabel = new JLabel();
+    private JLabel githubLabel = new JLabel();
+    private JLabel twitchLabel = new JLabel();
 
     public About() {
         updateLanguage();
@@ -20,27 +20,27 @@ public class About {
     }
 
     private void updateLanguage() {
-        if (!active_Language.equals(Language.getLanguage())) {
+        if (!activeLanguage.equals(Language.getLanguage())) {
             frame.setTitle(Language.getText("Frame.About"));
-            developer_Label.setText(Language.getText("Label.Developer") + ": " + Information.Developer);
-            github_Label.setText(Language.getText("Label.Github"));
-            twitch_Label.setText(Language.getText("Label.Twitch"));
-            active_Language = Language.getLanguage();
+            developerLabel.setText(Language.getText("Label.Developer") + ": " + Information.Developer);
+            githubLabel.setText(Language.getText("Label.Github"));
+            twitchLabel.setText(Language.getText("Label.Twitch"));
+            activeLanguage = Language.getLanguage();
         }
     }
 
     private void addComponents() {
-        frame.add(developer_Label, BorderLayout.NORTH);
-        frame.add(github_Label, BorderLayout.CENTER);
-        frame.add(twitch_Label, BorderLayout.SOUTH);
+        frame.add(developerLabel, BorderLayout.NORTH);
+        frame.add(githubLabel, BorderLayout.CENTER);
+        frame.add(twitchLabel, BorderLayout.SOUTH);
     }
 
     private void setFrameProperties() {
-        developer_Label.setHorizontalAlignment(JLabel.CENTER);
-        github_Label.setHorizontalAlignment(JLabel.CENTER);
-        twitch_Label.setHorizontalAlignment(JLabel.CENTER);
-        github_Label.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        twitch_Label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        developerLabel.setHorizontalAlignment(JLabel.CENTER);
+        githubLabel.setHorizontalAlignment(JLabel.CENTER);
+        twitchLabel.setHorizontalAlignment(JLabel.CENTER);
+        githubLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        twitchLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
         frame.pack();

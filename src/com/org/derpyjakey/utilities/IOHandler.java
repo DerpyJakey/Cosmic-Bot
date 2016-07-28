@@ -43,7 +43,23 @@ public class IOHandler {
         }
     }
 
-    public static void setValue(String directory, String key, String value) {
+    public static boolean[] checkKey(String directory, String[] keys) {
+        boolean[] keyExist = new boolean[keys.length];
+        PropertySorter propertySorter = new PropertySorter();
+        try {
+            propertySorter.load(new FileReader(directory));
+            for (int i = 0; i <= keys.length - 1; i++) {
+                keyExist[i] = propertySorter.containsKey(keys[i]);
+            }
+            return keyExist;
+        } catch (FileNotFoundException eof) {
+            return null;
+        } catch (IOException ioe) {
+            return null;
+        }
+    }
+
+    public static void setKey(String directory, String key, String value) {
         PropertySorter propertySorter = new PropertySorter();
         try {
             if(checkDirectory(directory)) {
@@ -58,7 +74,7 @@ public class IOHandler {
         }
     }
 
-    public static void setValue(String directory, String[] keys, String[] values) {
+    public static void setKey(String directory, String[] keys, String[] values) {
         PropertySorter propertySorter = new PropertySorter();
         try {
             if(checkDirectory(directory)) {
@@ -77,10 +93,10 @@ public class IOHandler {
 
     public static String getValue(String directory, String key) {
         try {
-            PropertySorter propertySorter = new PropertySorter();
-            propertySorter.load(new FileReader(directory));
-            if (propertySorter.containsKey(key)) {
-                return propertySorter.getProperty(key);
+            Properties property = new Properties();
+            property.load(new FileReader(directory));
+            if (property.containsKey(key)) {
+                return property.getProperty(key);
             } else {
                 return null;
             }
@@ -93,12 +109,12 @@ public class IOHandler {
 
     public static String[] getValue(String directory, String[] keys) {
         try {
-            PropertySorter propertySorter = new PropertySorter();
+            Properties property = new Properties();
             String[] values = new String[keys.length];
-            propertySorter.load(new FileReader(directory));
+            property.load(new FileReader(directory));
             for(int i = 0; i <= keys.length - 1; i++) {
-                if (propertySorter.containsKey(keys[i])) {
-                    values[i] = propertySorter.getProperty(keys[i]);
+                if (property.containsKey(keys[i])) {
+                    values[i] = property.getProperty(keys[i]);
                 } else {
                     values[i] = null;
                 }
@@ -111,7 +127,7 @@ public class IOHandler {
         }
     }
 
-    public static void deleteValue(String directory, String key) {
+    public static void deleteKey(String directory, String key) {
         PropertySorter propertySorter = new PropertySorter();
         try {
             if(checkDirectory(directory)) {
@@ -126,7 +142,7 @@ public class IOHandler {
         }
     }
 
-    public static void deleteValue(String directory, String[] keys) {
+    public static void deleteKey(String directory, String[] keys) {
         PropertySorter propertySorter = new PropertySorter();
         try {
             if(checkDirectory(directory)) {
