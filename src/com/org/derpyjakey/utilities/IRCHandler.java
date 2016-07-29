@@ -102,6 +102,14 @@ public class IRCHandler {
         }
     }
 
+    public String getConnectedChannels() {
+        return connectedChannels;
+    }
+
+    public int getConnectedChannelAmount() {
+        return getConnectedChannels().split(", ").length;
+    }
+
     public void disconnectServer() {
         connectedChannels = null;
         try {

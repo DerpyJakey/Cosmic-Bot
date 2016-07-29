@@ -2,7 +2,7 @@ package com.org.derpyjakey.utilities;
 
 import com.org.derpyjakey.references.Directories;
 
-public class Language {
+public class LanguageHandler {
     public static void setLanguage(String language) {
         IOHandler.setKey(Directories.Files.configurationFile, "Language", language);
     }

@@ -1,13 +1,19 @@
 package com.org.derpyjakey.frames;
 
 import com.org.derpyjakey.references.Information;
-import com.org.derpyjakey.utilities.Language;
+import com.org.derpyjakey.utilities.LanguageHandler;
+import com.org.derpyjakey.utilities.LogHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class About {
-    private String activeLanguage;
+    private String activeLanguage = "";
     private JFrame frame = new JFrame();
     private JLabel developerLabel = new JLabel();
     private JLabel githubLabel = new JLabel();
@@ -17,15 +23,35 @@ public class About {
         updateLanguage();
         addComponents();
         setFrameProperties();
+        githubLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI(Information.GithubLink));
+                } catch (URISyntaxException | IOException ex) {
+                    LogHandler.errorReport(ex.toString());
+                }
+            }
+        });
+        twitchLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                try {
+                    Desktop.getDesktop().browse(new URI(Information.TwitchLink));
+                } catch (URISyntaxException | IOException ex) {
+                    LogHandler.errorReport(ex.toString());
+                }
+            }
+        });
     }
 
     private void updateLanguage() {
-        if (!activeLanguage.equals(Language.getLanguage())) {
-            frame.setTitle(Language.getText("Frame.About"));
-            developerLabel.setText(Language.getText("Label.Developer") + ": " + Information.Developer);
-            githubLabel.setText(Language.getText("Label.Github"));
-            twitchLabel.setText(Language.getText("Label.Twitch"));
-            activeLanguage = Language.getLanguage();
+        if (!activeLanguage.equals(LanguageHandler.getLanguage())) {
+            frame.setTitle(LanguageHandler.getText("Frame.About"));
+            developerLabel.setText(LanguageHandler.getText("Label.Developer") + ": " + Information.Developer);
+            githubLabel.setText(LanguageHandler.getText("Label.Github"));
+            twitchLabel.setText(LanguageHandler.getText("Label.Twitch"));
+            activeLanguage = LanguageHandler.getLanguage();
         }
     }
 

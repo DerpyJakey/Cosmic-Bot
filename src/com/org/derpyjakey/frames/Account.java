@@ -2,7 +2,7 @@ package com.org.derpyjakey.frames;
 
 import com.org.derpyjakey.references.Directories;
 import com.org.derpyjakey.utilities.IOHandler;
-import com.org.derpyjakey.utilities.Language;
+import com.org.derpyjakey.utilities.LanguageHandler;
 import com.org.derpyjakey.utilities.LogHandler;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class Account {
-    private String activeLanguage;
+    private String activeLanguage = "";
     private JFrame frame = new JFrame();
     private JLabel usernameLabel = new JLabel();
     private JLabel passwordLabel = new JLabel();
@@ -31,8 +31,10 @@ public class Account {
             if (!usernameInputBox.getText().equals(IOHandler.getValue(Directories.Files.configurationFile, "Username"))) {
                 IOHandler.setKey(Directories.Files.configurationFile, "Username", usernameInputBox.getText());
             }
-            if (!passwordInputBox.getPassword().toString().equals(IOHandler.getValue(Directories.Files.configurationFile, "Password"))) {
-                IOHandler.setKey(Directories.Files.configurationFile, "Password", passwordInputBox.getPassword().toString());
+            String tmpPassword = new String(passwordInputBox.getPassword());
+            if (!tmpPassword.equals(IOHandler.getValue(Directories.Files.configurationFile, "Password"))) {
+                LogHandler.infoReport(tmpPassword);
+                IOHandler.setKey(Directories.Files.configurationFile, "Password", tmpPassword);
             }
             frame.dispose();
         });
@@ -44,7 +46,7 @@ public class Account {
             try {
                 desktop.browse(new URI("https://twitchapps.com/tmi/"));
             } catch (URISyntaxException URISE) {
-                JOptionPane.showMessageDialog(null, Language.getText("Error.OAuth"));
+                JOptionPane.showMessageDialog(null, LanguageHandler.getText("Error.OAuth"));
             } catch (IOException ioe) {
                 LogHandler.warningReport(ioe.toString());
             }
@@ -52,14 +54,14 @@ public class Account {
     }
 
     private void updateLanguage() {
-        if (!activeLanguage.equals(Language.getLanguage())) {
-            frame.setTitle(Language.getText("Frame.Account"));
-            usernameLabel.setText(Language.getText("Label.Username"));
-            passwordLabel.setText(Language.getText("Label.Password"));
-            saveButton.setText(Language.getText("Button.Save"));
-            closeButton.setText(Language.getText("Button.Close"));
-            oAuthButton.setText(Language.getText("Button.OAuth"));
-            activeLanguage  = Language.getLanguage();
+        if (!activeLanguage.equals(LanguageHandler.getLanguage())) {
+            frame.setTitle(LanguageHandler.getText("Frame.Account"));
+            usernameLabel.setText(LanguageHandler.getText("Label.Username"));
+            passwordLabel.setText(LanguageHandler.getText("Label.Password"));
+            saveButton.setText(LanguageHandler.getText("Button.Save"));
+            closeButton.setText(LanguageHandler.getText("Button.Close"));
+            oAuthButton.setText(LanguageHandler.getText("Button.OAuth"));
+            activeLanguage  = LanguageHandler.getLanguage();
         }
     }
 

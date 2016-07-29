@@ -1,10 +1,9 @@
 package com.org.derpyjakey.utilities;
 
+import com.org.derpyjakey.references.Directories;
+
 import java.io.*;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Properties;
-import java.util.Vector;
+import java.util.*;
 
 public class IOHandler {
     public static String getRoot() {
@@ -156,6 +155,28 @@ public class IOHandler {
             fileOutputStream.close();
         } catch (IOException ioe) {
             LogHandler.errorReport("Could not write to file.\n" + ioe);
+        }
+    }
+
+    public static String[] listCommands(String channel) {
+        try {
+            int i = 0;
+            List<String> stringList = new ArrayList<>();
+            Properties property = new Properties();
+            property.load(new FileReader(Directories.Files.commandFile.replace("%CHANNEL%", channel)));
+            Enumeration enuKeys = property.keys();
+            while (enuKeys.hasMoreElements()) {
+                String key = (String) enuKeys.nextElement();
+                if (key.contains(".Enable")) {
+                    stringList.add(i++, key.replace(".Enable", ""));
+                }
+            }
+            String[] output = stringList.toArray(new String[stringList.size()]);
+            return output;
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException ioe) {
+            return null;
         }
     }
 }
