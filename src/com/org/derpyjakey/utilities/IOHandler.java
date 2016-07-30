@@ -172,6 +172,9 @@ public class IOHandler {
                 }
             }
             String[] output = stringList.toArray(new String[stringList.size()]);
+            for (int d = 0; d <= output.length - 1; d++) {
+                LogHandler.infoReport("OUTPUT: " + output[d]);
+            }
             return output;
         } catch (FileNotFoundException e) {
             return null;

@@ -41,13 +41,4 @@ public class LanguageHandler {
             return null;
         }
     }
-
-    public static String convertTextFromEnglish(String language, String text) {
-        if (IOHandler.checkKey(Directories.Files.languageFile, language + "." + text)) {
-            return getText(getLanguage(), text);
-        } else {
-            LogHandler.errorReport("Missing " + '"' + text + '"' + " for " + language);
-            return null;
-        }
-    }
 }

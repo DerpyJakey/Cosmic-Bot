@@ -6,7 +6,6 @@ import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.LanguageHandler;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -44,35 +43,83 @@ public class Channel {
         updateLanguage();
         addComponents();
         setFrameProperties();
+        updateChannelList();
+        if(getChannelMode(channelSelectionComboBox.getSelectedItem().toString()).equals(LanguageHandler.getText("English", "Option.Bot"))) {
+            modeComboBox.setSelectedItem(LanguageHandler.getText("Option.Bot"));
+            modeUpdate();
+        } else {
+            modeComboBox.setSelectedItem(LanguageHandler.getText("Option.Chat"));
+        }
         updateButton.addActionListener((ActionEvent actionEvent) -> {
-            if (!channelInputBox.getText().isEmpty()) {
-                if (channelInputBox.getText().contains("#")) {
-                    if (channelInputBox.getText().contains(", ")) {
-                        String[] listChannels = channelInputBox.getText().replace("#", "").split(", ");
-                        for(String channel : listChannels) {
-                            if(!IOHandler.checkDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channel))) {
-                                IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channel));
-                                DefaultConfig.createDefaultChannelConfig(channel);
-                                DefaultConfig.createDefaultChannelCommandConfig(channel);
-                            }
-                            channelSelectionComboBox.addItem(channel);
-                        }
-                    } else {
-                        if (!IOHandler.checkDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channelInputBox.getText().replace("#", "")))) {
-                            IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channelInputBox.getText().replace("#", "")));
-                            DefaultConfig.createDefaultChannelConfig(channelInputBox.getText().replace("#", ""));
-                            DefaultConfig.createDefaultChannelCommandConfig(channelInputBox.getText().replace("#", ""));
-                        }
-                        channelSelectionComboBox.addItem(channelInputBox.getText().replace("#", ""));
-                    }
-                    IOHandler.setKey(Directories.Files.configurationFile, "Channels", channelInputBox.getText());
-                    channelSelectionLabel.setVisible(true);
-                    channelSelectionComboBox.setVisible(true);
-                    channelOptionPanel.setVisible(true);
-                }
-            } else {
-                channelOptionPanel.setVisible(false);
+            IOHandler.setKey(Directories.Files.configurationFile, "Channels", channelInputBox.getText());
+            updateChannelList();
+            modeComboBox.setSelectedItem(getChannelMode(channelSelectionComboBox.getSelectedItem().toString()));
+        });
+        channelSelectionComboBox.addActionListener((ActionEvent actionEvent) -> {
+            try {
+                modeComboBox.setSelectedItem(getChannelMode(channelSelectionComboBox.getSelectedItem().toString()));
+            } catch (NullPointerException ignored) {
             }
+        });
+        modeComboBox.addActionListener((ActionEvent actionEvent) -> {
+            modeUpdate();
+        });
+        availableCommandsComboBox.addActionListener((ActionEvent actionEvent) -> {
+            try {
+                if (availableCommandsComboBox.getSelectedItem().toString().equals(LanguageHandler.convertTextFromEnglish("Option.AddNewCommand"))) {
+                    clearCommandInput();
+                    addNewCommandSelected();
+                } else {
+                    updateCommandSelection(channelSelectionComboBox.getSelectedItem().toString(), availableCommandsComboBox.getSelectedItem().toString());
+                    commandSelected();
+                }
+            } catch (NullPointerException ignored) {
+            }
+        });
+        saveButton.addActionListener((ActionEvent actionEvent) -> {
+            if (availableCommandsComboBox.getSelectedItem().toString().equals(LanguageHandler.convertTextFromEnglish("Option.AddNewCommand"))) {
+                String[] keys = {commandInputBox.getText() + ".Enable", commandInputBox.getText() + ".FileDirectory", commandInputBox.getText() + ".Message", commandInputBox.getText() + ".Permission"};
+                String tmp1;
+                if (LanguageHandler.getText("Option.True").equals(enableComboBox.getSelectedItem().toString())) {
+                    tmp1 = LanguageHandler.getText("English", "Option.True");
+                } else {
+                    tmp1 = LanguageHandler.getText("English", "Option.False");
+                }
+                String tmp2;
+                if (LanguageHandler.getText("Option.Moderator").equals(permissionComboBox.getSelectedItem().toString())) {
+                    tmp2 = LanguageHandler.getText("English", "Option.Moderator");
+                } else {
+                    tmp2 = LanguageHandler.getText("English", "Option.Everyone");
+                }
+                String[] values = {tmp1, fileDirectoryInputBox.getText(), messageInputBox.getText(), tmp2};
+                IOHandler.setKey(Directories.Files.commandFile.replace("%CHANNEL%", channelSelectionComboBox.getSelectedItem().toString()), keys, values);
+            } else {
+                String[] keys = {availableCommandsComboBox.getSelectedItem().toString() + ".Enable", availableCommandsComboBox.getSelectedItem().toString() + ".FileDirectory", availableCommandsComboBox.getSelectedItem().toString() + ".Message", availableCommandsComboBox.getSelectedItem().toString() + ".Permission"};
+                String tmp1;
+                if (LanguageHandler.getText("Option.True").equals(enableComboBox.getSelectedItem().toString())) {
+                    tmp1 = LanguageHandler.getText("English", "Option.True");
+                } else {
+                    tmp1 = LanguageHandler.getText("English", "Option.False");
+                }
+                String tmp2;
+                if (LanguageHandler.getText("Option.Moderator").equals(permissionComboBox.getSelectedItem().toString())) {
+                    tmp2 = LanguageHandler.getText("English", "Option.Moderator");
+                } else {
+                    tmp2 = LanguageHandler.getText("English", "Option.Everyone");
+                }
+                String[] values = {tmp1, fileDirectoryInputBox.getText(), messageInputBox.getText(), tmp2};
+                IOHandler.setKey(Directories.Files.commandFile.replace("%CHANNEL%", channelSelectionComboBox.getSelectedItem().toString()), keys, values);
+            }
+            clearCommandInput();
+            repopulateCommandList();
+        });
+        deleteButton.addActionListener((ActionEvent actionEvent) -> {
+            removeCommand();
+            clearCommandInput();
+            repopulateCommandList();
+        });
+        closeButton.addActionListener((ActionEvent actionEvent) -> {
+            frame.dispose();
         });
     }
 
@@ -116,7 +163,7 @@ public class Channel {
         channelOptionPanel.add(modeComboBox);
         JPanel availableCommandsPanel = new JPanel(new BorderLayout());
         availableCommandsPanel.add(availableCommandsLabel, BorderLayout.WEST);
-        availableCommandsPanel.add(availableCommandsLabel, BorderLayout.CENTER);
+        availableCommandsPanel.add(availableCommandsComboBox, BorderLayout.CENTER);
         JPanel comboPanel = new JPanel(new GridLayout(1, 4));
         comboPanel.add(enableLabel);
         comboPanel.add(enableComboBox);
@@ -140,8 +187,9 @@ public class Channel {
         panelContainer2.add(availableCommandsPanel, BorderLayout.NORTH);
         panelContainer2.add(comboPanel, BorderLayout.CENTER);
         panelContainer2.add(commandPanel, BorderLayout.SOUTH);
-        panelContainer3.add(messagePanel);
-        panelContainer3.add(directoryPanel);
+        panelContainer3.add(messagePanel, BorderLayout.NORTH);
+        panelContainer3.add(directoryPanel, BorderLayout.CENTER);
+        panelContainer3.add(buttonPanel, BorderLayout.SOUTH);
         JPanel panelContainer = new JPanel(new BorderLayout());
         panelContainer.add(panelContainer1, BorderLayout.NORTH);
         panelContainer.add(panelContainer2, BorderLayout.CENTER);
@@ -186,14 +234,56 @@ public class Channel {
                 modeComboBox.setSelectedItem(LanguageHandler.convertTextFromEnglish("Option." + IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channelSelectionComboBox.getSelectedItem().toString()), "Mode")));
                 modeLabel.setVisible(true);
                 modeComboBox.setVisible(true);
+            } else {
+                modeLabel.setVisible(false);
+                modeComboBox.setVisible(false);
             }
+        } else {
+            channelSelectionComboBox.removeAllItems();
+            modeLabel.setVisible(false);
+            modeComboBox.setVisible(false);
         }
+    }
+
+    private String getChannelMode(String channel) {
+        return LanguageHandler.convertTextFromEnglish("Option." + IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Mode"));
+    }
+
+    private void modeUpdate() {
+        if(modeComboBox.getSelectedItem().toString().equals(LanguageHandler.convertTextFromEnglish("Option.Bot"))) {
+            clearCommandInput();
+            repopulateCommandList();
+            if (availableCommandsComboBox.getSelectedItem().toString().equals(LanguageHandler.convertTextFromEnglish("Option.AddNewCommand"))) {
+                clearCommandInput();
+                addNewCommandSelected();
+            } else {
+                updateCommandSelection(channelSelectionComboBox.getSelectedItem().toString(), availableCommandsComboBox.getSelectedItem().toString());
+                commandSelected();
+            }
+        } else {
+            clearFrame();
+        }
+        String tmp;
+        if (LanguageHandler.getText("Option.Bot").equals(modeComboBox.getSelectedItem().toString())) {
+            tmp = LanguageHandler.getText("English", "Option.Bot");
+        } else {
+            tmp = LanguageHandler.getText("English", "Option.Chat");
+        }
+        IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", channelSelectionComboBox.getSelectedItem().toString()), "Mode", tmp);
+    }
+
+    private void removeCommand() {
+        String[] keys = {availableCommandsComboBox.getSelectedItem().toString() + ".Enable", availableCommandsComboBox.getSelectedItem().toString() + ".FileDirectory", availableCommandsComboBox.getSelectedItem().toString() + ".Message", availableCommandsComboBox.getSelectedItem().toString() + ".Permission"};
+        IOHandler.deleteKey(Directories.Files.commandFile.replace("%CHANNEL%", channelSelectionComboBox.getSelectedItem().toString()), keys);
     }
 
     private void repopulateCommandList() {
         availableCommandsComboBox.removeAllItems();
-        for (String command : IOHandler.listCommands(channelSelectionComboBox.getSelectedItem().toString())) {
-            availableCommandsComboBox.addItem(command);
+        try {
+            for (String command : IOHandler.listCommands(channelSelectionComboBox.getSelectedItem().toString())) {
+                availableCommandsComboBox.addItem(command);
+            }
+        } catch (NullPointerException ignored) {
         }
         availableCommandsComboBox.addItem(LanguageHandler.getText("Option.AddNewCommand"));
         availableCommandsComboBox.setSelectedIndex(0);
@@ -207,5 +297,76 @@ public class Channel {
         fileDirectoryInputBox.setText("");
         commandLabel.setVisible(true);
         commandInputBox.setVisible(true);
+    }
+
+    private void updateCommandSelection(String channel, String command) {
+        enableComboBox.setSelectedItem(LanguageHandler.getText("Option." + IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", channel), command + ".Enable")));
+        permissionComboBox.setSelectedItem(LanguageHandler.getText("Option." + IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", channel), command + ".Permission")));
+        commandInputBox.setText(command);
+        messageInputBox.setText(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", channel), channel + ".Message"));
+        fileDirectoryInputBox.setText(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", channel), channel + ".FileDirectory"));
+    }
+
+    private void addNewCommandSelected() {
+        panelContainer2.setVisible(true);
+        panelContainer3.setVisible(true);
+        panelContainer2.setVisible(true);
+        panelContainer3.setVisible(true);
+        commandLabel.setVisible(true);
+        commandInputBox.setVisible(true);
+        availableCommandsLabel.setVisible(true);
+        availableCommandsComboBox.setVisible(true);
+        messageLabel.setVisible(true);
+        messageInputBox.setVisible(true);
+        fileDirectoryLabel.setVisible(true);
+        fileDirectoryInputBox.setVisible(true);
+        permissionLabel.setVisible(true);
+        permissionComboBox.setVisible(true);
+        enableLabel.setVisible(true);
+        enableComboBox.setVisible(true);
+        saveButton.setVisible(true);
+        deleteButton.setVisible(false);
+        closeButton.setVisible(true);
+        frame.pack();
+    }
+
+    private void commandSelected() {
+        panelContainer2.setVisible(true);
+        panelContainer3.setVisible(true);
+        commandLabel.setVisible(false);
+        commandInputBox.setVisible(false);
+        availableCommandsLabel.setVisible(true);
+        availableCommandsComboBox.setVisible(true);
+        messageLabel.setVisible(true);
+        messageInputBox.setVisible(true);
+        fileDirectoryLabel.setVisible(true);
+        fileDirectoryInputBox.setVisible(true);
+        permissionLabel.setVisible(true);
+        permissionComboBox.setVisible(true);
+        enableLabel.setVisible(true);
+        enableComboBox.setVisible(true);
+        saveButton.setVisible(true);
+        deleteButton.setVisible(true);
+        closeButton.setVisible(true);
+        frame.pack();
+    }
+
+    private void clearFrame() {
+        commandLabel.setVisible(false);
+        commandInputBox.setVisible(false);
+        messageLabel.setVisible(false);
+        messageInputBox.setVisible(false);
+        fileDirectoryLabel.setVisible(false);
+        fileDirectoryInputBox.setVisible(false);
+        permissionLabel.setVisible(false);
+        permissionComboBox.setVisible(false);
+        enableLabel.setVisible(false);
+        enableComboBox.setVisible(false);
+        availableCommandsLabel.setVisible(false);
+        availableCommandsComboBox.setVisible(false);
+        saveButton.setVisible(false);
+        deleteButton.setVisible(false);
+        closeButton.setVisible(true);
+        frame.pack();
     }
 }
