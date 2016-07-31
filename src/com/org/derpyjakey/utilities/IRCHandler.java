@@ -49,14 +49,14 @@ public class IRCHandler {
                 } else {
                     connectedChannels = connectedChannels + ", " + channel;
                 }
-                sendRawMessage("JOIN " + channel);
+                sendRawMessage("JOIN " + channel.toLowerCase());
             } else {
                 if (connectedChannels == null) {
                     connectedChannels = "#" + channel;
                 } else {
                     connectedChannels = connectedChannels + ", #" + channel;
                 }
-                sendRawMessage("JOIN #" + channel);
+                sendRawMessage("JOIN #" + channel.toLowerCase());
             }
         }
     }
@@ -65,21 +65,21 @@ public class IRCHandler {
         for (String channel:channels) {
             if (channel.startsWith("#")) {
                 connectedChannels = connectedChannels.replace(", " + channel, "");
-                sendRawMessage("PART " + channel);
+                sendRawMessage("PART " + channel.toLowerCase());
             } else {
                 connectedChannels = connectedChannels.replace(", #" + channel, "");
-                sendRawMessage("PART #" + channel);
+                sendRawMessage("PART #" + channel.toLowerCase());
             }
         }
     }
 
     public void sendMessage(String channel, String message) {
-        sendRawMessage("PRIVMSG " + channel + " :" + message);
+        sendRawMessage("PRIVMSG " + channel.toLowerCase() + " :" + message);
     }
 
     void sendMessage(String[] channel, String[] message) {
         for (int i = 0; i <= channel.length; i++) {
-            sendRawMessage("PRIVMSG " + channel[i] + " :" + message[i]);
+            sendRawMessage("PRIVMSG " + channel[i].toLowerCase() + " :" + message[i]);
         }
     }
 
