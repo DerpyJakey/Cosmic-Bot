@@ -1,6 +1,5 @@
 package com.org.derpyjakey;
 
-import com.org.derpyjakey.frames.Channel;
 import com.org.derpyjakey.frames.Client;
 import com.org.derpyjakey.frames.Language;
 import com.org.derpyjakey.references.Directories;
@@ -29,7 +28,6 @@ public class CosmicBot {
                 Language language = new Language();
             }
         }
-        Channel channel = new Channel();
-        //Client client = new Client();
+        Client client = new Client();
     }
 }

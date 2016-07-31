@@ -167,14 +167,11 @@ public class IOHandler {
             Enumeration enuKeys = property.keys();
             while (enuKeys.hasMoreElements()) {
                 String key = (String) enuKeys.nextElement();
-                if (key.contains(".Enable")) {
+                if (key.equals(key.replace(".Enable", "") + ".Enable")) {
                     stringList.add(i++, key.replace(".Enable", ""));
                 }
             }
             String[] output = stringList.toArray(new String[stringList.size()]);
-            for (int d = 0; d <= output.length - 1; d++) {
-                LogHandler.infoReport("OUTPUT: " + output[d]);
-            }
             return output;
         } catch (FileNotFoundException e) {
             return null;
