@@ -99,6 +99,8 @@ public class IRCHandler {
             return cosmicReader.readLine().replace("\n", "").replace("\r", "");
         } catch (IOException ioe) {
             return null;
+        } catch (NullPointerException npe) {
+            return null;
         }
     }
 

@@ -73,10 +73,14 @@ public class Client {
                 for (String channel : ircHandler.getConnectedChannels().replace("#", "").split(", ")) {
                     channelSelectionComboBox.addItem(channel);
                 }
+                channelSelectionComboBox.setVisible(true);
+                sendButton.setVisible(true);
             } else {
                 connectItem.setText(LanguageHandler.getText("MenuItem.Connect"));
                 updateChatBox("Disconnected");
                 channelSelectionComboBox.removeAllItems();
+                channelSelectionComboBox.setVisible(false);
+                sendButton.setVisible(false);
                 ircHandler.disconnectServer();
             }
         });
@@ -130,6 +134,8 @@ public class Client {
     }
 
     private void setFrameProperties() {
+        channelSelectionComboBox.setVisible(false);
+        sendButton.setVisible(false);
         chatTextPane.setEditable(false);
         chatScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         chatScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
