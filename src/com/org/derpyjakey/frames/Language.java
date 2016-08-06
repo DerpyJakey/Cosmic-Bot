@@ -1,7 +1,5 @@
 package com.org.derpyjakey.frames;
 
-import com.org.derpyjakey.references.Directories;
-import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.LanguageHandler;
 
 import javax.swing.*;
@@ -23,7 +21,7 @@ public class Language {
             changeLanguage(languageComboBox.getSelectedItem().toString());
         });
         saveButton.addActionListener((ActionEvent actionEvent) -> {
-            IOHandler.setKey(Directories.Files.configurationFile, "Language", activeLanguage);
+            LanguageHandler.setLanguage(languageComboBox.getSelectedItem().toString());
             frame.dispose();
         });
     }

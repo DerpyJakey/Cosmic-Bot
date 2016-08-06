@@ -20,7 +20,7 @@ public class Channel {
     private JLabel fileDirectoryLabel = new JLabel();
     private JLabel permissionLabel = new JLabel();
     private JLabel commandKeyLabel = new JLabel();
-    private JTextField channelTextField = new JTextField();
+    private JTextField channelTextField = new JTextField(7);
     private JTextField commandTextField = new JTextField(10);
     private JTextField messageTextField = new JTextField(10);
     private JTextField fileDirectoryTextField = new JTextField(10);
