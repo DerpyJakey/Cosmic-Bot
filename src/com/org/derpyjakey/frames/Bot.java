@@ -7,7 +7,6 @@ package com.org.derpyjakey.frames;
 import com.org.derpyjakey.utilities.LanguageHandler;
  
 import javax.swing.*;
-import java.awt.*;
  
 public class Bot {
     private String activeLanguage = "";
@@ -37,22 +36,24 @@ public class Bot {
     private JButton saveButton = new JButton();
     private JButton closeButton = new JButton();
     
-    public Bot {
+    public Bot() {
         updateLanguage();
         addComponents();
         setFrameProperties();
     }
     
     private void updateLanguage() {
-        if (!activeLanguage.equals(LanguageHandler.getLanguage()) {
+        if (!activeLanguage.equals(LanguageHandler.getLanguage())) {
+            frame.setTitle(LanguageHandler.getText("Frame.Bot"));
+            commandKeyLabel.setText(LanguageHandler.getText("Label.CommandKey"));
+            enableBotFeatures.setText(LanguageHandler.getText("Label.EnableBotFeatures"));
+            enableBlacklistWordsLabel.setText(LanguageHandler.getText("Label.EnableBlacklistFeature"));
         }
     }
     
     private void addComponents() {
-    
     }
     
     private void setFrameProperties() {
-    
     }
 }

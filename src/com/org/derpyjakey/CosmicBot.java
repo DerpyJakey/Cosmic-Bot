@@ -8,22 +8,22 @@ import com.org.derpyjakey.utilities.IOHandler;
 
 public class CosmicBot {
     public static void main(String[] args) {
+        boolean firstBoot = false;
         if (!IOHandler.checkDirectory(Directories.Folders.rootFolder)) {
             IOHandler.createDirectory(Directories.Folders.rootFolder);
+            firstBoot = true;
         }
         if (!IOHandler.checkDirectory(Directories.Folders.configurationFolder)) {
             IOHandler.createDirectory(Directories.Folders.configurationFolder);
+            firstBoot = true;
         }
         if (!IOHandler.checkDirectory(Directories.Folders.channelRootFolder)) {
             IOHandler.createDirectory(Directories.Folders.channelRootFolder);
+            firstBoot = true;
         }
-        if (!IOHandler.checkDirectory(Directories.Files.configurationFile) || !(IOHandler.checkDirectory(Directories.Files.languageFile))) {
-            if (!IOHandler.checkDirectory(Directories.Files.configurationFile)) {
-                DefaultConfig.createDefaultConfig();
-            }
-            if (!IOHandler.checkDirectory(Directories.Files.languageFile)) {
-                DefaultConfig.createDefaultLanguage();
-            }
+        DefaultConfig.createDefaultConfig();
+        DefaultConfig.createDefaultLanguage();
+        if (firstBoot) {
             if (IOHandler.getValue(Directories.Files.languageFile, "Available Languages").contains(", ")) {
                 Language language = new Language();
             }

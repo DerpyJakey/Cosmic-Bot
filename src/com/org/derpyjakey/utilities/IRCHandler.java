@@ -97,9 +97,7 @@ public class IRCHandler {
     public String recieveMessage() {
         try {
             return cosmicReader.readLine().replace("\n", "").replace("\r", "");
-        } catch (IOException ioe) {
-            return null;
-        } catch (NullPointerException npe) {
+        } catch (IOException | NullPointerException ioe) {
             return null;
         }
     }
@@ -109,7 +107,11 @@ public class IRCHandler {
     }
 
     public int getConnectedChannelAmount() {
-        return getConnectedChannels().split(", ").length;
+        if (getConnectedChannels().contains(", ")) {
+            return getConnectedChannels().split(", ").length;
+        } else {
+            return 1;
+        }
     }
 
     public void disconnectServer() {
