@@ -14,10 +14,10 @@ import java.net.URISyntaxException;
 
 public class About {
     private String activeLanguage = "";
-    private JFrame frame = new JFrame();
-    private JLabel developerLabel = new JLabel();
-    private JLabel githubLabel = new JLabel();
-    private JLabel twitchLabel = new JLabel();
+    final private JFrame frame = new JFrame();
+    final private JLabel developerLabel = new JLabel();
+    final private JLabel githubLabel = new JLabel();
+    final private JLabel twitchLabel = new JLabel();
 
     public About() {
         updateLanguage();

@@ -64,10 +64,10 @@ public class IOHandler {
             if(checkDirectory(directory)) {
                 propertySorter.load(new FileReader(directory));
             }
-            FileOutputStream fileOutputStream = new FileOutputStream(directory);
-            propertySorter.setProperty(key, value);
-            propertySorter.store(fileOutputStream, null);
-            fileOutputStream.close();
+            try (FileOutputStream fileOutputStream = new FileOutputStream(directory)) {
+                propertySorter.setProperty(key, value);
+                propertySorter.store(fileOutputStream, null);
+            }
         } catch (IOException ioe) {
             LogHandler.errorReport("Could not write to file.\n" + ioe);
         }
@@ -79,12 +79,12 @@ public class IOHandler {
             if(checkDirectory(directory)) {
                 propertySorter.load(new FileReader(directory));
             }
-            FileOutputStream fileOutputStream = new FileOutputStream(directory);
-            for(int i = 0; i <= keys.length - 1 && i <= values.length - 1; i++) {
-                propertySorter.setProperty(keys[i], values[i]);
+            try (FileOutputStream fileOutputStream = new FileOutputStream(directory)) {
+                for(int i = 0; i <= keys.length - 1 && i <= values.length - 1; i++) {
+                    propertySorter.setProperty(keys[i], values[i]);
+                }
+                propertySorter.store(fileOutputStream, null);
             }
-            propertySorter.store(fileOutputStream, null);
-            fileOutputStream.close();
         } catch (IOException ioe) {
             LogHandler.errorReport("Could not write to file.\n" + ioe);
         }
@@ -146,10 +146,10 @@ public class IOHandler {
             if(checkDirectory(directory)) {
                 propertySorter.load(new FileReader(directory));
             }
-            FileOutputStream fileOutputStream = new FileOutputStream(directory);
-            propertySorter.remove(key);
-            propertySorter.store(fileOutputStream, null);
-            fileOutputStream.close();
+            try (FileOutputStream fileOutputStream = new FileOutputStream(directory)) {
+                propertySorter.remove(key);
+                propertySorter.store(fileOutputStream, null);
+            }
         } catch (IOException ioe) {
             LogHandler.errorReport("Could not write to file.\n" + ioe);
         }
@@ -196,6 +196,7 @@ public class IOHandler {
 }
 
 class PropertySorter extends Properties {
+    @Override
     public Enumeration keys() {
         Enumeration enumeration = super.keys();
         Vector<String> keyList = new Vector<String>();

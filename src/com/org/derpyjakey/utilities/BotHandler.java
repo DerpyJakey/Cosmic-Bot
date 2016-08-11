@@ -38,19 +38,11 @@ public class BotHandler {
     }
 
     static private boolean bypassBotControl(String channel, String username) {
-        if (IOHandler.getValue(Directories.Files.viewerFile.replace("%CHANNEL%", channel), username + ".Moderator").equals("True")) {
-            return true;
-        } else {
-            return false;
-        }
+        return IOHandler.getValue(Directories.Files.viewerFile.replace("%CHANNEL%", channel), username + ".Moderator").equals("True");
     }
 
     static private boolean enableBlacklistWords(String channel) {
-        if (IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Enable Blacklist Words").equals("True")) {
-            return true;
-        } else {
-            return false;
-        }
+        return IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Enable Blacklist Words").equals("True");
     }
 
     static private boolean checkBlacklistWord(String channel, String message) {
@@ -79,36 +71,22 @@ public class BotHandler {
                 capCount++;
             }
         }
-        if (capCount <= capLimit) {
-            return true;
-        }
-        return false;
+        return capCount <= capLimit;
     }
 
     static private boolean enableWordLimit(String channel) {
-        if (IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Enable Word Limit").equals("True")) {
-            return true;
-        } else {
-            return false;
-        }
+        return IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Enable Word Limit").equals("True");
     }
 
     static private boolean checkWordLimit(String channel, String message) {
         int wordLimit = Integer.parseInt(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Word Limit"));
         String[] words = message.split("\\w\\s+");
         int totalWords = words.length;
-        if (totalWords <= wordLimit) {
-            return true;
-        }
-        return false;
+        return totalWords <= wordLimit;
     }
 
     static private boolean enableSpamProtection(String channel) {
-        if (IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Enable Spam Protection").equals("True")) {
-            return true;
-        } else {
-            return false;
-        }
+        return IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", channel), "Enable Spam Protection").equals("True");
     }
 
     static public boolean checkSpamProtection(String channel, String username) {

@@ -5,6 +5,7 @@ import com.org.derpyjakey.utilities.IOHandler;
 import com.org.derpyjakey.utilities.IRCHandler;
 import com.org.derpyjakey.utilities.LanguageHandler;
 import com.org.derpyjakey.utilities.LogHandler;
+import com.sun.glass.events.KeyEvent;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
@@ -17,30 +18,31 @@ import java.awt.event.AdjustmentEvent;
 public class Client {
     private String activeLanguage = "";
     private JFrame frame = new JFrame();
-    private JPanel panel = new JPanel(new BorderLayout());
-    private JPanel inputPanel = new JPanel(new BorderLayout());
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu clientMenu = new JMenu();
-    private JMenu serverMenu = new JMenu();
-    private JMenu settingsMenu = new JMenu();
+    final private JPanel panel = new JPanel(new BorderLayout());
+    final private JPanel inputPanel = new JPanel(new BorderLayout());
+    final private JMenuBar menuBar = new JMenuBar();
+    final private JMenu clientMenu = new JMenu();
+    final private JMenu serverMenu = new JMenu();
+    final private JMenu settingsMenu = new JMenu();
     private JMenuItem connectItem = new JMenuItem();
-    private JMenuItem darkUIItem = new JMenuItem();
-    private JMenuItem aboutItem = new JMenuItem();
-    private JMenuItem exitItem = new JMenuItem();
-    private JMenuItem accountItem = new JMenuItem();
-    private JMenuItem channelItem = new JMenuItem();
-    private JMenuItem languageItem = new JMenuItem();
+    final private JMenuItem darkUIItem = new JMenuItem();
+    final private JMenuItem aboutItem = new JMenuItem();
+    final private JMenuItem exitItem = new JMenuItem();
+    final private JMenuItem accountItem = new JMenuItem();
+    final private JMenuItem channelItem = new JMenuItem();
+    final private JMenuItem languageItem = new JMenuItem();
     private JComboBox channelSelectionComboBox = new JComboBox();
-    private JTextPane chatTextPane = new JTextPane();
+    final private JTextPane chatTextPane = new JTextPane();
     private JTextField chatInputField = new JTextField();
     private JButton sendButton = new JButton();
-    private JScrollPane chatScrollPane = new JScrollPane(chatTextPane);
-    private StyledDocument styledDocument = chatTextPane.getStyledDocument();
+    final private JScrollPane chatScrollPane = new JScrollPane(chatTextPane);
+    final private StyledDocument styledDocument = chatTextPane.getStyledDocument();
     private boolean connectionStatus = false;
     private boolean isThreadInitialized = false;
     Thread chatThread;
     private IRCHandler ircHandler = new IRCHandler();
     private String clientMessage;
+    final private Toolkit toolKit = Toolkit.getDefaultToolkit();
 
     public Client() {
         updateLanguage();
@@ -224,9 +226,11 @@ public class Client {
             Style clientChatStyle = chatTextPane.addStyle("Style", null);
             StyleConstants.setForeground(clientChatStyle, Color.BLACK);
             styledDocument.insertString(styledDocument.getEndPosition().getOffset(), message + "\n", clientChatStyle);
-            chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-            });
+            if (!scrollLockEnabled()) {
+                chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
+                    e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+                });
+            }
         } catch (BadLocationException ignored) {
         }
     }
@@ -236,9 +240,11 @@ public class Client {
             Style clientChatStyle = chatTextPane.addStyle("Style", null);
             StyleConstants.setForeground(clientChatStyle, messageColor);
             styledDocument.insertString(styledDocument.getEndPosition().getOffset(), message + "\n", clientChatStyle);
-            chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-            });
+            if (!scrollLockEnabled()) {
+                chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
+                    e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+                });
+            }
         } catch (BadLocationException ignored) {
         }
     }
@@ -250,9 +256,11 @@ public class Client {
             styledDocument.insertString(styledDocument.getEndPosition().getOffset(), chatUsername, clientChatStyle);
             StyleConstants.setForeground(clientChatStyle, Color.BLACK);
             styledDocument.insertString(styledDocument.getEndPosition().getOffset(), ": " + chatMessage + "\n", clientChatStyle);
-            chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-            });
+            if (!scrollLockEnabled()) {
+                chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
+                    e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+                });
+            }
         } catch (BadLocationException ignored) {
         }
     }
@@ -266,11 +274,17 @@ public class Client {
             styledDocument.insertString(styledDocument.getEndPosition().getOffset(), chatUsername, clientChatStyle);
             StyleConstants.setForeground(clientChatStyle, Color.BLACK);
             styledDocument.insertString(styledDocument.getEndPosition().getOffset(), ": " + chatMessage + "\n", clientChatStyle);
-            chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
-            });
+            if (!scrollLockEnabled()) {
+                chatScrollPane.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
+                    e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+                });
+            }
         } catch (BadLocationException ignored) {
         }
+    }
+    
+    private boolean scrollLockEnabled() {
+        return toolKit.getLockingKeyState(KeyEvent.VK_SCROLL_LOCK);
     }
     
     private boolean darkUIEnabled() {

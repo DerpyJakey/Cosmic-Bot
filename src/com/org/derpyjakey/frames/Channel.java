@@ -10,37 +10,37 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class Channel {
-    private String activeLanguage = "";
+    final private String activeLanguage = "";
     private JFrame frame = new JFrame();
-    private JLabel channelLabel = new JLabel();
-    private JLabel selectChannelLabel = new JLabel();
-    private JLabel selectCommandLabel = new JLabel();
-    private JLabel commandLabel = new JLabel();
-    private JLabel messageLabel = new JLabel();
-    private JLabel fileDirectoryLabel = new JLabel();
-    private JLabel permissionLabel = new JLabel();
-    private JLabel commandKeyLabel = new JLabel();
+    final private JLabel channelLabel = new JLabel();
+    final private JLabel selectChannelLabel = new JLabel();
+    final private JLabel selectCommandLabel = new JLabel();
+    final private JLabel commandLabel = new JLabel();
+    final private JLabel messageLabel = new JLabel();
+    final private JLabel fileDirectoryLabel = new JLabel();
+    final private JLabel permissionLabel = new JLabel();
+    final private JLabel commandKeyLabel = new JLabel();
     private JTextField channelTextField = new JTextField(7);
     private JTextField commandTextField = new JTextField(10);
     private JTextField messageTextField = new JTextField(10);
     private JTextField fileDirectoryTextField = new JTextField(10);
     private JTextField timerTextField = new JTextField(4);
     private JTextField commandKeyTextField = new JTextField(4);
-    private JButton updateButton = new JButton();
-    private JButton saveButton = new JButton();
-    private JButton deleteButton = new JButton();
-    private JButton closeButton = new JButton();
+    final private JButton updateButton = new JButton();
+    final private JButton saveButton = new JButton();
+    final private JButton deleteButton = new JButton();
+    final private JButton closeButton = new JButton();
     private JComboBox selectChannelComboBox = new JComboBox();
     private JComboBox selectCommandComboBox = new JComboBox();
     private JComboBox permissionComboBox = new JComboBox();
-    private JCheckBox botCheckBox = new JCheckBox();
+    final private JCheckBox botCheckBox = new JCheckBox();
     private JCheckBox enableCheckBox = new JCheckBox();
     private JCheckBox timerCheckBox = new JCheckBox();
-    private JPanel panel1 = new JPanel(new GridLayout(3, 3));
-    private JPanel panel2 = new JPanel(new GridLayout(3, 2));
-    private JPanel panel3 = new JPanel();
-    private JPanel panel4 = new JPanel();
-    private JPanel panel5 = new JPanel(new BorderLayout());
+    final private JPanel panel1 = new JPanel(new GridLayout(3, 3));
+    final private JPanel panel2 = new JPanel(new GridLayout(3, 2));
+    final private JPanel panel3 = new JPanel();
+    final private JPanel panel4 = new JPanel();
+    final private JPanel panel5 = new JPanel(new BorderLayout());
 
 
     public Channel() {

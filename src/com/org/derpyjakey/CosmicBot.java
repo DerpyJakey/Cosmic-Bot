@@ -28,6 +28,11 @@ public class CosmicBot {
                 Language language = new Language();
             }
         }
+        for (int i = 0; i <= args.length - 1; i++) {
+            if (args[i].toLowerCase().equals("debug")) {
+                IOHandler.setKey(Directories.Files.configurationFile, "Debug Mode", "True");
+            }
+        }
         Client client = new Client();
     }
 }

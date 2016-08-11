@@ -15,13 +15,13 @@ import java.net.URISyntaxException;
 public class Account {
     private String activeLanguage = "";
     private JFrame frame = new JFrame();
-    private JLabel usernameLabel = new JLabel();
-    private JLabel passwordLabel = new JLabel();
-    private JTextField usernameInputBox = new JTextField();
-    private JPasswordField passwordInputBox = new JPasswordField();
-    private JButton saveButton = new JButton();
-    private JButton closeButton = new JButton();
-    private JButton oAuthButton = new JButton();
+    final private JLabel usernameLabel = new JLabel();
+    final private JLabel passwordLabel = new JLabel();
+    private JTextField usernameInputBox = new JTextField(10);
+    private JPasswordField passwordInputBox = new JPasswordField(10);
+    final private JButton saveButton = new JButton();
+    final private JButton closeButton = new JButton();
+    final private JButton oAuthButton = new JButton();
 
     public Account() {
         updateLanguage();
