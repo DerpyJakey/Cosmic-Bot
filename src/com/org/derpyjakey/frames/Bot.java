@@ -17,6 +17,8 @@ public class Bot {
     private JLabel blackListWordsLabel = new JLabel();
     private JLabel enableCapLimitLabel = new JLabel();
     private JLabel capLimitLabel = new JLabel();
+    private JLabel enableTextLimitLabel = new JLabel();
+    private JLabel textLimitLabel = new JLabel();
     private JLabel enableWordLimitLabel = new JLabel();
     private JLabel wordLimitLabel = new JLabel();
     private JLabel enableSpamFeatureLabel = new JLabel();
@@ -25,11 +27,13 @@ public class Bot {
     private JCheckBox enableBotFeaturesCheckBox = new JCheckBox();
     private JCheckBox enableBlacklistWordsCheckBox = new JCheckBox();
     private JCheckBox enableCapLimitCheckBox = new JCheckBox();
+    private JCheckBox enableTextLimitCheckBox = new JCheckBox();
     private JCheckBox enableWordLimitCheckBox = new JCheckBox();
     private JCheckBox enableSpamFeatureCheckBox = new JCheckBox();
     private JTextField commandKeyTextField = new JTextField();
     private JTextField blackListWordsTextField = new JTextField();
     private JTextField capLimitTextField = new JTextField();
+    private JTextField textLimitTextField = new JTextField();
     private JTextField wordLimitTextField = new JTextField();
     private JTextField spamTimerTextField = new JTextField();
     private JTextField spamMessageTextField = new JTextField();
@@ -48,6 +52,18 @@ public class Bot {
             commandKeyLabel.setText(LanguageHandler.getText("Label.CommandKey"));
             enableBotFeatures.setText(LanguageHandler.getText("Label.EnableBotFeatures"));
             enableBlacklistWordsLabel.setText(LanguageHandler.getText("Label.EnableBlacklistFeature"));
+            blackListWordsLabel.setText(LanguageHandler.getText("Label.BlacklistWords"));
+            enableCapLimitLabel.setText(LanguageHandler.getText("Label.EnableCapLimitFeature"));
+            capLimitLabel.setText(LanguageHandler.getText("Label.CapLimit"));
+            enableTextLimitLabel.setText(LanguageHandler.getText("Label.EnableTextLimitFeature"));
+            wordLimitLabel.setText(LanguageHandler.getText("Label.TextLimit"));
+            enableWordLimitLabel.setText(LanguageHandler.getText("Label.EnableWordLimitFeature"));
+            wordLimitLabel.setText(LanguageHandler.getText("Label.WordLimit"));
+            enableSpamFeatureLabel.setText(LanguageHandler.getText("Label.EnableSpamFeature"));
+            timeFrameLabel.setText(LanguageHandler.getText("Label.SpamTimeFrame"));
+            messagePerTimeFrameLabel.setText(LanguageHandler.getText("Label.MessagePerTimeFrame"));
+            saveButton.setText(LanguageHandler.getText("Button.Save"));
+            closeButton.setText(LanguageHandler.getText("Button.Close"));
         }
     }
     

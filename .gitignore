@@ -3,6 +3,7 @@
 *.directory
 *.mf
 *.properties
+*.json
 /build/*
 /test/*
 /dist/

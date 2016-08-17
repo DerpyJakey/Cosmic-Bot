@@ -13,8 +13,8 @@ public class DefaultConfig {
     public static void createDefaultLanguage() {
         IOHandler.createDirectory(Directories.Folders.configurationFolder);
         IOHandler.compareKey(Directories.Files.languageFile, "Available Languages", "English");
-        String[] englishFrames = {"English.Frame.Client", "English.Frame.Account", "English.Frame.Language", "English.Frame.Channel", "English.Frame.About"};
-        String[] englishFramesText = {"Cosmic-Bot", "Account", "Language", "Channel", "About Cosmic-Bot"};
+        String[] englishFrames = {"English.Frame.Client", "English.Frame.Account", "English.Frame.Language", "English.Frame.Channel", "English.Frame.About", "English.Frame.Bot"};
+        String[] englishFramesText = {"Cosmic-Bot", "Account", "Language", "Channel", "About Cosmic-Bot", "Bot Settings"};
         IOHandler.compareKey(Directories.Files.languageFile, englishFrames, englishFramesText);
         String[] englishMenus = {"English.Menu.Client", "English.Menu.Server", "English.Menu.Settings"};
         String[] englishMenusText = {"Client", "Server", "Settings"};
@@ -22,8 +22,8 @@ public class DefaultConfig {
         String[] englishMenuItems = {"English.MenuItem.Connect", "English.MenuItem.Disconnect", "English.MenuItem.About", "English.MenuItem.Exit", "English.MenuItem.Account", "English.MenuItem.Channel", "English.MenuItem.Language", "English.MenuItem.DarkUI", "English.MenuItem.LightUI"};
         String[] englishMenuItemsText = {"Connect", "Disconnect", "About", "Exit", "Account", "Channel", "Language", "Dark UI", "Light UI"};
         IOHandler.compareKey(Directories.Files.languageFile, englishMenuItems, englishMenuItemsText);
-        String[] englishLabels = {"English.Label.CommandKey", "English.Label.SelectChannel", "English.Label.Channels", "English.Label.Language", "English.Label.Username", "English.Label.Password", "English.Label.Mode", "English.Label.Enable", "English.Label.Permission", "English.Label.SelectCommand", "English.Label.Command", "English.Label.Message", "English.Label.FileDirectory", "English.Label.Developer", "English.Label.Github", "English.Label.Twitch"};
-        String[] englishLabelsText = {"Command Key", "Select Channel", "Channels", "Language", "Username", "Password", "Mode", "Enable", "Permission", "Select Command", "Command", "Message", "File Directory", "Developer", "Github", "Twitch"};
+        String[] englishLabels = {"English.Label.CommandKey", "English.Label.SelectChannel", "English.Label.Channels", "English.Label.Language", "English.Label.Username", "English.Label.Password", "English.Label.Mode", "English.Label.Enable", "English.Label.Permission", "English.Label.SelectCommand", "English.Label.Command", "English.Label.Message", "English.Label.FileDirectory", "English.Label.Developer", "English.Label.Github", "English.Label.Twitch", "English.Label.CommandKey", "English.Label.EnableBotFeatures", "English.Label.EnableBlacklistFeature", "English.Label.BlacklistWords", "English.Label.EnableCapLimitFeature", "English.Label.CapLimit", "English.Label.EnableWordLimitFeature", "English.Label.WordLimit", "English.Label.EnableSpamFeature", "English.Label.SpamTimeFrame", "English.Label.MessagePerTimeFrame", "English.Label.EnableTextLimitFeature", "English.Label.TextLimit"};
+        String[] englishLabelsText = {"Command Key", "Select Channel", "Channels", "Language", "Username", "Password", "Mode", "Enable", "Permission", "Select Command", "Command", "Message", "File Directory", "Developer", "Github", "Twitch", "Command Key", "Enable Bot Features", "Enable Blacklist", "Blacklist Words", "Enable Cap Limit", "Cap Limit", "Enable Word Limit", "Word Limit", "Enable Anti-Spam Features", "Time Frame", "Message within Time Frame", "Enable Text Limit", "Text Limit"};
         IOHandler.compareKey(Directories.Files.languageFile, englishLabels, englishLabelsText);
         String[] englishButtons = {"English.Button.Update", "English.Button.Send", "English.Button.Save", "English.Button.Close", "English.Button.OAuth", "English.Button.Delete"};
         String[] englishButtonsText = {"Update", "Send", "Save", "Close", "OAuth", "Delete"};
