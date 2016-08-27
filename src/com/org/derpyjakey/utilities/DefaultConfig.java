@@ -36,11 +36,31 @@ public class DefaultConfig {
         IOHandler.setKey(Directories.Files.languageFile, "Available Languages", "English");
     }
 
+    public static void createDefaultChannelConfig(String[] channel) {
+        for(int i = 0; i <= channel.length - 1; i++) {
+            if (channel[i].contains("#")) {
+                createDefaultChannelConfig(channel[i].replace("#", ""));
+            } else {
+                createDefaultChannelConfig(channel[i]);
+            }
+        }
+    }
+
     public static void createDefaultChannelConfig(String channel) {
         IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channel));
-        String[] keys = {"Bot", "Command Key", "Enable Blacklist", "Blacklisted Words", "Enable Cap Limit", "Cap Limit", "Enable Text Limit", "Text Limit", "Enable Word Limit", "Word Limit", "Enable Spam Protection", "Spam Amount", "Spam Timer", "1 Warning", "2 Warning", "3 Warning", "4 Warning", "5 Warning"};
-        String[] values = {"False", "!", "False", "", "False", "", "False", "", "False", "", "False", "", "", "30s", "1m", "5m", "10m", "ban"};
+        String[] keys = {"Enable Bot", "Command Key", "Enable Blacklist", "Blacklist Rules", "Blacklist Response", "Enable Cap Limit", "Cap Limit Rules", "Cap Limit Response", "Enable Char Limit", "Char Limit Rules", "Char Limit Response", "Enable Word Limit", "Word Limit Rules", "Word Limit Response", "Enable Spam Protection", "Spam Protection Rules", "Spam Protection Response", "1 Warning", "2 Warning", "3 Warning", "4 Warning", "5 Warning"};
+        String[] values = {"False", "!", "False", "Bitch, Fuck", "You've said a blacklisted word!", "False", "10", "Too many caps!", "False", "100", "Too many text in a message!", "False", "50", "Too many words in a message!", "False", "10/5", "Too many messages in timeframe", "30s", "1m", "5m", "10m", "ban"};
         IOHandler.compareKey(Directories.Files.channelFile.replace("%CHANNEL%", channel), keys, values);
+    }
+
+    public static void createDefaultChannelCommandConfig(String[] channel) {
+        for(int i = 0; i <= channel.length - 1; i++) {
+            if (channel[i].contains("#")) {
+                createDefaultChannelCommandConfig(channel[i].replace("#", ""));
+            } else {
+                createDefaultChannelCommandConfig(channel[i]);
+            }
+        }
     }
 
     public static void createDefaultChannelCommandConfig(String channel) {

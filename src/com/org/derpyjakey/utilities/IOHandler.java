@@ -25,6 +25,12 @@ public class IOHandler {
         return file.exists();
     }
 
+    public static void createDirectory(String[] directory) {
+        for (int i = 0; i<= directory.length - 1; i++) {
+            createDirectory(directory[i]);
+        }
+    }
+
     public static void createDirectory(String directory) {
         File file = new File(directory);
         file.mkdirs();

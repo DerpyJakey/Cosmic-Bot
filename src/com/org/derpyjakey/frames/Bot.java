@@ -69,6 +69,10 @@ public class Bot {
         setFrameProperties();
         updateSettings();
         saveButton.addActionListener((ActionEvent actionEvent) -> {
+            
+        });
+        closeButton.addActionListener((ActionEvent actionEvent) -> {
+            frame.dispose();
         });
     }
     
@@ -128,11 +132,22 @@ public class Bot {
     }
 
     private void updateSettings() {
-        botEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", activeChannel), "Bot").equals("True"));
-        commandKeyTextfield.setText(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", activeChannel), "Command Key"));
-        blacklistEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", activeChannel), "Enable Blacklist").equals("True"));
-        capLimitEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", activeChannel), "Enable Cap Limit").equals("True"));
-        wordLimitEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", activeChannel), "Enable Word Limit").equals("True"));
-        spamProtectionEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", activeChannel), "Enable Spam Protection").equals("True"));
+        botEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Bot").equals("True"));
+        blacklistEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Blacklist").equals("True"));
+        capLimitEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Cap Limit").equals("True"));
+        charLimitEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Char Limit").equals("True"));
+        wordLimitEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Word Limit").equals("True"));
+        spamProtectionEnableCheckbox.setSelected(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Spam Protection").equals("True"));
+        commandKeyTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Command Key"));
+        blacklistRulesTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Blacklist Rules"));
+        capLimitRulesTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Cap Limit Rules"));
+        charLimitRulesTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Char Limit Rules"));
+        wordLimitRulesTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Word Limit Rules"));
+        spamProtectionRuleTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Spam Protection Rules"));
+        blacklistResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Blacklist Response"));
+        capLimitResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Cap Limit Response"));
+        charLimitResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Char Limit Response"));
+        wordLimitResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Word Limit Response"));
+        spamProtectionResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Spam Protection Response"));
     }
 }

@@ -38,6 +38,23 @@ public class CosmicBot {
                 }
             }
         }
+        IOHandler.createDirectory(Directories.Folders.channelRootFolder);
+        if (IOHandler.getValue(Directories.Files.configurationFile, "Channel") != null) {
+            String channel = IOHandler.getValue(Directories.Files.configurationFile, "Channel");
+            if (channel.contains(", ")) {
+                String[] channelArray = channel.replace("#", "").split(", ");
+                for (int i = 0; i <= channelArray.length - 1; i++) {
+                    IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channelArray[i]));
+                    DefaultConfig.createDefaultChannelConfig(channelArray[i]);
+                    DefaultConfig.createDefaultChannelCommandConfig(channelArray[i]);
+                }
+            } else {
+                IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channel));
+                DefaultConfig.createDefaultChannelConfig(channel);
+                DefaultConfig.createDefaultChannelCommandConfig(channel);
+            }
+        }
         Client client = new Client();
+        //Bot bot = new Bot(args[0]);
     }
 }
