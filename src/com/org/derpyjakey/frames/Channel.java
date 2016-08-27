@@ -33,9 +33,9 @@ public class Channel {
     private JComboBox selectChannelComboBox = new JComboBox();
     private JComboBox selectCommandComboBox = new JComboBox();
     private JComboBox permissionComboBox = new JComboBox();
-    final private JCheckBox botCheckBox = new JCheckBox();
-    private JCheckBox enableCheckBox = new JCheckBox();
-    private JCheckBox timerCheckBox = new JCheckBox();
+    final private JCheckBox botCheckbox = new JCheckBox();
+    private JCheckBox enableCheckbox = new JCheckBox();
+    private JCheckBox timerCheckbox = new JCheckBox();
     final private JPanel panel1 = new JPanel(new GridLayout(3, 3));
     final private JPanel panel2 = new JPanel(new GridLayout(3, 2));
     final private JPanel panel3 = new JPanel();
@@ -48,20 +48,20 @@ public class Channel {
         addComponents();
         setFrameProperties();
         updateChannelList();
-        checkBotCheckBox();
+        checkBotCheckbox();
         botCheckUpdate();
         updateButton.addActionListener((ActionEvent actionEvent) -> {
             IOHandler.setKey(Directories.Files.configurationFile, "Channels", channelTextField.getText());
             updateChannelList();
-            checkBotCheckBox();
+            checkBotCheckbox();
         });
-        botCheckBox.addActionListener((ActionEvent actionEvent) -> {
+        botCheckbox.addActionListener((ActionEvent actionEvent) -> {
             botCheckUpdate();
             botSaveSetting();
         });
         selectChannelComboBox.addActionListener((ActionEvent actionEvent) -> {
             try {
-                checkBotCheckBox();
+                checkBotCheckbox();
                 botCheckUpdate();
             } catch (NullPointerException ignored) {
             }
@@ -82,12 +82,12 @@ public class Channel {
             if (selectCommandComboBox.getSelectedItem().toString().equals(LanguageHandler.getText("Option.AddNewCommand"))) {
                 String[] keys = {commandTextField.getText() + ".Enable", commandTextField.getText() + ".EnableTimer", commandTextField.getText() + ".FileDirectory", commandTextField.getText() + ".Message", commandTextField.getText() + ".Permission", commandTextField.getText() + ".Timer"};
                 String[] values = new String[6];
-                if (enableCheckBox.isSelected()) {
+                if (enableCheckbox.isSelected()) {
                     values[0] = "True";
                 } else {
                     values[0] = "False";
                 }
-                if (timerCheckBox.isSelected()) {
+                if (timerCheckbox.isSelected()) {
                     values[1] = "True";
                 } else {
                     values[1] = "False";
@@ -104,12 +104,12 @@ public class Channel {
             } else {
                 String[] keys = {selectCommandComboBox.getSelectedItem().toString() + ".Enable", selectCommandComboBox.getSelectedItem().toString() + ".EnableTimer", selectCommandComboBox.getSelectedItem().toString() + ".FileDirectory", selectCommandComboBox.getSelectedItem().toString() + ".Message", selectCommandComboBox.getSelectedItem().toString() + ".Permission", selectCommandComboBox.getSelectedItem().toString() + ".Timer"};
                 String[] values = new String[6];
-                if (enableCheckBox.isSelected()) {
+                if (enableCheckbox.isSelected()) {
                     values[0] = "True";
                 } else {
                     values[0] = "False";
                 }
-                if (timerCheckBox.isSelected()) {
+                if (timerCheckbox.isSelected()) {
                     values[1] = "True";
                 } else {
                     values[1] = "False";
@@ -141,9 +141,9 @@ public class Channel {
     private void updateLanguage() {
         if (!activeLanguage.equals(LanguageHandler.getLanguage())) {
             frame.setTitle(LanguageHandler.getText("Frame.Channel"));
-            enableCheckBox.setText(LanguageHandler.getText("CheckBox.Enable"));
-            botCheckBox.setText(LanguageHandler.getText("CheckBox.Bot"));
-            timerCheckBox.setText(LanguageHandler.getText("CheckBox.Timer"));
+            enableCheckbox.setText(LanguageHandler.getText("Checkbox.Enable"));
+            botCheckbox.setText(LanguageHandler.getText("Checkbox.Bot"));
+            timerCheckbox.setText(LanguageHandler.getText("Checkbox.Timer"));
             permissionComboBox.addItem(LanguageHandler.getText("Option.Moderator"));
             permissionComboBox.addItem(LanguageHandler.getText("Option.Everyone"));
             channelLabel.setText(LanguageHandler.getText("Label.Channels"));
@@ -167,10 +167,10 @@ public class Channel {
         panel1.add(updateButton);
         panel1.add(selectChannelLabel);
         panel1.add(selectChannelComboBox);
-        panel1.add(botCheckBox);
+        panel1.add(botCheckbox);
         panel1.add(selectCommandLabel);
         panel1.add(selectCommandComboBox);
-        panel1.add(enableCheckBox);
+        panel1.add(enableCheckbox);
         panel2.add(commandLabel);
         panel2.add(commandTextField);
         panel2.add(messageLabel);
@@ -181,7 +181,7 @@ public class Channel {
         panel3.add(permissionComboBox);
         panel3.add(commandKeyLabel);
         panel3.add(commandKeyTextField);
-        panel3.add(timerCheckBox);
+        panel3.add(timerCheckbox);
         panel3.add(timerTextField);
         panel4.add(saveButton);
         panel4.add(deleteButton);
@@ -199,7 +199,7 @@ public class Channel {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         selectCommandLabel.setVisible(false);
         selectCommandComboBox.setVisible(false);
-        enableCheckBox.setVisible(false);
+        enableCheckbox.setVisible(false);
         panel2.setVisible(false);
         panel3.setVisible(false);
         saveButton.setVisible(false);
@@ -240,14 +240,14 @@ public class Channel {
             }
             if (!selectChannelComboBox.getSelectedItem().toString().isEmpty()) {
                 botCheckUpdate();
-                botCheckBox.setVisible(true);
+                botCheckbox.setVisible(true);
             } else {
-                botCheckBox.setSelected(false);
-                botCheckBox.setVisible(false);
+                botCheckbox.setSelected(false);
+                botCheckbox.setVisible(false);
             }
         } else {
             clearCommandInputs();
-            botCheckBox.setVisible(false);
+            botCheckbox.setVisible(false);
         }
     }
 
@@ -258,19 +258,19 @@ public class Channel {
         commandKeyTextField.setText("");
         timerTextField.setText("");
         permissionComboBox.setSelectedIndex(0);
-        timerCheckBox.setSelected(false);
+        timerCheckbox.setSelected(false);
     }
 
-    private void checkBotCheckBox() {
+    private void checkBotCheckbox() {
         if (IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", selectChannelComboBox.getSelectedItem().toString()), "Bot").equals("True")) {
-            botCheckBox.setSelected(true);
+            botCheckbox.setSelected(true);
         } else {
-            botCheckBox.setSelected(false);
+            botCheckbox.setSelected(false);
         }
     }
 
     private void botCheckUpdate() {
-        if (botCheckBox.isSelected()) {
+        if (botCheckbox.isSelected()) {
             clearCommandInputs();
             repopulateCommandList();
             if (selectCommandComboBox.getSelectedItem().toString().equals(LanguageHandler.getText("Option.AddNewCommand"))) {
@@ -286,7 +286,7 @@ public class Channel {
     }
 
     private void botSaveSetting() {
-        if (botCheckBox.isSelected()) {
+        if (botCheckbox.isSelected()) {
             IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", selectChannelComboBox.getSelectedItem().toString()), "Bot", "True");
         } else {
             IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", selectChannelComboBox.getSelectedItem().toString()), "Bot", "False");
@@ -295,14 +295,14 @@ public class Channel {
 
     private void updateCommandSelection(String command) {
         if (IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", selectChannelComboBox.getSelectedItem().toString()), command + ".Enable").equals("True")) {
-            enableCheckBox.setSelected(true);
+            enableCheckbox.setSelected(true);
         } else {
-            enableCheckBox.setSelected(false);
+            enableCheckbox.setSelected(false);
         }
         if (IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", selectChannelComboBox.getSelectedItem().toString()), command + ".EnableTimer").equals("True")) {
-            timerCheckBox.setSelected(true);
+            timerCheckbox.setSelected(true);
         } else {
-            timerCheckBox.setSelected(false);
+            timerCheckbox.setSelected(false);
         }
         messageTextField.setText(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", selectChannelComboBox.getSelectedItem().toString()), command + ".Message"));
         fileDirectoryTextField.setText(IOHandler.getValue(Directories.Files.commandFile.replace("%CHANNEL%", selectChannelComboBox.getSelectedItem().toString()), command + ".FileDirectory"));
@@ -325,7 +325,7 @@ public class Channel {
     private void addNewCommandSelected() {
         selectCommandLabel.setVisible(true);
         selectCommandComboBox.setVisible(true);
-        enableCheckBox.setVisible(true);
+        enableCheckbox.setVisible(true);
         panel2.setVisible(true);
         panel3.setVisible(true);
         panel4.setVisible(true);
@@ -342,7 +342,7 @@ public class Channel {
     private void commandSelected() {
         selectCommandLabel.setVisible(true);
         selectCommandComboBox.setVisible(true);
-        enableCheckBox.setVisible(true);
+        enableCheckbox.setVisible(true);
         panel2.setVisible(true);
         panel3.setVisible(true);
         panel4.setVisible(true);
@@ -358,7 +358,7 @@ public class Channel {
     private void clearFrame() {
         selectCommandLabel.setVisible(false);
         selectCommandComboBox.setVisible(false);
-        enableCheckBox.setVisible(false);
+        enableCheckbox.setVisible(false);
         panel2.setVisible(false);
         panel3.setVisible(false);
         panel4.setVisible(true);

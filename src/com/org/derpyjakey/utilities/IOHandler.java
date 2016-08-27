@@ -126,6 +126,21 @@ public class IOHandler {
         }
     }
     
+    public static void compareKey(String directory, String language, String item, String key, String value) {
+        if (getValue(directory, key) == null) {
+            setKey(directory, language + "." + item + "." + key, value);
+        }
+    }
+    
+    public static void compareKey(String directory, String language, String item, String[] key, String[] value) {
+        for (int i = 0; i <= key.length - 1; i++) {
+            if (getValue(directory, key[i]) == null) {
+                setKey(directory, language + "." + item + "." + key[i], value[i]);
+            }
+        }
+    }
+
+    
     public static void compareKey(String directory, String key, String value) {
         if (getValue(directory, key) == null) {
             setKey(directory, key, value);

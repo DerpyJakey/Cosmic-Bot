@@ -1,7 +1,6 @@
 package com.org.derpyjakey;
 
-import com.org.derpyjakey.frames.Client;
-import com.org.derpyjakey.frames.Language;
+import com.org.derpyjakey.frames.*;
 import com.org.derpyjakey.references.Directories;
 import com.org.derpyjakey.utilities.DefaultConfig;
 import com.org.derpyjakey.utilities.IOHandler;
@@ -9,6 +8,7 @@ import com.org.derpyjakey.utilities.IOHandler;
 public class CosmicBot {
     public static void main(String[] args) {
         boolean firstBoot = false;
+        boolean triggered = false;
         if (!IOHandler.checkDirectory(Directories.Folders.rootFolder)) {
             IOHandler.createDirectory(Directories.Folders.rootFolder);
             firstBoot = true;
@@ -31,6 +31,11 @@ public class CosmicBot {
         for (int i = 0; i <= args.length - 1; i++) {
             if (args[i].toLowerCase().equals("debug")) {
                 IOHandler.setKey(Directories.Files.configurationFile, "Debug Mode", "True");
+                triggered = true;
+            } else {
+                if (!triggered) {
+                    IOHandler.setKey(Directories.Files.configurationFile, "Debug Mode", "False");
+                }
             }
         }
         Client client = new Client();

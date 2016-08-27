@@ -12,33 +12,33 @@ public class DefaultConfig {
 
     public static void createDefaultLanguage() {
         IOHandler.createDirectory(Directories.Folders.configurationFolder);
-        IOHandler.compareKey(Directories.Files.languageFile, "Available Languages", "English");
-        String[] englishFrames = {"English.Frame.Client", "English.Frame.Account", "English.Frame.Language", "English.Frame.Channel", "English.Frame.About", "English.Frame.Bot"};
-        String[] englishFramesText = {"Cosmic-Bot", "Account", "Language", "Channel", "About Cosmic-Bot", "Bot Settings"};
-        IOHandler.compareKey(Directories.Files.languageFile, englishFrames, englishFramesText);
-        String[] englishMenus = {"English.Menu.Client", "English.Menu.Server", "English.Menu.Settings"};
-        String[] englishMenusText = {"Client", "Server", "Settings"};
-        IOHandler.compareKey(Directories.Files.languageFile, englishMenus, englishMenusText);
-        String[] englishMenuItems = {"English.MenuItem.Connect", "English.MenuItem.Disconnect", "English.MenuItem.About", "English.MenuItem.Exit", "English.MenuItem.Account", "English.MenuItem.Channel", "English.MenuItem.Language", "English.MenuItem.DarkUI", "English.MenuItem.LightUI"};
-        String[] englishMenuItemsText = {"Connect", "Disconnect", "About", "Exit", "Account", "Channel", "Language", "Dark UI", "Light UI"};
-        IOHandler.compareKey(Directories.Files.languageFile, englishMenuItems, englishMenuItemsText);
-        String[] englishLabels = {"English.Label.CommandKey", "English.Label.SelectChannel", "English.Label.Channels", "English.Label.Language", "English.Label.Username", "English.Label.Password", "English.Label.Mode", "English.Label.Enable", "English.Label.Permission", "English.Label.SelectCommand", "English.Label.Command", "English.Label.Message", "English.Label.FileDirectory", "English.Label.Developer", "English.Label.Github", "English.Label.Twitch", "English.Label.CommandKey", "English.Label.EnableBotFeatures", "English.Label.EnableBlacklistFeature", "English.Label.BlacklistWords", "English.Label.EnableCapLimitFeature", "English.Label.CapLimit", "English.Label.EnableWordLimitFeature", "English.Label.WordLimit", "English.Label.EnableSpamFeature", "English.Label.SpamTimeFrame", "English.Label.MessagePerTimeFrame", "English.Label.EnableTextLimitFeature", "English.Label.TextLimit"};
-        String[] englishLabelsText = {"Command Key", "Select Channel", "Channels", "Language", "Username", "Password", "Mode", "Enable", "Permission", "Select Command", "Command", "Message", "File Directory", "Developer", "Github", "Twitch", "Command Key", "Enable Bot Features", "Enable Blacklist", "Blacklist Words", "Enable Cap Limit", "Cap Limit", "Enable Word Limit", "Word Limit", "Enable Anti-Spam Features", "Time Frame", "Message within Time Frame", "Enable Text Limit", "Text Limit"};
-        IOHandler.compareKey(Directories.Files.languageFile, englishLabels, englishLabelsText);
-        String[] englishButtons = {"English.Button.Update", "English.Button.Send", "English.Button.Save", "English.Button.Close", "English.Button.OAuth", "English.Button.Delete"};
-        String[] englishButtonsText = {"Update", "Send", "Save", "Close", "OAuth", "Delete"};
-        IOHandler.compareKey(Directories.Files.languageFile, englishButtons, englishButtonsText);
-        String[] englishOptions = {"English.Option.True", "English.Option.False", "English.Option.Chat", "English.Option.Bot", "English.Option.Moderator", "English.Option.Everyone", "English.Option.AddNewCommand"};
-        String[] englishOptionsText = {"True", "False", "Chat", "Bot", "Moderator", "Everyone", "Add New Command"};
-        IOHandler.compareKey(Directories.Files.languageFile, englishOptions, englishOptionsText);
-        String[] englishCheckBox = {"English.CheckBox.Enable", "English.CheckBox.Bot", "English.CheckBox.Timer"};
-        String[] englishCheckBoxText = {"Enable", "Bot", "Timer"};
-        IOHandler.compareKey(Directories.Files.languageFile, englishCheckBox, englishCheckBoxText);
+        String[] frames = {"Client", "About", "Account", "Channel", "Language", "Bot"};
+        String[] englishFramesTranslation = {"Client", "About", "Account", "Channel", "Language", "Editing"};
+        IOHandler.compareKey(Directories.Files.languageFile, "English", "Frame", frames, englishFramesTranslation);
+        String[] menus = {"Client", "Server", "Settings"};
+        String[] englishMenusTranslation = {"Client", "Server", "Settings"};
+        IOHandler.compareKey(Directories.Files.languageFile, "English", "Menu", menus, englishMenusTranslation);
+        String[] menuItems = {"Connect", "DarkUI", "LightUI", "About", "Exit", "Account", "Channel", "Language"};
+        String[] englishMenuItemsTranslation = {"Connect", "DarkUI", "LightUI", "About", "Exit", "Account", "Channel", "Language"};
+        IOHandler.compareKey(Directories.Files.languageFile, "English", "MenuItem", menuItems, englishMenuItemsTranslation);
+        String[] labels = {"CommandKey", "BotFeatureEnable", "Blacklist", "BlacklistEnable", "BlacklistRules", "BlacklistResponse", "CapLimit", "CapLimitEnable", "CapLimitRules", "CapLimitResponse", "CharLimit", "CharLimitEnable", "CharLimitRules", "CharLimitResponse", "WordLimit", "WordLimitEnable", "WordLimitRules", "WordLimitResponse", "SpamProtection", "SpamProtectionEnable", "SpamProtectionRule", "SpamProtectionResponse", "Developer", "Github", "Twitch", "Username", "Password", "Channels", "SelectChannel", "SelectCommand", "Command", "Message", "FileDirectory", "Permission", "CommandKey", "Language"};
+        String[] englishLabelsTranslation = {"Command Key", "Enable Bot", "Blacklist", "Enable", "Rules", "Response", "Cap Limit", "Enable", "Rules", "Response", "Text Limit", "Enable", "Rules", "Response", "Word Limit", "Enable", "Rules", "Response", "Spam Protection", "Enable", "Rules", "Response", "Developer", "Github", "Twitch", "Username", "Password", "Channels", "Select Channel", "Select Command", "Command", "Message", "File Directory", "Permission", "Command Key ", "Language"};
+        IOHandler.compareKey(Directories.Files.languageFile, "English", "Label", labels, englishLabelsTranslation);
+        String[] buttons = {"Save", "Close", "Send", "OAuth", "Update", "Delete"};
+        String[] englishButtonsTranslation = {"Save", "Close", "Send", "OAuth", "Update", "Delete"};
+        IOHandler.compareKey(Directories.Files.languageFile, "English", "Button", buttons, englishButtonsTranslation);
+        String[] options = {"Moderator", "Everyone"};
+        String[] englishOptionsTranslation = {"Moderator", "Everyone"};
+        IOHandler.compareKey(Directories.Files.languageFile, "English", "Options", options, englishOptionsTranslation);
+        String[] checkbox = {"Enable", "Bot", "Timer"};
+        String[] englishCheckboxTranslation = {"Enable", "Bot", "Timer"};
+        IOHandler.compareKey(Directories.Files.languageFile, "English", "Checkbox", checkbox, englishCheckboxTranslation);
+        IOHandler.setKey(Directories.Files.languageFile, "Available Languages", "English");
     }
 
     public static void createDefaultChannelConfig(String channel) {
         IOHandler.createDirectory(Directories.Folders.channelFolder.replace("%CHANNEL%", channel));
-        String[] keys = {"Bot", "Command Key", "Enable Blacklist Words", "Blacklisted Words", "Enable Caps Limit", "Caps Limit", "Enable Text Limit", "Text Limit", "Enable Word Limit", "Word Limit", "Enable Spam Protection", "Spam Amount", "Spam Timer", "1 Warning", "2 Warning", "3 Warning", "4 Warning", "5 Warning"};
+        String[] keys = {"Bot", "Command Key", "Enable Blacklist", "Blacklisted Words", "Enable Cap Limit", "Cap Limit", "Enable Text Limit", "Text Limit", "Enable Word Limit", "Word Limit", "Enable Spam Protection", "Spam Amount", "Spam Timer", "1 Warning", "2 Warning", "3 Warning", "4 Warning", "5 Warning"};
         String[] values = {"False", "!", "False", "", "False", "", "False", "", "False", "", "False", "", "", "30s", "1m", "5m", "10m", "ban"};
         IOHandler.compareKey(Directories.Files.channelFile.replace("%CHANNEL%", channel), keys, values);
     }
