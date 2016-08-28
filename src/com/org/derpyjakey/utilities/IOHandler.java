@@ -64,6 +64,25 @@ public class IOHandler {
         }
     }
 
+    public static void setKey(String directory, String key, boolean value) {
+        PropertySorter propertySorter = new PropertySorter();
+        try {
+            if(checkDirectory(directory)) {
+                propertySorter.load(new FileReader(directory));
+            }
+            try (FileOutputStream fileOutputStream = new FileOutputStream(directory)) {
+                if (value) {
+                    propertySorter.setProperty(key, "True");
+                } else {
+                    propertySorter.setProperty(key, "False");
+                }
+                propertySorter.store(fileOutputStream, null);
+            }
+        } catch (IOException ioe) {
+            LogHandler.errorReport("Could not write to file.\n" + ioe);
+        }
+    }
+
     public static void setKey(String directory, String key, String value) {
         PropertySorter propertySorter = new PropertySorter();
         try {

@@ -1,9 +1,5 @@
 package com.org.derpyjakey.frames;
 
-/**
- * Placeholder for Bot Setting Frame. (Will be added into Channel Frame)
- * To Enable, Disable, and Modify Bot settings.
- */
 import com.org.derpyjakey.utilities.LanguageHandler;
 import com.org.derpyjakey.references.Directories;
 import com.org.derpyjakey.utilities.LogHandler;
@@ -40,6 +36,7 @@ public class Bot {
     private JLabel spamProtectionEnableLabel = new JLabel();
     private JLabel spamProtectionRuleLabel = new JLabel();
     private JLabel spamProtectionResponseLabel = new JLabel();
+    private JLabel timeoutBanLabel = new JLabel();
     private JCheckBox botEnableCheckbox = new JCheckBox();
     private JCheckBox blacklistEnableCheckbox = new JCheckBox();
     private JCheckBox capLimitEnableCheckbox = new JCheckBox();
@@ -57,6 +54,7 @@ public class Bot {
     private JTextField wordLimitResponseTextfield = new JTextField(10);
     private JTextField spamProtectionRuleTextfield = new JTextField(10);
     private JTextField spamProtectionResponseTextfield = new JTextField(10);
+    private JTextField timeoutBanTextfield = new JTextField(10);
     private JButton saveButton = new JButton();
     private JButton closeButton = new JButton();
     private JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -69,7 +67,24 @@ public class Bot {
         setFrameProperties();
         updateSettings();
         saveButton.addActionListener((ActionEvent actionEvent) -> {
-            
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Bot", botEnableCheckbox.isSelected());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Blacklist", blacklistEnableCheckbox.isSelected());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Cap Limit", capLimitEnableCheckbox.isSelected());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Char Limit", charLimitEnableCheckbox.isSelected());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Word Limit", wordLimitEnableCheckbox.isSelected());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Enable Spam Protection", spamProtectionEnableCheckbox.isSelected());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Command Key", commandKeyTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Blacklist Rules", blacklistRulesTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Cap Limit Rules", capLimitRulesTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Char Limit Rules", charLimitRulesTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Word Limit Rules", wordLimitRulesTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Spam Protection Rules", spamProtectionRuleTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Blacklist Response", blacklistResponseTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Cap Limit Response", capLimitResponseTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Char Limit Response", charLimitResponseTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Word Limit Response", wordLimitResponseTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Spam Protection Response", spamProtectionResponseTextfield.getText());
+            IOHandler.setKey(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Timeout/Ban", timeoutBanTextfield.getText());
         });
         closeButton.addActionListener((ActionEvent actionEvent) -> {
             frame.dispose();
@@ -101,6 +116,7 @@ public class Bot {
             spamProtectionEnableLabel.setText(LanguageHandler.getText("Label.SpamProtectionEnable"));
             spamProtectionRuleLabel.setText(LanguageHandler.getText("Label.SpamProtectionRule"));
             spamProtectionResponseLabel.setText(LanguageHandler.getText("Label.SpamProtectionResponse"));
+            timeoutBanLabel.setText(LanguageHandler.getText("Label.TimeoutBan"));
             saveButton.setText(LanguageHandler.getText("Button.Save"));
             closeButton.setText(LanguageHandler.getText("Button.Close"));
             activeLanguage = LanguageHandler.getLanguage();
@@ -109,9 +125,9 @@ public class Bot {
     
     private void addComponents() {
         gridLayout.weightx = 0.5;
-        int[] tempX = {1, 2, 4, 5, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 2, 4};
-        int[] tempY = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6};
-        Component[] tempComp = {botLabel, botEnableCheckbox, commandKeyLabel, commandKeyTextfield, blacklistLabel, blacklistEnableLabel, blacklistEnableCheckbox, blacklistRulesLabel, blacklistRulesTextfield, blacklistResponseLabel, blacklistResponseTextfield, capLimitLabel, capLimitEnableLabel, capLimitEnableCheckbox, capLimitRulesLabel, capLimitRulesTextfield, capLimitResponseLabel, capLimitResponseTextfield, charLimitLabel, charLimitEnableLabel, charLimitEnableCheckbox, charLimitRulesLabel, charLimitRulesTextfield, charLimitResponseLabel, charLimitResponseTextfield, wordLimitLabel, wordLimitEnableLabel, wordLimitEnableCheckbox, wordLimitRulesLabel, wordLimitRulesTextfield, wordLimitResponseLabel, wordLimitResponseTextfield, spamProtectionLabel, spamProtectionEnableLabel, spamProtectionEnableCheckbox, spamProtectionRuleLabel, spamProtectionRuleTextfield, spamProtectionResponseLabel, spamProtectionResponseTextfield, saveButton, closeButton};
+        int[] tempX = {1, 2, 4, 5, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 2, 4, 2, 4};
+        int[] tempY = {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 6, 6, 7, 7};
+        Component[] tempComp = {botLabel, botEnableCheckbox, commandKeyLabel, commandKeyTextfield, blacklistLabel, blacklistEnableLabel, blacklistEnableCheckbox, blacklistRulesLabel, blacklistRulesTextfield, blacklistResponseLabel, blacklistResponseTextfield, capLimitLabel, capLimitEnableLabel, capLimitEnableCheckbox, capLimitRulesLabel, capLimitRulesTextfield, capLimitResponseLabel, capLimitResponseTextfield, charLimitLabel, charLimitEnableLabel, charLimitEnableCheckbox, charLimitRulesLabel, charLimitRulesTextfield, charLimitResponseLabel, charLimitResponseTextfield, wordLimitLabel, wordLimitEnableLabel, wordLimitEnableCheckbox, wordLimitRulesLabel, wordLimitRulesTextfield, wordLimitResponseLabel, wordLimitResponseTextfield, spamProtectionLabel, spamProtectionEnableLabel, spamProtectionEnableCheckbox, spamProtectionRuleLabel, spamProtectionRuleTextfield, spamProtectionResponseLabel, spamProtectionResponseTextfield, timeoutBanLabel, timeoutBanTextfield, saveButton, closeButton};
         setGrid(mainPanel, tempX, tempY, tempComp, gridLayout);
         frame.getContentPane().add(mainPanel);
     }
@@ -149,5 +165,6 @@ public class Bot {
         charLimitResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Char Limit Response"));
         wordLimitResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Word Limit Response"));
         spamProtectionResponseTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Spam Protection Response"));
+        timeoutBanTextfield.setText(IOHandler.getValue(Directories.Files.channelFile.replace("%CHANNEL%", activeChannel), "Timeout/Ban"));
     }
 }

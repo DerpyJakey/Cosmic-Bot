@@ -7,12 +7,6 @@ public class LogHandler {
         System.out.println("INFO: " + message);
     }
 
-    public static void debugReport(String message) {
-        if (IOHandler.getValue(Directories.Files.configurationFile, "Debug Mode").equals("True")) {
-            System.out.println("DEBUG: " + message);
-        }
-    }
-
     public static void warningReport(String message) {
         System.out.println("WARNING: " + message);
     }
